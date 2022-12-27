@@ -113,3 +113,40 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+
+Widget _cardOverView() {
+  return Container(
+    child: new Card(
+        child:Container(
+          child:  Column(
+            children: <Widget>[
+              Text("5",
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.brown,
+                  )),
+              Text("To Do",
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.brown,
+                  )),
+            ],
+          ),
+        )
+    ),
+    decoration: new BoxDecoration(
+      boxShadow: [
+        new BoxShadow(
+          color: Colors.black,
+          blurRadius: 20.0,
+        ),
+      ],
+    ),
+    margin: EdgeInsets.only(left:8.0, right: 8.0),
+
+  );
+}

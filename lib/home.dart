@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(HomeScreen());
@@ -39,6 +40,7 @@ class HomeBody extends StatelessWidget {
       children: <Widget>[
         _headerScreen(),
         _titleOverview(),
+        _listOverView()
       ],
     );
   }
@@ -55,7 +57,7 @@ Widget _headerScreen() {
     height: 200,
     padding: const EdgeInsets.only(left: 16.0, top: 16.0),
     child: Row(
-      children: <Widget>[_avatar(), _titleHeader()],
+      children: <Widget>[_avatar(), _titleHeader(), _goDetailButton()],
     ),
   );
 }
@@ -79,6 +81,17 @@ Widget _titleHeader() {
       ],
     ),
   );
+}
+
+Widget _goDetailButton() {
+  return Expanded(
+    child: Container(
+      alignment: Alignment.topRight,
+      margin: EdgeInsets.only(right: 16.0),
+      child: SvgPicture.asset('assets/ic_back_black.svg'),
+    )
+  );
+
 }
 
 Widget _titleDate() {
@@ -117,4 +130,89 @@ Widget _titleOverview() {
           color: Colors.black,
         )),
   );
+}
+
+Widget _listOverView() {
+  return Container(
+    margin: EdgeInsets.only(top: 32.0),
+      child: Column(
+        children: <Widget>[
+          _upperOverView(),
+          SizedBox(height: 16),
+          _lowerOverView()
+        ],
+      ),
+  );
+}
+
+Widget _upperOverView() {
+  return Container(
+    alignment: Alignment.center,
+     child: Row(
+       mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[CardOverView(taskNumber: "5",contend: "Todo"),
+          CardOverView(taskNumber: "8",contend: "In Progress")],
+      )
+  );
+}
+
+Widget _lowerOverView() {
+  return Container(
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[CardOverView(taskNumber: "12",contend: "Done"),
+          CardOverView(taskNumber: "2",contend: "To Day")],
+      )
+  );
+}
+
+class CardOverView extends StatelessWidget {
+  CardOverView({Key? key, required this.taskNumber, required this.contend})
+      : super(key: key);
+
+  final String taskNumber;
+  final String contend;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: new Card(
+          child:Container(
+            padding: EdgeInsets.only(top: 16.0),
+            width: 200,
+            height: 100,
+            child:  Column(
+              children: <Widget>[
+                Text(taskNumber,
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown,
+                    )),
+                Text(contend,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown,
+                    )),
+              ],
+            ),
+          )
+      ),
+      decoration: new BoxDecoration(
+        boxShadow: [
+          new BoxShadow(
+            color: Colors.grey.withOpacity(0.5), //color of shadow
+            spreadRadius: 1, //spread radius
+            blurRadius: 8, // blur radius
+            offset: Offset(5, 5), // changes position of shadow
+          ),
+        ],
+      ),
+      margin: EdgeInsets.only(left:8.0, right: 8.0),
+
+    );
+  }
+
 }
