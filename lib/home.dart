@@ -36,16 +36,23 @@ class HomeBody extends StatelessWidget {
   String value = "";
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         _headerScreen(),
         _titleOverview(),
+        SizedBox(height: 16),
         _listOverView(),
         _titleHighPriority(),
         SizedBox(height: 16),
-        CardTaskItem(titleTask: "Buy Fruits", contendTask: "XXX",),
+        CardTaskItem(titleTask: "Buy Fruits", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
         SizedBox(height: 16),
-        CardTaskItem(titleTask: "Buy Fruits", contendTask: "XXX",),
+        CardTaskItem(titleTask: "Shopping", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",),
+        SizedBox(height: 16),
+        CardTaskItem(titleTask: "Drink Coffe", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",),
+        SizedBox(height: 16),
+        CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",),
+        SizedBox(height: 16)
+
 
       ],
     );
@@ -140,7 +147,6 @@ Widget _titleOverview() {
 
 Widget _listOverView() {
   return Container(
-    margin: EdgeInsets.only(top: 32.0),
       child: Column(
         children: <Widget>[
           _upperOverView(),
@@ -258,15 +264,16 @@ class CardTaskItem extends StatelessWidget {
           //set border radius more than 50% of height and width to make circle
         ),
           child:Container(
-            width: 340,
+            width: 352,
             height: 112,
+            padding: const EdgeInsets.only(left: 4.0, top: 8.0, right: 8.0),
             child: Column(
               children: <Widget>[
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(left: 12.0, top: 8.0),
-                  child: const Text("Buy Fruits",
-                      style: TextStyle(
+                  padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+                  child: Text(titleTask,
+                      style: const TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -274,38 +281,56 @@ class CardTaskItem extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(left: 12.0, top: 8.0),
-                  child: const Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ",
-                      style: TextStyle(
+                  padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+                  child: Text(contendTask,
+                      style: const TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       )),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 12.0),
+                  margin: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     children: <Widget>[
                       Container(
                         alignment: Alignment.topLeft,
-                        padding: EdgeInsets.only(left: 12.0, top: 8.0),
-                        child: const Text("3",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            )),
+                        padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset('assets/ic_star.svg'),
+                            Container(
+                              margin: const EdgeInsets.only(left: 4.0, top: 1.0),
+                              child:const Text("3",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  )),
+                            )
+                          ],
+                        )
                       ),
 
                       Container(
                         alignment: Alignment.topLeft,
                         padding: EdgeInsets.only(left: 42.0, top: 8.0),
-                        child: const Text("30 Dec 2022",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            )),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset('assets/ic_calender.svg'),
+                              Container(
+                                margin: EdgeInsets.only(left: 4.0, top: 1.0),
+                                child:const Text("31 July 2021",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    )),
+                              )
+                            ],
+                          )
                       ),
                     ],
                   ),
