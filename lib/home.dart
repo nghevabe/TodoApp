@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
@@ -162,8 +163,8 @@ Widget _upperOverView() {
     alignment: Alignment.center,
      child: Row(
        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[CardOverView(taskNumber: "5",contend: "Todo"),
-          CardOverView(taskNumber: "8",contend: "In Progress")],
+        children: const <Widget>[CardOverView(taskNumber: "5",contend: "Todo", textColor: "#855B28"),
+          CardOverView(taskNumber: "8",contend: "In Progress", textColor: "#000000")],
       )
   );
 }
@@ -173,18 +174,19 @@ Widget _lowerOverView() {
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[CardOverView(taskNumber: "12",contend: "Done"),
-          CardOverView(taskNumber: "2",contend: "To Day")],
+        children: <Widget>[CardOverView(taskNumber: "12",contend: "Done", textColor: "#36976A"),
+          CardOverView(taskNumber: "2",contend: "To Day", textColor: "#FF9900")],
       )
   );
 }
 
 class CardOverView extends StatelessWidget {
-  CardOverView({Key? key, required this.taskNumber, required this.contend})
+  const CardOverView({Key? key, required this.taskNumber, required this.contend, required this.textColor})
       : super(key: key);
 
   final String taskNumber;
   final String contend;
+  final String textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -198,20 +200,20 @@ class CardOverView extends StatelessWidget {
                   width: 100,
                   alignment: Alignment.center,
                   child: Text(taskNumber,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 32.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.brown,
+                        color: HexColor(textColor),
                       )),
                 ),
                 Container(
                   width: 100,
                   alignment: Alignment.center,
                   child:Text(contend,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.brown,
+                        color: HexColor(textColor),
                       )),
                 ),
               ],
