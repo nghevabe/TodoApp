@@ -15,21 +15,84 @@ class HomeScreen extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomeScreen(title: 'Home'),
+      home: MyStatefulHomeScreen(),
     );
   }
 }
 
-class MyHomeScreen extends StatelessWidget {
-  MyHomeScreen({Key? key, required this.title}) : super(key: key);
+class MyStatefulHomeScreen extends StatefulWidget {
+  MyStatefulHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  MyHomeScreen createState() {
+    return new MyHomeScreen(title: 'Home',);
+  }
+
+
+}
+
+class MyHomeScreen extends State<MyStatefulHomeScreen> {
+  int selectedIndex = 0;
+
+  Widget _Home = MyHome();
+  Widget _Manager = MyManager();
+  Widget _Noti = MyNoti();
+  Widget _Setting = MySetting();
+
+  MyHomeScreen({Key? key, required this.title}) : super();
   final String title;
   String value = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: HomeBody());
+        body: getBody(),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: this.selectedIndex,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.file_copy),
+            label: 'Manager',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notification',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Setting',
+          ),
+        ],
+        selectedItemColor: Colors.amber[800],
+        onTap: (int index) {
+          this.onTapHandler(index);
+        },
+      ),
+    );
   }
+
+  void onTapHandler(int index)  {
+    this.setState(() {
+      this.selectedIndex = index;
+    });
+  }
+
+  Widget getBody()  {
+    if(this.selectedIndex == 0) {
+      return this._Home;
+    } else if(this.selectedIndex==1) {
+      return this._Manager;
+    } else if(this.selectedIndex==2) {
+      return this._Noti;
+    } else {
+      return this._Setting;
+    }
+  }
+  
 }
 
 class HomeBody extends StatelessWidget {
@@ -362,5 +425,33 @@ class CardTaskItem extends StatelessWidget {
     );
   }
 
+}
+
+class MyHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return HomeBody();
+  }
+}
+
+class MyManager extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Manager"));
+  }
+}
+
+class MyNoti extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Noti"));
+  }
+}
+
+class MySetting extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("Setting"));
+  }
 }
 
