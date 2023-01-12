@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'manager_screen.dart';
+import 'notification_screen.dart';
+import 'setting_screen.dart';
+
 void main() {
   runApp(HomeScreen());
 }
@@ -40,7 +44,7 @@ class MyHomeScreen extends State<MyStatefulHomeScreen> {
 
   Widget _Home = MyHome();
   Widget _Manager = MyManager();
-  Widget _Noti = MyNoti();
+  Widget _Noti = MyNotification();
   Widget _Setting = MySetting();
 
   MyHomeScreen({Key? key, required this.title}) : super();
@@ -452,24 +456,10 @@ class MyHome extends StatelessWidget {
   }
 }
 
-class MyManager extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Manager"));
-  }
-}
+class TaskItem {
+  String titleTask;
+  String contendTask;
 
-class MyNoti extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Noti"));
-  }
-}
-
-class MySetting extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Setting"));
-  }
+  TaskItem(this.titleTask, this.contendTask);
 }
 
