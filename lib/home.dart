@@ -33,6 +33,10 @@ class MyStatefulHomeScreen extends StatefulWidget {
 
 class MyHomeScreen extends State<MyStatefulHomeScreen> {
   int selectedIndex = 0;
+  String icColor1 = "#5F6368";
+  String icColor2 = "#5F6368";
+  String icColor3 = "#5F6368";
+  String icColor4 = "#5F6368";
 
   Widget _Home = MyHome();
   Widget _Manager = MyManager();
@@ -45,32 +49,30 @@ class MyHomeScreen extends State<MyStatefulHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: getBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: this.selectedIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.file_copy),
-            label: 'Manager',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notification',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Setting',
-          ),
-        ],
-        selectedItemColor: Colors.amber[800],
-        onTap: (int index) {
-          this.onTapHandler(index);
+      backgroundColor: Colors.white,
+      body: getBody(),
+      floatingActionButton: FloatingActionButton(
+        //Floating action button on Scaffold
+        onPressed: () {
+          //code to execute on button press
         },
+        child: Icon(Icons.add),
+        backgroundColor: HexColor("#855B28"),//icon inside button
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar( //bottom navigation bar on scaffold
+        shape: CircularNotchedRectangle(), //shape of notch
+        notchMargin: 5, //notche margin between floating button and bottom appbar
+        child: Row( //children inside bottom appbar
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(icon: Icon(Icons.home, color: HexColor(icColor1)), onPressed: () {onTapHandler(0);},),
+            IconButton(icon: Icon(Icons.file_copy, color: HexColor(icColor2)), onPressed: () {onTapHandler(1);},),
+            IconButton(icon: Icon(Icons.notifications, color: HexColor(icColor3)), onPressed: () {onTapHandler(2);},),
+            IconButton(icon: Icon(Icons.settings, color: HexColor(icColor4)), onPressed: () {onTapHandler(3);},),
+          ],
+        ),
       ),
     );
   }
@@ -83,12 +85,28 @@ class MyHomeScreen extends State<MyStatefulHomeScreen> {
 
   Widget getBody()  {
     if(this.selectedIndex == 0) {
+      this.icColor1 = "#855B28";
+      this.icColor2 = "#5F6368";
+      this.icColor3 = "#5F6368";
+      this.icColor4 = "#5F6368";
       return this._Home;
     } else if(this.selectedIndex==1) {
+      this.icColor1 = "#5F6368";
+      this.icColor2 = "#855B28";
+      this.icColor3 = "#5F6368";
+      this.icColor4 = "#5F6368";
       return this._Manager;
     } else if(this.selectedIndex==2) {
+      this.icColor1 = "#5F6368";
+      this.icColor2 = "#5F6368";
+      this.icColor3 = "#855B28";
+      this.icColor4 = "#5F6368";
       return this._Noti;
     } else {
+      this.icColor1 = "#5F6368";
+      this.icColor2 = "#5F6368";
+      this.icColor3 = "#5F6368";
+      this.icColor4 = "#855B28";
       return this._Setting;
     }
   }
