@@ -162,30 +162,12 @@ class HomeBody extends State<StatefulHomeBody> {
             children:
               listTask.map((item) {
                 return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",);
-                return ListTile(
-                    title: Text(item.titleTask),
-                    onTap: ()=>{
-                     print("GGG")
-                    }
-                );
               }).toList(),
-          )
+          ),
+          SizedBox(height: 32),
         ],
       ));
 
-  }
-}
-
-class ListTask extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-    for (var i = 0; i < 6; i++)
-        CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",),
-        SizedBox(height: 16),
-      ],
-    );
   }
 }
 
