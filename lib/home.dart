@@ -32,17 +32,23 @@ class MyStatefulHomeScreen extends StatefulWidget {
     return new MyHomeScreen(title: 'Home',);
   }
 
-
 }
 
 class MyHomeScreen extends State<MyStatefulHomeScreen> {
+  List<TaskItem> listTask = <TaskItem>[
+    TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
+    TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
+    TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
+    TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),];
+
+  TaskItem taskItem = TaskItem("Task X", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor");
   int selectedIndex = 0;
   String icColor1 = "#5F6368";
   String icColor2 = "#5F6368";
   String icColor3 = "#5F6368";
   String icColor4 = "#5F6368";
 
-  Widget _Home = MyHome();
+  //Widget _Home = MyHome(listTask);
   Widget _Manager = MyManager();
   Widget _Noti = MyNotification();
   Widget _Setting = MySetting();
@@ -58,6 +64,7 @@ class MyHomeScreen extends State<MyStatefulHomeScreen> {
       floatingActionButton: FloatingActionButton(
         //Floating action button on Scaffold
         onPressed: () {
+          onAddItem();
           //code to execute on button press
         },
         child: Icon(Icons.add),
@@ -87,13 +94,19 @@ class MyHomeScreen extends State<MyStatefulHomeScreen> {
     });
   }
 
+  void onAddItem()  {
+    this.setState(() {
+      listTask.add(taskItem);
+    });
+  }
+
   Widget getBody()  {
     if(this.selectedIndex == 0) {
       this.icColor1 = "#855B28";
       this.icColor2 = "#5F6368";
       this.icColor3 = "#5F6368";
       this.icColor4 = "#5F6368";
-      return this._Home;
+      return MyHome(listTask);
     } else if(this.selectedIndex==1) {
       this.icColor1 = "#5F6368";
       this.icColor2 = "#855B28";
@@ -117,29 +130,60 @@ class MyHomeScreen extends State<MyStatefulHomeScreen> {
   
 }
 
-class HomeBody extends StatelessWidget {
-  HomeBody({Key? key}) : super(key: key);
+class StatefulHomeBody extends StatefulWidget {
+  StatefulHomeBody({Key? key, required this.listTask}) : super(key: key);
+  List<TaskItem> listTask;
+
+  @override
+  HomeBody createState() {
+    return new HomeBody(listTask: listTask);
+  }
+}
+
+class HomeBody extends State<StatefulHomeBody> {
+
+  HomeBody({Key? key, required this.listTask}) : super();
+  List<TaskItem> listTask;
   String value = "";
+
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return SingleChildScrollView(child:
+      Column(
+        children: [
+          _headerScreen(),
+          _titleOverview(),
+          SizedBox(height: 16),
+          _listOverView(),
+          _titleHighPriority(),
+          SizedBox(height: 16),
+          Column(
+            children:
+              listTask.map((item) {
+                return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",);
+                return ListTile(
+                    title: Text(item.titleTask),
+                    onTap: ()=>{
+                     print("GGG")
+                    }
+                );
+              }).toList(),
+          )
+        ],
+      ));
+
+  }
+}
+
+class ListTask extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: <Widget>[
-        _headerScreen(),
-        _titleOverview(),
-        SizedBox(height: 16),
-        _listOverView(),
-        _titleHighPriority(),
-        SizedBox(height: 16),
-        CardTaskItem(titleTask: "Buy Fruits", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
-        SizedBox(height: 16),
-        CardTaskItem(titleTask: "Shopping", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",),
-        SizedBox(height: 16),
-        CardTaskItem(titleTask: "Drink Coffe", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",),
-        SizedBox(height: 16),
+    for (var i = 0; i < 6; i++)
         CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",),
-        SizedBox(height: 16)
-
-
+        SizedBox(height: 16),
       ],
     );
   }
@@ -344,16 +388,14 @@ class CardTaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
           //set border radius more than 50% of height and width to make circle
         ),
           child:Container(
-            width: 352,
-            height: 112,
-            padding: const EdgeInsets.only(left: 4.0, top: 8.0, right: 8.0),
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 4.0, top: 8.0, right: 8.0, bottom: 8.0),
             child: Column(
               children: <Widget>[
                 Container(
@@ -442,7 +484,7 @@ class CardTaskItem extends StatelessWidget {
           ),
         ],
       ),
-      margin: const EdgeInsets.only(left:8.0, right: 8.0),
+      margin: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
 
     );
   }
@@ -450,9 +492,14 @@ class CardTaskItem extends StatelessWidget {
 }
 
 class MyHome extends StatelessWidget {
+  //MyHome({Key? key, required this.listTask}) : super(key: key);
+
+  List<TaskItem> listTask;
+  MyHome(this.listTask, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return HomeBody();
+    return StatefulHomeBody(listTask: listTask);
   }
 }
 
