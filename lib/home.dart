@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_app/TaskItem.dart';
 
 import 'manager_screen.dart';
 import 'notification_screen.dart';
@@ -485,10 +486,4 @@ class MyHome extends StatelessWidget {
   }
 }
 
-class TaskItem {
-  String titleTask;
-  String contendTask;
-
-  TaskItem(this.titleTask, this.contendTask);
-}
 
