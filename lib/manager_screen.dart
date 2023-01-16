@@ -76,7 +76,7 @@ Widget _cardHeader() {
             topRight: Radius.circular(20.0),
           )
       ),
-      child: _tabMenu(),
+      child: StateTabMenu(selectedIndex: 0),
     ),
   );
 }
@@ -132,77 +132,139 @@ class ManagerBody extends State<StatefulManagerBody> {
   }
 }
 
-Widget _tabMenu() {
-  return Container(
-    padding: EdgeInsets.only(top: 16.0, bottom: 10.0),
-    child: Row(
-      children: <Widget>[
-        Expanded(
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Text(
-                  "Todo",
-                  style: TextStyle(
-                      color: HexColor("#855B28"),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 4),
-              Container(
-                height: 2,
-                width: 50,
-                color: HexColor("#855B28"),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Text(
-                  "In progress",
-                  style: TextStyle(
-                      color: HexColor("#855B28"),
-                      fontSize: 16.0),
-                ),
-              ),
-              SizedBox(height: 4),
-              Container(
-                height: 2,
-                width: 50,
-                color: HexColor("#FFFFFF"),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
+class StateTabMenu extends StatefulWidget {
+  StateTabMenu({Key? key, required this.selectedIndex}) : super();
+  int selectedIndex;
+
+  @override
+  TabMenu createState() {
+    return TabMenu(selectedIndex: selectedIndex);
+  }
+
+}
+
+class TabMenu extends State<StateTabMenu> {
+  TabMenu({Key? key, required this.selectedIndex}) : super();
+  int selectedIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    String colorTab1 = "#FFFFFF";
+    String colorTab2 = "#FFFFFF";
+    String colorTab3 = "#FFFFFF";
+    if (selectedIndex == 0) {
+      print("tab 1");
+      colorTab1 = "#855B28";
+      colorTab2 = "#FFFFFF";
+      colorTab3 = "#FFFFFF";
+    } else if (selectedIndex == 1) {
+      print("tab 2");
+      colorTab1 = "#FFFFFF";
+      colorTab2 = "#855B28";
+      colorTab3 = "#FFFFFF";
+    } else {
+      print("tab 3");
+      colorTab1 = "#FFFFFF";
+      colorTab2 = "#FFFFFF";
+      colorTab3 = "#855B28";
+    }
+    return Container(
+
+
+      padding: EdgeInsets.only(top: 16.0, bottom: 10.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
             child: Column(
               children: <Widget>[
-                Container(
-                  child: Text(
-                    "Done",
-                    style: TextStyle(
-                        color: HexColor("#855B28"),
-                        fontSize: 16.0),
+                GestureDetector(
+                  onTap: () {
+                    print("Clike 1");
+                    onTapHandler(0);
+                  },
+                  child: Container(
+                    child: Text(
+                      "Todo",
+                      style: TextStyle(
+                          color: HexColor("#855B28"),
+                          fontSize: 16.0,
+                          // fontWeight: FontWeight.bold
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 4),
                 Container(
                   height: 2,
                   width: 50,
-                  color: HexColor("#FFFFFF"),
+                  color: HexColor(colorTab1),
                 )
               ],
             ),
           ),
-        ),
-      ],
-    ),
-  );
+          Expanded(
+            child: Column(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    print("Clike 2");
+                    onTapHandler(1);
+                  },
+                  child: Container(
+                    child: Text(
+                      "In progress",
+                      style:
+                      TextStyle(color: HexColor("#855B28"), fontSize: 16.0),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 4),
+                Container(
+                  height: 2,
+                  width: 50,
+                  color: HexColor(colorTab2),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  GestureDetector(
+                      onTap: () {
+                        print("Clike 3");
+                        onTapHandler(2);
+                      },
+                      child: Container(
+                        child: Text(
+                          "Done",
+                          style: TextStyle(
+                              color: HexColor("#855B28"), fontSize: 16.0),
+                        ),
+                      )),
+                  SizedBox(height: 4),
+                  Container(
+                    height: 2,
+                    width: 50,
+                    color: HexColor(colorTab3),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void onTapHandler(int index) {
+    setState(() {
+      selectedIndex = index;
+      StateTabMenu(selectedIndex: index);
+    });
+  }
+
 }
 
 Widget _cardBody() {
