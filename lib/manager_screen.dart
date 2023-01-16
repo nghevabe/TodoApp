@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_app/TaskItem.dart';
 import 'package:todo_app/utils/util_components.dart';
 
 class MyManager extends StatelessWidget {
@@ -20,13 +18,6 @@ class StatefulManagerBody extends StatefulWidget {
   }
 }
 
-Widget _lineSpace() {
-  return Container(
-    height: 1,
-    color: HexColor("#E5E5E5"),
-  );
-}
-
 Widget _headerScreen() {
   return Container(
     decoration: const BoxDecoration(
@@ -35,9 +26,20 @@ Widget _headerScreen() {
         fit: BoxFit.cover,
       ),
     ),
+    width: double.infinity,
     height: 200,
-    padding: const EdgeInsets.only(left: 16.0),
-
+    child: Row(
+      children: [
+        _itemDate(),
+        _itemDate(),
+        _itemDate(),
+        _itemDate(),
+        _itemDate(),
+        _itemDate(),
+        _itemDate(),
+        _itemDate(),
+      ]
+    ),
   );
 }
 
@@ -89,6 +91,20 @@ class ManagerBody extends State<StatefulManagerBody> {
           titleTask: "Sleep",
           contendTask:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+          priority: 1,
+        ),
+        SizedBox(height: 16),
+        CardTaskItem(
+          titleTask: "Sleep",
+          contendTask:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+          priority: 1,
+        ),
+        SizedBox(height: 16),
+        CardTaskItem(
+          titleTask: "Sleep",
+          contendTask:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
           priority: 1,
         )
       ],
@@ -189,5 +205,54 @@ Widget _cardManager(){
       _headerScreen(),
       _cardHeader(),
     ],
+  );
+}
+
+Widget _getListItemDate() {
+  return Row(
+    children: [
+      _itemDate(),
+      _itemDate(),
+      _itemDate(),
+      _itemDate(),
+      _itemDate(),
+      _itemDate(),
+    ],
+  );
+}
+
+Widget _itemDate(){
+  return Container(
+    margin: EdgeInsets.only(left: 12.0, right: 12.0),
+    padding: EdgeInsets.only(left: 8.0, top: 12.0, right: 8.0, bottom: 12.0),
+    decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.55),
+        borderRadius:
+        BorderRadius.all(Radius.circular(16))),
+    height: 66.0,
+    child: Column(
+      children: [
+        Container(
+          child: Text(
+            "Mon",
+            style: TextStyle(
+                color: HexColor("#855B28"),
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(width: 4),
+        Container(
+          margin: EdgeInsets.only(top: 4.0),
+          child: Text(
+            "8",
+            style: TextStyle(
+                color: HexColor("#855B28"),
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    ),
   );
 }
