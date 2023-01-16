@@ -28,19 +28,39 @@ Widget _headerScreen() {
     ),
     width: double.infinity,
     height: 200,
-    child: Row(
-      children: [
-        _itemDate(),
-        _itemDate(),
-        _itemDate(),
-        _itemDate(),
-        _itemDate(),
-        _itemDate(),
-        _itemDate(),
-        _itemDate(),
-      ]
-    ),
-  );
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 42.0),
+            alignment: Alignment.center,
+            child: Text(
+              "December",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              margin: EdgeInsets.only(top: 8.0),
+              child: Row(
+                children: [
+                  _itemDate(),
+                  _itemDate(),
+                  _itemDate(),
+                  _itemDate(),
+                  _itemDate(),
+                  _itemDate(),
+                  _itemDate(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      )
+      );
 }
 
 Widget _cardHeader() {
@@ -223,20 +243,20 @@ Widget _getListItemDate() {
 
 Widget _itemDate(){
   return Container(
+    height: 66.0,
     margin: EdgeInsets.only(left: 12.0, right: 12.0),
     padding: EdgeInsets.only(left: 8.0, top: 12.0, right: 8.0, bottom: 12.0),
     decoration: BoxDecoration(
         color: Colors.grey.withOpacity(0.55),
         borderRadius:
         BorderRadius.all(Radius.circular(16))),
-    height: 66.0,
     child: Column(
       children: [
         Container(
           child: Text(
             "Mon",
             style: TextStyle(
-                color: HexColor("#855B28"),
+                color: Colors.black,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold),
           ),
@@ -245,9 +265,9 @@ Widget _itemDate(){
         Container(
           margin: EdgeInsets.only(top: 4.0),
           child: Text(
-            "8",
+            "18",
             style: TextStyle(
-                color: HexColor("#855B28"),
+                color: Colors.black,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold),
           ),
