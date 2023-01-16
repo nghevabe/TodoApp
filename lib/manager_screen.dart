@@ -20,6 +20,13 @@ class StatefulManagerBody extends StatefulWidget {
   }
 }
 
+Widget _lineSpace() {
+  return Container(
+    height: 1,
+    color: HexColor("#E5E5E5"),
+  );
+}
+
 Widget _headerScreen() {
   return Container(
     decoration: const BoxDecoration(
@@ -95,28 +102,67 @@ Widget _tabMenu() {
     child: Row(
       children: <Widget>[
         Expanded(
-          child: Text("To do",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.0,
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Text(
+                  "Todo",
+                  style: TextStyle(
+                      color: HexColor("#855B28"),
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 4),
+              Container(
+                height: 2,
+                width: 50,
                 color: HexColor("#855B28"),
-              )),
+              )
+            ],
+          ),
         ),
         Expanded(
-          child: Text("In Progress",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: HexColor("#855B28"),
-              )),
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Text(
+                  "In progress",
+                  style: TextStyle(
+                      color: HexColor("#855B28"),
+                      fontSize: 16.0),
+                ),
+              ),
+              SizedBox(height: 4),
+              Container(
+                height: 2,
+                width: 50,
+                color: HexColor("#FFFFFF"),
+              )
+            ],
+          ),
         ),
         Expanded(
-          child: Text("Done",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: HexColor("#855B28"),
-              )),
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Done",
+                    style: TextStyle(
+                        color: HexColor("#855B28"),
+                        fontSize: 16.0),
+                  ),
+                ),
+                SizedBox(height: 4),
+                Container(
+                  height: 2,
+                  width: 50,
+                  color: HexColor("#FFFFFF"),
+                )
+              ],
+            ),
+          ),
         ),
       ],
     ),
