@@ -163,7 +163,8 @@ class HomeBody extends State<StatefulHomeBody> {
           Column(
             children:
               listTask.map((item) {
-                return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",);
+                return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+                  priority: 0,);
               }).toList(),
           ),
           SizedBox(height: 32),

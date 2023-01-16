@@ -68,18 +68,21 @@ class ManagerBody extends State<StatefulManagerBody> {
           titleTask: "Sleep",
           contendTask:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+          priority: 3,
         ),
         SizedBox(height: 16),
         CardTaskItem(
           titleTask: "Sleep",
           contendTask:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+          priority: 2,
         ),
         SizedBox(height: 16),
         CardTaskItem(
           titleTask: "Sleep",
           contendTask:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+          priority: 1,
         )
       ],
     ));
