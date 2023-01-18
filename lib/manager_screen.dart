@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:todo_app/DateItem.dart';
 import 'package:todo_app/utils/util_components.dart';
 
 class MyManager extends StatelessWidget {
@@ -19,15 +20,24 @@ class StatefulManagerBody extends StatefulWidget {
 }
 
 Widget _headerScreen() {
+
+  List<DateItem> listDate = <DateItem>[
+    DateItem("Mon", "8", false),
+    DateItem("Mon", "8", false),
+    DateItem("Mon", "8", false),
+    DateItem("Mon", "8", false),
+    DateItem("Mon", "8", false),
+    DateItem("Mon", "8", false),];
+
   return Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage("assets/bg_header.png"),
-        fit: BoxFit.cover,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/bg_header.png"),
+          fit: BoxFit.cover,
+        ),
       ),
-    ),
-    width: double.infinity,
-    height: 200,
+      width: double.infinity,
+      height: 200,
       child: Column(
         children: [
           Container(
@@ -41,26 +51,12 @@ Widget _headerScreen() {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Container(
-              margin: EdgeInsets.only(top: 8.0),
-              child: Row(
-                children: [
-                  _itemDate(),
-                  _itemDate(),
-                  _itemDate(),
-                  _itemDate(),
-                  _itemDate(),
-                  _itemDate(),
-                  _itemDate(),
-                ],
-              ),
-            ),
-          ),
+        // listDate
+          SizedBox(height:12),
+          StatefulListItemDate(listDate: listDate)
         ],
       )
-      );
+  );
 }
 
 Widget _cardHeader() {
@@ -90,46 +86,46 @@ class ManagerBody extends State<StatefulManagerBody> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
-      children: [
-        _cardManager(),
-        _cardBody(),
-        SizedBox(height: 16),
-        CardTaskItem(
-          titleTask: "Sleep",
-          contendTask:
+          children: [
+            _cardManager(),
+            _cardBody(),
+            SizedBox(height: 16),
+            CardTaskItem(
+              titleTask: "Sleep",
+              contendTask:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-          priority: 3,
-        ),
-        SizedBox(height: 16),
-        CardTaskItem(
-          titleTask: "Sleep",
-          contendTask:
+              priority: 3,
+            ),
+            SizedBox(height: 16),
+            CardTaskItem(
+              titleTask: "Sleep",
+              contendTask:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-          priority: 2,
-        ),
-        SizedBox(height: 16),
-        CardTaskItem(
-          titleTask: "Sleep",
-          contendTask:
+              priority: 2,
+            ),
+            SizedBox(height: 16),
+            CardTaskItem(
+              titleTask: "Sleep",
+              contendTask:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-          priority: 1,
-        ),
-        SizedBox(height: 16),
-        CardTaskItem(
-          titleTask: "Sleep",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-          priority: 1,
-        ),
-        SizedBox(height: 16),
-        CardTaskItem(
-          titleTask: "Sleep",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-          priority: 1,
-        )
-      ],
-    ));
+              priority: 1,
+            ),
+            SizedBox(height: 16),
+            CardTaskItem(
+              titleTask: "Sleep",
+              contendTask:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+              priority: 1,
+            ),
+            SizedBox(height: 16),
+            CardTaskItem(
+              titleTask: "Sleep",
+              contendTask:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+              priority: 1,
+            )
+          ],
+        ));
   }
 }
 
@@ -181,9 +177,9 @@ class TabMenu extends State<StateTabMenu> {
                     child: Text(
                       "Todo",
                       style: TextStyle(
-                          color: HexColor("#855B28"),
-                          fontSize: 16.0,
-                          // fontWeight: FontWeight.bold
+                        color: HexColor("#855B28"),
+                        fontSize: 16.0,
+                        // fontWeight: FontWeight.bold
                       ),
                     ),
                   ),
@@ -280,51 +276,148 @@ Widget _cardManager(){
   );
 }
 
-Widget _getListItemDate() {
-  return Row(
-    children: [
-      _itemDate(),
-      _itemDate(),
-      _itemDate(),
-      _itemDate(),
-      _itemDate(),
-      _itemDate(),
-    ],
-  );
+
+class StatefulListItemDate extends StatefulWidget {
+  StatefulListItemDate({Key? key, required this.listDate}) : super(key: key);
+  List<DateItem> listDate;
+
+  @override
+  ListItemDate createState() {
+    return ListItemDate(listDate: listDate);
+  }
 }
 
-Widget _itemDate(){
-  return Container(
-    height: 66.0,
-    margin: EdgeInsets.only(left: 12.0, right: 12.0),
-    padding: EdgeInsets.only(left: 8.0, top: 12.0, right: 8.0, bottom: 12.0),
-    decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.55),
-        borderRadius:
-        BorderRadius.all(Radius.circular(16))),
-    child: Column(
-      children: [
-        Container(
-          child: Text(
-            "Mon",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold),
-          ),
+class ListItemDate extends State<StatefulListItemDate> {
+  ListItemDate({Key? key, required this.listDate}) : super();
+  List<DateItem> listDate;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        margin: EdgeInsets.only(top: 8.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: listDate.asMap().entries.map((entry) {
+            int index = entry.key;
+            DateItem item = entry.value;
+            return GestureDetector(
+            onTap: () {
+                onClickItem(index);
+              },
+              child: ItemDateCard(dayOfWeek: item.dayOfWeek,
+                dayOfMonth: item.dayOfMonth, isSelected: item.isSelected));
+          }).toList()
+            )
         ),
-        SizedBox(width: 4),
-        Container(
-          margin: EdgeInsets.only(top: 4.0),
-          child: Text(
-            "18",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-      ],
-    ),
-  );
+    );
+
+  }
+
+  void onClickItem(int index) {
+    setState(() {
+      clearListDate();
+      listDate[index].isSelected = true;
+      StatefulListItemDate(listDate: listDate);
+    });
+  }
+
+  void clearListDate(){
+    for (int i = 0; i < listDate.length; i++) {
+      listDate[i].isSelected = false;
+    }
+  }
+  
 }
+
+// SingleChildScrollView(
+// scrollDirection: Axis.horizontal,
+// child: Container(
+// margin: EdgeInsets.only(top: 8.0),
+// child: Row(
+// children: [
+// _itemDate(),
+// _itemDate(),
+// _itemDate(),
+// _itemDate(),
+// _itemDate(),
+// _itemDate(),
+// _itemDate(),
+// ],
+// ),
+// ),
+// ),
+
+class ItemDateCard extends StatelessWidget {
+  ItemDateCard({Key? key,
+    required this.dayOfWeek,
+    required this.dayOfMonth,
+    required this.isSelected}) : super(key: key);
+
+  String dayOfWeek;
+  String dayOfMonth;
+  bool isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    double transparentValue = 0.0;
+    if (isSelected) {
+      transparentValue = 0.55;
+    }
+    return Container(
+      width: 60.0,
+      height: 66.0,
+      margin: EdgeInsets.only(left: 12.0, right: 12.0),
+      padding: EdgeInsets.only(left: 8.0, top: 12.0, right: 8.0, bottom: 12.0),
+      decoration: BoxDecoration(
+          color: Colors.grey.withOpacity(transparentValue),
+          borderRadius:
+          BorderRadius.all(Radius.circular(16))),
+      child: Column(
+        children: [
+          Container(
+            child: Text(
+              dayOfWeek,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(width: 4),
+          Container(
+            margin: EdgeInsets.only(top: 4.0),
+            child: Text(
+              dayOfMonth,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// class ListItemDate extends State<StatefulItemDate> {
+//   ListItemDate({Key? key, required this.listDate}) : super();
+//   List<DateItem> listDate;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: ListView.builder(
+//         itemCount: listDate.length,
+//         scrollDirection: Axis.horizontal,
+//         shrinkWrap: true,
+//         itemBuilder: (context,index)=> ItemDateCard(dayOfWeek: listDate[index].dayOfWeek,
+//             dayOfMonth: listDate[index].dayOfMonth),
+//       ),
+//     );
+//   }
+//
+// }
