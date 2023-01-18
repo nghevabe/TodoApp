@@ -1,152 +1,133 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:todo_app/TaskItem.dart';
+import 'package:todo_app/home_screen.dart';
+
+import 'manager_screen.dart';
+import 'notification_screen.dart';
+import 'setting_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MainApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Todo App',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: StatefulMainScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class StatefulMainScreen extends StatefulWidget {
+  StatefulMainScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  MainScreen createState() {
+    return new MainScreen(title: 'Home',);
   }
 
+}
+
+class MainScreen extends State<StatefulMainScreen> {
+  List<TaskItem> listTask = <TaskItem>[
+    TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
+    TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
+    TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
+    TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),];
+
+  TaskItem taskItem = TaskItem("Task X", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor");
+  int selectedIndex = 0;
+  String icColor1 = "#5F6368";
+  String icColor2 = "#5F6368";
+  String icColor3 = "#5F6368";
+  String icColor4 = "#5F6368";
+
+  //Widget _Home = MyHome(listTask);
+  Widget _Manager = MyManager();
+  Widget _Noti = MyNotification();
+  Widget _Setting = MySetting();
+
+  MainScreen({Key? key, required this.title}) : super();
+  final String title;
+  String value = "";
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+      backgroundColor: Colors.white,
+      body: getBody(),
+      floatingActionButton: FloatingActionButton(
+        //Floating action button on Scaffold
+        onPressed: () {
+          onAddItem();
+          //code to execute on button press
+        },
+        child: Icon(Icons.add),
+        backgroundColor: HexColor("#855B28"),//icon inside button
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar( //bottom navigation bar on scaffold
+        shape: CircularNotchedRectangle(), //shape of notch
+        notchMargin: 5, //notche margin between floating button and bottom appbar
+        child: Row( //children inside bottom appbar
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text(
-              'Hello Linh Tran:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            IconButton(icon: Icon(Icons.home, color: HexColor(icColor1)), onPressed: () {onTapHandler(0);},),
+            IconButton(icon: Icon(Icons.file_copy, color: HexColor(icColor2)), onPressed: () {onTapHandler(1);},),
+            IconButton(icon: Icon(Icons.notifications, color: HexColor(icColor3)), onPressed: () {onTapHandler(2);},),
+            IconButton(icon: Icon(Icons.settings, color: HexColor(icColor4)), onPressed: () {onTapHandler(3);},),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  void onTapHandler(int index)  {
+    this.setState(() {
+      this.selectedIndex = index;
+    });
+  }
+
+  void onAddItem()  {
+    this.setState(() {
+      listTask.add(taskItem);
+    });
+  }
+
+  Widget getBody()  {
+    if(this.selectedIndex == 0) {
+      this.icColor1 = "#855B28";
+      this.icColor2 = "#5F6368";
+      this.icColor3 = "#5F6368";
+      this.icColor4 = "#5F6368";
+      return MyHome(listTask);
+    } else if(this.selectedIndex==1) {
+      this.icColor1 = "#5F6368";
+      this.icColor2 = "#855B28";
+      this.icColor3 = "#5F6368";
+      this.icColor4 = "#5F6368";
+      return this._Manager;
+    } else if(this.selectedIndex==2) {
+      this.icColor1 = "#5F6368";
+      this.icColor2 = "#5F6368";
+      this.icColor3 = "#855B28";
+      this.icColor4 = "#5F6368";
+      return this._Noti;
+    } else {
+      this.icColor1 = "#5F6368";
+      this.icColor2 = "#5F6368";
+      this.icColor3 = "#5F6368";
+      this.icColor4 = "#855B28";
+      return this._Setting;
+    }
+  }
+
 }
 
-
-
-Widget _cardOverView() {
-  return Container(
-    child: new Card(
-        child:Container(
-          child:  Column(
-            children: <Widget>[
-              Text("5",
-                  style: TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown,
-                  )),
-              Text("To Do",
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown,
-                  )),
-            ],
-          ),
-        )
-    ),
-    decoration: new BoxDecoration(
-      boxShadow: [
-        new BoxShadow(
-          color: Colors.black,
-          blurRadius: 20.0,
-        ),
-      ],
-    ),
-    margin: EdgeInsets.only(left:8.0, right: 8.0),
-
-  );
-}
