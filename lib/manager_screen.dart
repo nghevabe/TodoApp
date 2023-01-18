@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/DateItem.dart';
+import 'package:todo_app/TaskItem.dart';
 import 'package:todo_app/utils/util_components.dart';
 
 class MyManager extends StatelessWidget {
+  List<TaskItem> listTask;
+  MyManager(this.listTask, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(child: StatefulManagerBody());
+    return Container(child: StatefulManagerBody(listTask: listTask));
   }
 }
 
 class StatefulManagerBody extends StatefulWidget {
-  StatefulManagerBody({Key? key}) : super(key: key);
+  StatefulManagerBody({Key? key, required this.listTask}) : super(key: key);
+  List<TaskItem> listTask;
 
   @override
   ManagerBody createState() {
-    return new ManagerBody();
+    return new ManagerBody(listTask: listTask);
   }
 }
 
@@ -78,8 +83,9 @@ Widget _cardHeader() {
 }
 
 class ManagerBody extends State<StatefulManagerBody> {
+  ManagerBody({Key? key, required this.listTask}) : super();
+  List<TaskItem> listTask;
 
-  ManagerBody({Key? key}) : super();
   String value = "";
 
   @override
@@ -90,40 +96,13 @@ class ManagerBody extends State<StatefulManagerBody> {
             _cardManager(),
             _cardBody(),
             SizedBox(height: 16),
-            CardTaskItem(
-              titleTask: "Sleep",
-              contendTask:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-              priority: 3,
+            Column(
+              children:
+              listTask.map((item) {
+                return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+                  priority: item.priority,);
+              }).toList(),
             ),
-            SizedBox(height: 16),
-            CardTaskItem(
-              titleTask: "Sleep",
-              contendTask:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-              priority: 2,
-            ),
-            SizedBox(height: 16),
-            CardTaskItem(
-              titleTask: "Sleep",
-              contendTask:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-              priority: 1,
-            ),
-            SizedBox(height: 16),
-            CardTaskItem(
-              titleTask: "Sleep",
-              contendTask:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-              priority: 1,
-            ),
-            SizedBox(height: 16),
-            CardTaskItem(
-              titleTask: "Sleep",
-              contendTask:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-              priority: 1,
-            )
           ],
         ));
   }

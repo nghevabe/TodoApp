@@ -37,12 +37,12 @@ class StatefulMainScreen extends StatefulWidget {
 
 class MainScreen extends State<StatefulMainScreen> {
   List<TaskItem> listTask = <TaskItem>[
-    TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
-    TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
-    TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
-    TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),];
+    TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1),
+    TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2),
+    TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),
+    TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),];
 
-  TaskItem taskItem = TaskItem("Task X", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor");
+  TaskItem taskItem = TaskItem("Task X", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1);
   int selectedIndex = 0;
   String icColor1 = "#5F6368";
   String icColor2 = "#5F6368";
@@ -50,7 +50,6 @@ class MainScreen extends State<StatefulMainScreen> {
   String icColor4 = "#5F6368";
 
   //Widget _Home = MyHome(listTask);
-  Widget _Manager = MyManager();
   Widget _Noti = MyNotification();
   Widget _Setting = MySetting();
 
@@ -113,7 +112,7 @@ class MainScreen extends State<StatefulMainScreen> {
       this.icColor2 = "#855B28";
       this.icColor3 = "#5F6368";
       this.icColor4 = "#5F6368";
-      return this._Manager;
+      return MyManager(listTask);
     } else if(this.selectedIndex==2) {
       this.icColor1 = "#5F6368";
       this.icColor2 = "#5F6368";
