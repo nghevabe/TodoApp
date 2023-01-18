@@ -93,6 +93,7 @@ class ManagerBody extends State<StatefulManagerBody> {
       children: [
         _cardManager(),
         _cardBody(),
+        SizedBox(height: 16),
         CardTaskItem(
           titleTask: "Sleep",
           contendTask:
@@ -153,25 +154,20 @@ class TabMenu extends State<StateTabMenu> {
     String colorTab2 = "#FFFFFF";
     String colorTab3 = "#FFFFFF";
     if (selectedIndex == 0) {
-      print("tab 1");
       colorTab1 = "#855B28";
       colorTab2 = "#FFFFFF";
       colorTab3 = "#FFFFFF";
     } else if (selectedIndex == 1) {
-      print("tab 2");
       colorTab1 = "#FFFFFF";
       colorTab2 = "#855B28";
       colorTab3 = "#FFFFFF";
     } else {
-      print("tab 3");
       colorTab1 = "#FFFFFF";
       colorTab2 = "#FFFFFF";
       colorTab3 = "#855B28";
     }
     return Container(
-
-
-      padding: EdgeInsets.only(top: 16.0, bottom: 10.0),
+      padding: EdgeInsets.only(top: 16.0),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -179,7 +175,6 @@ class TabMenu extends State<StateTabMenu> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    print("Clike 1");
                     onTapHandler(0);
                   },
                   child: Container(
@@ -269,14 +264,9 @@ class TabMenu extends State<StateTabMenu> {
 
 Widget _cardBody() {
   return Container(
+    color: HexColor("#E6E6E6"),
+    height: 2.0,
     margin: EdgeInsets.only(left: 10.0, right: 10.0),
-    child: Column(
-      children: [
-        Divider(
-          color: HexColor("#E6E6E6"),
-        )
-      ],
-    ),
   );
 }
 
