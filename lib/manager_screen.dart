@@ -28,11 +28,11 @@ Widget _headerScreen() {
 
   List<DateItem> listDate = <DateItem>[
     DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),];
+    DateItem("Tue", "9", false),
+    DateItem("Wed", "10", false),
+    DateItem("Thu", "11", false),
+    DateItem("Fri", "12", false),
+    DateItem("Sat", "13", false),];
 
   return Container(
       decoration: const BoxDecoration(

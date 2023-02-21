@@ -111,7 +111,7 @@ Widget _titleDate() {
   return Container(
     margin: EdgeInsets.only(left: 12.0),
     width: 200,
-    child: const Text("Thứ 3, 27 tháng 12, 2022",
+    child: const Text("Thứ 3, 21 tháng 2, 2023",
         textAlign: TextAlign.left,
         style: TextStyle(
           fontSize: 14.0,
