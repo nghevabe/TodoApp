@@ -6,6 +6,7 @@ import 'package:todo_app/home_screen.dart';
 import 'manager_screen.dart';
 import 'notification_screen.dart';
 import 'setting_screen.dart';
+import 'dart:convert';
 
 
 // test commit
@@ -66,6 +67,12 @@ class MainScreen extends State<StatefulMainScreen> {
       floatingActionButton: FloatingActionButton(
         //Floating action button on Scaffold
         onPressed: () {
+
+          TaskItem item = TaskItem("Task Bidv", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3);
+
+          String jsonstring = json.encode(listTask);
+          print("json data: "+ jsonstring);
+
           onAddItem();
           //code to execute on button press
         },
