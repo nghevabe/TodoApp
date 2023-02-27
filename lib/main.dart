@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/TaskItem.dart';
+import 'package:todo_app/add_task_screen.dart';
 import 'package:todo_app/home_screen.dart';
 
 import 'manager_screen.dart';
@@ -68,12 +69,18 @@ class MainScreen extends State<StatefulMainScreen> {
         //Floating action button on Scaffold
         onPressed: () {
 
-          TaskItem item = TaskItem("Task Bidv", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTaskScreen()),
+          );
 
-          String jsonstring = json.encode(listTask);
-          print("json data: "+ jsonstring);
+          // TaskItem item = TaskItem("Task Bidv", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3);
+          //
+          // String jsonstring = json.encode(listTask);
+          // print("json data: "+ jsonstring);
+          //
+          // onAddItem();
 
-          onAddItem();
           //code to execute on button press
         },
         child: Icon(Icons.add),
