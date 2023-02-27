@@ -28,11 +28,11 @@ Widget _headerScreen() {
 
   List<DateItem> listDate = <DateItem>[
     DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),];
+    DateItem("Tue", "9", false),
+    DateItem("Wed", "10", false),
+    DateItem("Thu", "11", false),
+    DateItem("Fri", "12", false),
+    DateItem("Sat", "13", false),];
 
   return Container(
       decoration: const BoxDecoration(
@@ -64,22 +64,42 @@ Widget _headerScreen() {
   );
 }
 
-Widget _cardHeader() {
-  return Container(
-    width: double.infinity,
-    margin: EdgeInsets.only(top: 180.0),
-    alignment: Alignment.topLeft,
-    child: Container(
-      decoration:  const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          )
+class StateCardHeader extends StatefulWidget {
+
+  StateCardHeader({Key? key, required this.selectedIndex, required this.listTask}) : super();
+  int selectedIndex;
+  List<TaskItem> listTask;
+
+  @override
+  CardHeader createState() {
+    return CardHeader(selectedIndex: selectedIndex, listTask: listTask);
+  }
+
+}
+
+class CardHeader extends State<StateCardHeader> {
+  CardHeader({Key? key, required this.selectedIndex, required this.listTask})
+      : super();
+  int selectedIndex;
+  List<TaskItem> listTask;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 180.0),
+      alignment: Alignment.topLeft,
+      child: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            )),
+        child: StateTabMenu(selectedIndex: 0),
       ),
-      child: StateTabMenu(selectedIndex: 0),
-    ),
-  );
+    );
+  }
 }
 
 class ManagerBody extends State<StatefulManagerBody> {
@@ -93,19 +113,34 @@ class ManagerBody extends State<StatefulManagerBody> {
     return SingleChildScrollView(
         child: Column(
           children: [
-            _cardManager(),
+            StateCardManager(selectedIndex: 0, listTask: listTask,),
             _cardBody(),
             SizedBox(height: 16),
             Column(
               children:
-              listTask.map((item) {
-                return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-                  priority: item.priority,);
+              listTask.asMap().entries.map((entry) {
+                int index = entry.key;
+                TaskItem item = entry.value;
+                return  GestureDetector(
+                    onTap: () {
+                      print("Bidv Click Item Task: "+item.titleTask);
+                      onDelete(index, listTask);
+                    },
+                    child: CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+                      priority: item.priority,)
+                );
               }).toList(),
             ),
           ],
         ));
   }
+
+  void onDelete(int index, List<TaskItem> listTask) {
+    setState(() {
+      listTask.removeAt(index);
+    });
+  }
+
 }
 
 class StateTabMenu extends StatefulWidget {
@@ -245,16 +280,43 @@ Widget _cardBody() {
   );
 }
 
-Widget _cardManager(){
+class StateCardManager extends StatefulWidget{
+  StateCardManager({Key? key, required this.selectedIndex, required this.listTask})
+      : super();
+  int selectedIndex;
+  List<TaskItem> listTask;
 
-  return Stack(
-    children: <Widget>[
-      _headerScreen(),
-      _cardHeader(),
-    ],
-  );
+  @override
+  CardManager createState() {
+    return CardManager(selectedIndex: selectedIndex, listTask: listTask);
+  }
+
+  // return Stack(
+  //   children: <Widget>[
+  //     _headerScreen(),
+  //     _cardHeader(),
+  //   ],
+  // );
 }
 
+class CardManager extends State<StateCardManager> {
+  CardManager({Key? key, required this.selectedIndex, required this.listTask})
+      : super();
+  int selectedIndex;
+  List<TaskItem> listTask;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        _headerScreen(),
+        StateCardHeader(selectedIndex: selectedIndex, listTask: listTask),
+      ],
+    );
+
+  }
+
+}
 
 class StatefulListItemDate extends StatefulWidget {
   StatefulListItemDate({Key? key, required this.listDate}) : super(key: key);
@@ -311,24 +373,6 @@ class ListItemDate extends State<StatefulListItemDate> {
   
 }
 
-// SingleChildScrollView(
-// scrollDirection: Axis.horizontal,
-// child: Container(
-// margin: EdgeInsets.only(top: 8.0),
-// child: Row(
-// children: [
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// ],
-// ),
-// ),
-// ),
-
 class ItemDateCard extends StatelessWidget {
   ItemDateCard({Key? key,
     required this.dayOfWeek,
@@ -381,22 +425,3 @@ class ItemDateCard extends StatelessWidget {
     );
   }
 }
-
-// class ListItemDate extends State<StatefulItemDate> {
-//   ListItemDate({Key? key, required this.listDate}) : super();
-//   List<DateItem> listDate;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: ListView.builder(
-//         itemCount: listDate.length,
-//         scrollDirection: Axis.horizontal,
-//         shrinkWrap: true,
-//         itemBuilder: (context,index)=> ItemDateCard(dayOfWeek: listDate[index].dayOfWeek,
-//             dayOfMonth: listDate[index].dayOfMonth),
-//       ),
-//     );
-//   }
-//
-// }

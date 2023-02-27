@@ -111,7 +111,7 @@ Widget _titleDate() {
   return Container(
     margin: EdgeInsets.only(left: 12.0),
     width: 200,
-    child: const Text("Thứ 3, 27 tháng 12, 2022",
+    child: const Text("Thứ 3, 21 tháng 2, 2023",
         textAlign: TextAlign.left,
         style: TextStyle(
           fontSize: 14.0,
@@ -150,7 +150,7 @@ Widget _listOverView() {
     child: Column(
       children: <Widget>[
         _upperOverView(),
-        SizedBox(height: 16),
+        SizedBox(height: 4),
         _lowerOverView()
       ],
     ),
@@ -162,10 +162,12 @@ Widget _upperOverView() {
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[CardOverView(taskNumber: "5",contend: "Todo", textColor: "#855B28"),
-          CardOverView(taskNumber: "8",contend: "In Progress", textColor: "#000000")],
-      )
-  );
+        children: const <Widget>[
+          CardOverView(taskNumber: "5", contend: "Todo", textColor: "#855B28"),
+          CardOverView(
+              taskNumber: "8", contend: "In Progress", textColor: "#000000")
+        ],
+      ));
 }
 
 Widget _lowerOverView() {
@@ -241,7 +243,7 @@ class CardOverView extends StatelessWidget {
           ),
         ],
       ),
-      margin: const EdgeInsets.only(left:8.0, right: 8.0),
+      margin: const EdgeInsets.only(left:2.0, right: 2.0),
 
     );
   }
