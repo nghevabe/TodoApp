@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen();
@@ -69,11 +70,11 @@ class _SignUpFormState extends State<SignUpForm> {
               decoration: InputDecoration(
                   hintText: 'BIDV',
                   filled: true,
-                  fillColor: Colors.grey,
+                  fillColor: HexColor("#F4F6F8"),
                   contentPadding: const EdgeInsets.all(15),
-                  enabledBorder: const OutlineInputBorder(
+                  enabledBorder:  OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
-                    borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+                    borderSide:  BorderSide(color: HexColor("#C3A87B"), width: 0.0),
                   ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4))),
@@ -106,11 +107,11 @@ class _SignUpFormState extends State<SignUpForm> {
               decoration: InputDecoration(
                   hintText: 'Input contents',
                   filled: true,
-                  fillColor: Colors.grey,
+                  fillColor: HexColor("#F4F6F8"),
                   contentPadding: const EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 100),
-                  enabledBorder: const OutlineInputBorder(
+                  enabledBorder: OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
-                    borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+                    borderSide: BorderSide(color: HexColor("#C3A87B"), width: 0.0),
                   ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4))),
@@ -122,7 +123,7 @@ class _SignUpFormState extends State<SignUpForm> {
           Container(
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 16.0,top: 24.0),
-            child: const Text("Content",
+            child: const Text("Priority",
                 style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.black,
@@ -131,15 +132,63 @@ class _SignUpFormState extends State<SignUpForm> {
 
           SizedBox(height: 12),
 
-          DropdownButton<String>(
-            items: <String>['Low', 'Medium', 'High'].map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (_) {},
-          )
+          DecoratedBox(
+              decoration: BoxDecoration(
+                color: HexColor("#F4F6F8"), //background color of dropdown button
+                border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
+                borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
+              ),
+
+              child:Padding(
+                  padding: EdgeInsets.only(left:12, right:8),
+                  child:DropdownButton(
+                    underline: SizedBox(),
+                    value: "Low",
+                    items: [ //add items in the dropdown
+                      DropdownMenuItem(
+                          child: Text("Low"),
+                          value: "Low"
+                      ),
+
+                      DropdownMenuItem(
+                          child: Text("Medium"),
+                          value: "Medium"
+                      ),
+
+                      DropdownMenuItem(
+                          child: Text("High"),
+                          value: "High"
+                      ),
+
+                    ],
+                    onChanged: (value){ //get value when changed
+                      print("You selected $value");
+                    },
+                    icon: Padding( //Icon at tail, arrow bottom is default icon
+                        padding: EdgeInsets.only(left:8),
+                        child:Icon(Icons.arrow_circle_down_sharp)
+                    ),
+                    iconEnabledColor: HexColor("#C3A87B"), //Icon color
+                    style: TextStyle(  //te
+                        color: Colors.grey, //Font color
+                        fontSize: 16 //font size on dropdown button
+                    ),
+                    dropdownColor: HexColor("#855B28"), //dropdown background color
+                  )
+              )
+          ),
+
+          SizedBox(height: 24)
+
+          // DropdownButton<String>(
+          //   items: <String>['Low', 'Medium', 'High'].map((String value) {
+          //     return DropdownMenuItem<String>(
+          //       value: value,
+          //       child: Text(value),
+          //     );
+          //   }).toList(),
+          //   onChanged: (_) {},
+          // )
         ],
       ),
     );
