@@ -131,51 +131,12 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
 
           SizedBox(height: 12),
-
-          DecoratedBox(
-              decoration: BoxDecoration(
-                color: HexColor("#F4F6F8"), //background color of dropdown button
-                border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
-                borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
-              ),
-
-              child:Padding(
-                  padding: EdgeInsets.only(left:12, right:8),
-                  child:DropdownButton(
-                    underline: SizedBox(),
-                    value: "Low",
-                    items: [ //add items in the dropdown
-                      DropdownMenuItem(
-                          child: Text("Low"),
-                          value: "Low"
-                      ),
-
-                      DropdownMenuItem(
-                          child: Text("Medium"),
-                          value: "Medium"
-                      ),
-
-                      DropdownMenuItem(
-                          child: Text("High"),
-                          value: "High"
-                      ),
-
-                    ],
-                    onChanged: (value){ //get value when changed
-                      print("You selected $value");
-                    },
-                    icon: Padding( //Icon at tail, arrow bottom is default icon
-                        padding: EdgeInsets.only(left:8),
-                        child:Icon(Icons.arrow_circle_down_sharp)
-                    ),
-                    iconEnabledColor: HexColor("#C3A87B"), //Icon color
-                    style: TextStyle(  //te
-                        color: Colors.grey, //Font color
-                        fontSize: 16 //font size on dropdown button
-                    ),
-                    dropdownColor: HexColor("#855B28"), //dropdown background color
-                  )
-              )
+          Row(
+            children: [
+              _priorityPicker(),
+              SizedBox(width: 6),
+              _pointPicker()
+            ],
           ),
 
           SizedBox(height: 24)
@@ -193,4 +154,120 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
+}
+
+Widget _pointPicker() {
+
+  return
+    Container(
+        alignment: Alignment.centerLeft,
+        margin: EdgeInsets.only(left: 16.0),
+        child:
+        DecoratedBox(
+            decoration: BoxDecoration(
+              color: HexColor("#F4F6F8"), //background color of dropdown button
+              border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
+              borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
+            ),
+
+            child:Container(
+                width: 124,
+                padding: EdgeInsets.only(left:12),
+                child:DropdownButton(
+                  underline: SizedBox(),
+                  value: "1",
+                  items: [ //add items in the dropdown
+                    DropdownMenuItem(
+                        child: Text("1"),
+                        value: "1"
+                    ),
+
+                    DropdownMenuItem(
+                        child: Text("2"),
+                        value: "2"
+                    ),
+
+                    DropdownMenuItem(
+                        child: Text("3"),
+                        value: "3"
+                    ),
+
+                  ],
+                  onChanged: (value){ //get value when changed
+                    print("You selected $value");
+                  },
+                  icon: Container(
+                    //Icon at tail, arrow bott
+                      width: 96,
+                      alignment: Alignment.centerRight,
+                      child: Icon(Icons.arrow_circle_down_sharp)),
+                  iconEnabledColor: HexColor("#C3A87B"), //Icon color
+                  style: TextStyle(  //te
+                      color: Colors.grey, //Font color
+                      fontSize: 16 //font size on dropdown button
+                  ),
+                  dropdownColor: HexColor("#855B28"), //dropdown background color
+                )
+            )
+        )
+    );
+
+}
+
+Widget _priorityPicker() {
+
+  return
+    Container(
+        alignment: Alignment.centerLeft,
+        margin: EdgeInsets.only(left: 16.0),
+        child:
+        DecoratedBox(
+            decoration: BoxDecoration(
+              color: HexColor("#F4F6F8"), //background color of dropdown button
+              border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
+              borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
+            ),
+
+            child:Container(
+                width: 214,
+                padding: EdgeInsets.only(left:12),
+                child:DropdownButton(
+                  underline: SizedBox(),
+                  value: "Low",
+                  items: [ //add items in the dropdown
+                    DropdownMenuItem(
+                        child: Text("Low"),
+                        value: "Low"
+                    ),
+
+                    DropdownMenuItem(
+                        child: Text("Medium"),
+                        value: "Medium"
+                    ),
+
+                    DropdownMenuItem(
+                        child: Text("High"),
+                        value: "High"
+                    ),
+
+                  ],
+                  onChanged: (value){ //get value when changed
+                    print("You selected $value");
+                  },
+                  icon: Container(
+                    //Icon at tail, arrow bott
+                    width: 134,
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.arrow_circle_down_sharp)),
+                iconEnabledColor: HexColor("#C3A87B"), //Icon color
+                  style: TextStyle(  //te
+                      color: Colors.grey, //Font color
+                      fontSize: 16 //font size on dropdown button
+                  ),
+                  dropdownColor: HexColor("#855B28"), //dropdown background color
+                )
+            )
+        )
+    );
+
 }
