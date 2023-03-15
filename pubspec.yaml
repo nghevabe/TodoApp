@@ -59,6 +59,7 @@ flutter:
     - assets/ic_back_black.svg
     - assets/ic_star.svg
     - assets/ic_calender.svg
+    - assets/ic_task.svg
     - assets/ic_add.png
 
   # The following line ensures that the Material Icons font is

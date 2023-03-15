@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen();
@@ -180,7 +181,7 @@ Widget _pointPicker() {
               BorderRadius.circular(4), //border raiuds of dropdown button
         ),
         child: Container(
-            padding: EdgeInsets.only(left: 12, right: 10),
+            padding: EdgeInsets.only(left: 12, right: 12),
             child: DropdownButton(
               underline: SizedBox(),
               value: "1",
@@ -203,7 +204,7 @@ Widget _pointPicker() {
                   Container(
                     //Icon at tail, arrow bott
                       alignment: Alignment.centerRight,
-                      child: Icon(Icons.arrow_circle_down_sharp))
+                      child: SvgPicture.asset('assets/ic_star.svg', color: HexColor("#C3A87B"),))
                 ],
               )),
 
@@ -281,7 +282,7 @@ Widget _priorityPicker() {
                     //Icon at tail, arrow bott
                     width: 134,
                     alignment: Alignment.centerRight,
-                    child: Icon(Icons.arrow_circle_down_sharp)),
+                    child: SvgPicture.asset('assets/ic_task.svg', color: HexColor("#C3A87B"),)),
                 iconEnabledColor: HexColor("#C3A87B"), //Icon color
                   style: TextStyle(  //te
                       color: Colors.grey, //Font color
@@ -316,10 +317,8 @@ Widget _datePicker() {
 
           Expanded(child: Container(
               alignment: Alignment.centerRight,
-              child: Icon(
-                Icons.arrow_circle_down_sharp,
-                color: HexColor("#C3A87B"), //<-- SEE HERE
-              ),))
+              child: SvgPicture.asset('assets/ic_calender.svg',
+                  color: HexColor("#C3A87B")),))
         ],
       )
     );
