@@ -123,17 +123,6 @@ class _SignUpFormState extends State<SignUpForm> {
               },
             ),
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 16.0,top: 24.0),
-            child: const Text("Priority",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black,
-                )),
-          ),
-
-          SizedBox(height: 12),
           Row(
             children: [
               _priorityPicker(),
@@ -148,7 +137,7 @@ class _SignUpFormState extends State<SignUpForm> {
           Container(
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 16.0),
-            child: const Text("Title",
+            child: const Text("Date time",
                 style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.black,
@@ -169,130 +158,159 @@ class _SignUpFormState extends State<SignUpForm> {
 Widget _pointPicker() {
   return
     Expanded(
-        child: Container(
-    margin: EdgeInsets.only(right: 16.0),
-    child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: HexColor("#F4F6F8"),
-          //background color of dropdown button
-          border: Border.all(color: HexColor("#C3A87B"), width: 1),
-          //border of dropdown button
-          borderRadius:
-              BorderRadius.circular(4), //border raiuds of dropdown button
-        ),
-        child: Container(
-            padding: EdgeInsets.only(left: 12, right: 12),
-            child: DropdownButton(
-              underline: SizedBox(),
-              value: "1",
-              items: [
-                //add items in the dropdown
-                DropdownMenuItem(child: Text("1"), value: "1"),
-
-                DropdownMenuItem(child: Text("2"), value: "2"),
-
-                DropdownMenuItem(child: Text("3"), value: "3"),
-              ],
-              onChanged: (value) {
-                //get value when changed
-                print("You selected $value");
-              },
-              icon:
-              Expanded(child: Row(
-                children: [
-                  Expanded(child: Container()),
-                  Container(
-                    //Icon at tail, arrow bott
-                      alignment: Alignment.centerRight,
-                      child: SvgPicture.asset('assets/ic_star.svg', color: HexColor("#C3A87B"),))
-                ],
-              )),
-
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       //Icon at tail, arrow bott
-              //         child: Container(
-              //           color: Colors.amber,
-              //           height: 5,
-              //         )),
-              //     Container(
-              //       //Icon at tail, arrow bott
-              //       width: 50,
-              //         color: Colors.amber,
-              //         alignment: Alignment.centerRight,
-              //         child: Icon(Icons.arrow_circle_down_sharp))
-              //   ],
-              //
-              // ),
-              iconEnabledColor: HexColor("#C3A87B"),
-              //Icon color
+        child: Column(
+          children: [
+          Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(top: 24.0),
+          child: const Text("Point",
               style: TextStyle(
-                  //te
-                  color: Colors.grey, //Font color
-                  fontSize: 16 //font size on dropdown button
+                fontSize: 16.0,
+                color: Colors.black,
+              )),
+        ),
+        SizedBox(height: 12),
+            Container(
+              margin: EdgeInsets.only(right: 16.0),
+              child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: HexColor("#F4F6F8"),
+                    //background color of dropdown button
+                    border: Border.all(color: HexColor("#C3A87B"), width: 1),
+                    //border of dropdown button
+                    borderRadius:
+                    BorderRadius.circular(4), //border raiuds of dropdown button
                   ),
-              dropdownColor: HexColor("#855B28"), //dropdown background color
-            ))),
-  ));
+                  child: Container(
+                      padding: EdgeInsets.only(left: 12, right: 12),
+                      child: DropdownButton(
+                        underline: SizedBox(),
+                        value: "1",
+                        items: [
+                          //add items in the dropdown
+                          DropdownMenuItem(child: Text("1"), value: "1"),
+
+                          DropdownMenuItem(child: Text("2"), value: "2"),
+
+                          DropdownMenuItem(child: Text("3"), value: "3"),
+                        ],
+                        onChanged: (value) {
+                          //get value when changed
+                          print("You selected $value");
+                        },
+                        icon:
+                        Expanded(child: Row(
+                          children: [
+                            Expanded(child: Container()),
+                            Container(
+                              //Icon at tail, arrow bott
+                                alignment: Alignment.centerRight,
+                                child: SvgPicture.asset('assets/ic_star.svg', color: HexColor("#C3A87B"),))
+                          ],
+                        )),
+
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       //Icon at tail, arrow bott
+                        //         child: Container(
+                        //           color: Colors.amber,
+                        //           height: 5,
+                        //         )),
+                        //     Container(
+                        //       //Icon at tail, arrow bott
+                        //       width: 50,
+                        //         color: Colors.amber,
+                        //         alignment: Alignment.centerRight,
+                        //         child: Icon(Icons.arrow_circle_down_sharp))
+                        //   ],
+                        //
+                        // ),
+                        iconEnabledColor: HexColor("#C3A87B"),
+                        //Icon color
+                        style: TextStyle(
+                          //te
+                            color: Colors.grey, //Font color
+                            fontSize: 16 //font size on dropdown button
+                        ),
+                        dropdownColor: HexColor("#855B28"), //dropdown background color
+                      ))),
+            )
+          ],
+        ));
 
 }
 
 Widget _priorityPicker() {
 
-  return
-    Container(
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
         alignment: Alignment.centerLeft,
-        margin: EdgeInsets.only(left: 16.0),
-        child:
-        DecoratedBox(
-            decoration: BoxDecoration(
-              color: HexColor("#F4F6F8"), //background color of dropdown button
-              border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
-              borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
-            ),
+        margin: EdgeInsets.only(left: 16.0, top: 24.0),
+        child: const Text("Priority",
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.black,
+            )),
+      ),
+      SizedBox(height: 12),
+      Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(left: 16.0),
+          child:
+          DecoratedBox(
+              decoration: BoxDecoration(
+                color: HexColor("#F4F6F8"), //background color of dropdown button
+                border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
+                borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
+              ),
 
-            child:Container(
-                width: 214,
-                padding: EdgeInsets.only(left:12),
-                child:DropdownButton(
-                  underline: SizedBox(),
-                  value: "Low",
-                  items: [ //add items in the dropdown
-                    DropdownMenuItem(
-                        child: Text("Low"),
-                        value: "Low"
+              child:Container(
+                  width: 214,
+                  padding: EdgeInsets.only(left:12),
+                  child:DropdownButton(
+                    underline: SizedBox(),
+                    value: "Low",
+                    items: [ //add items in the dropdown
+                      DropdownMenuItem(
+                          child: Text("Low"),
+                          value: "Low"
+                      ),
+
+                      DropdownMenuItem(
+                          child: Text("Medium"),
+                          value: "Medium"
+                      ),
+
+                      DropdownMenuItem(
+                          child: Text("High"),
+                          value: "High"
+                      ),
+
+                    ],
+                    onChanged: (value){ //get value when changed
+                      print("You selected $value");
+                    },
+                    icon: Container(
+                      //Icon at tail, arrow bott
+                        width: 130,
+                        alignment: Alignment.centerRight,
+                        child: SvgPicture.asset('assets/ic_task.svg', color: HexColor("#C3A87B"),)),
+                    iconEnabledColor: HexColor("#C3A87B"), //Icon color
+                    style: TextStyle(  //te
+                        color: Colors.grey, //Font color
+                        fontSize: 16 //font size on dropdown button
                     ),
-
-                    DropdownMenuItem(
-                        child: Text("Medium"),
-                        value: "Medium"
-                    ),
-
-                    DropdownMenuItem(
-                        child: Text("High"),
-                        value: "High"
-                    ),
-
-                  ],
-                  onChanged: (value){ //get value when changed
-                    print("You selected $value");
-                  },
-                  icon: Container(
-                    //Icon at tail, arrow bott
-                    width: 134,
-                    alignment: Alignment.centerRight,
-                    child: SvgPicture.asset('assets/ic_task.svg', color: HexColor("#C3A87B"),)),
-                iconEnabledColor: HexColor("#C3A87B"), //Icon color
-                  style: TextStyle(  //te
-                      color: Colors.grey, //Font color
-                      fontSize: 16 //font size on dropdown button
-                  ),
-                  dropdownColor: HexColor("#855B28"), //dropdown background color
-                )
-            )
-        )
-    );
+                    dropdownColor: HexColor("#855B28"), //dropdown background color
+                  )
+              )
+          )
+      )
+    ],
+  );
 
 }
 
@@ -309,10 +327,10 @@ Widget _datePicker() {
       margin: EdgeInsets.only(left: 16, right: 16),
       child: Row (
         children: [
-          Text("Title",
+          Text("31 July 2021",
               style: TextStyle(
                 fontSize: 16.0,
-                color: Colors.black,
+                color: Colors.grey,
               )),
 
           Expanded(child: Container(
