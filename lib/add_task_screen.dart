@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen();
@@ -71,9 +72,10 @@ class _SignUpFormState extends State<SignUpForm> {
             margin: EdgeInsets.only(left: 16, right: 16),
             child: TextField(
               decoration: InputDecoration(
-                  hintText: 'BIDV',
+                  hintText: 'Task Title',
                   filled: true,
                   fillColor: HexColor("#F4F6F8"),
+                  hintStyle: TextStyle(fontSize: 16.0, color: HexColor("#828282")),
                   contentPadding: const EdgeInsets.all(15),
                   enabledBorder:  OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
@@ -108,9 +110,10 @@ class _SignUpFormState extends State<SignUpForm> {
               minLines: 1, // <-- SEE HERE
               maxLines: 5,
               decoration: InputDecoration(
-                  hintText: 'Input contents',
+                  hintText: 'Description Task',
                   filled: true,
                   fillColor: HexColor("#F4F6F8"),
+                  hintStyle: TextStyle(fontSize: 16.0, color: HexColor("#828282")),
                   contentPadding: const EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 100),
                   enabledBorder: OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
@@ -144,7 +147,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 )),
           ),
           SizedBox(height: 6),
-          _datePicker(),
+          DatePicker(),
           SizedBox(height: 32),
           Expanded(child: Container()),
           _btnAdd(),
@@ -230,7 +233,7 @@ Widget _pointPicker() {
                         //Icon color
                         style: TextStyle(
                           //te
-                            color: Colors.grey, //Font color
+                            color: HexColor("#828282"), //Font color
                             fontSize: 16 //font size on dropdown button
                         ),
                         dropdownColor: HexColor("#855B28"), //dropdown background color
@@ -301,7 +304,7 @@ Widget _priorityPicker() {
                         child: SvgPicture.asset('assets/ic_task.svg', color: HexColor("#C3A87B"),)),
                     iconEnabledColor: HexColor("#C3A87B"), //Icon color
                     style: TextStyle(  //te
-                        color: Colors.grey, //Font color
+                        color: HexColor("#828282"), //Font color
                         fontSize: 16 //font size on dropdown button
                     ),
                     dropdownColor: HexColor("#855B28"), //dropdown background color
@@ -364,4 +367,83 @@ Widget _btnAdd() {
     ),
   );
 
+}
+
+class DatePicker extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _DatePicker();
+  }
+}
+
+class _DatePicker extends State<DatePicker> {
+  TextEditingController dateInput = TextEditingController();
+
+  @override
+  void initState() {
+    dateInput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+        padding: EdgeInsets.only(left: 12.0, right: 12.0),
+        decoration: BoxDecoration(
+          color: HexColor("#F4F6F8"), //background color of dropdown button
+          border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
+          borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
+        ),
+        margin: EdgeInsets.only(left: 16, right: 16),
+        child: Row (
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 250.0,
+              color: Colors.blueAccent,
+              child: TextField(
+                controller: dateInput,
+//editing controller of this TextField
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Pick Date',
+                  hintStyle: TextStyle(fontSize: 16.0, color: HexColor("#828282")),
+                ),
+                readOnly: true,
+//set it true, so that user will not able to edit text
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+//DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2100));
+
+                  if (pickedDate != null) {
+                    print(
+                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                    String formattedDate =
+                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                    print(
+                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                    setState(() {
+                      dateInput.text =
+                          formattedDate; //set output date to TextField value.
+                    });
+                  } else {}
+                },
+              ),
+            ),
+
+            Expanded(child: Container(
+              alignment: Alignment.centerRight,
+              child: SvgPicture.asset('assets/ic_calender.svg',
+                  color: HexColor("#C3A87B")),))
+          ],
+        )
+
+    );
+  }
 }
