@@ -11,14 +11,14 @@ class AddTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/': (context) => const SignUpScreen(),
+        '/': (context) => const AddTaskBody(),
       },
     );
   }
 }
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen();
+class AddTaskBody extends StatelessWidget {
+  const AddTaskBody();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
         child: SizedBox(
           width: 400,
           child: Card(
-            child: SignUpForm(),
+            child: AddTaskForm(),
           ),
         ),
       ),
@@ -36,17 +36,14 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm();
+class AddTaskForm extends StatefulWidget {
+  const AddTaskForm();
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<AddTaskForm> createState() => _AddTaskFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
-  final _firstNameTextController = TextEditingController();
-  final _lastNameTextController = TextEditingController();
-  final _usernameTextController = TextEditingController();
+class _AddTaskFormState extends State<AddTaskForm> {
 
   double _formProgress = 0;
 
@@ -128,9 +125,9 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Row(
             children: [
-              _priorityPicker(),
+              PriorityPicker(),
               SizedBox(width: 16),
-              _pointPicker(),
+              PointPicker(),
 
             ],
           ),
@@ -150,7 +147,8 @@ class _SignUpFormState extends State<SignUpForm> {
           DatePicker(),
           SizedBox(height: 32),
           Expanded(child: Container()),
-          _btnAdd(),
+          BtnAdd(titleTask: "Mua kem", contentTask: "Đi ra siêu thị mua kem",
+              priorityTask: "Low", pointTask: "1"),
 
         ],
       ),
@@ -158,21 +156,36 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 }
 
-Widget _pointPicker() {
+class PointPicker extends StatefulWidget {
+  PointPicker ({Key? key}) : super();
+
+@override
+State<StatefulWidget> createState() {
+  return _PointPicker();
+}
+
+
+}
+
+class _PointPicker extends State<PointPicker> {
+   _PointPicker({Key? key}) : super();
+
+@override
+Widget build(BuildContext context) {
   return
     Expanded(
         child: Column(
           children: [
-          Container(
-          alignment: Alignment.centerLeft,
-          margin: EdgeInsets.only(top: 24.0),
-          child: const Text("Point",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              )),
-        ),
-        SizedBox(height: 12),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(top: 24.0),
+              child: const Text("Point",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  )),
+            ),
+            SizedBox(height: 12),
             Container(
               margin: EdgeInsets.only(right: 16.0),
               child: DecoratedBox(
@@ -212,23 +225,6 @@ Widget _pointPicker() {
                           ],
                         )),
 
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       //Icon at tail, arrow bott
-                        //         child: Container(
-                        //           color: Colors.amber,
-                        //           height: 5,
-                        //         )),
-                        //     Container(
-                        //       //Icon at tail, arrow bott
-                        //       width: 50,
-                        //         color: Colors.amber,
-                        //         alignment: Alignment.centerRight,
-                        //         child: Icon(Icons.arrow_circle_down_sharp))
-                        //   ],
-                        //
-                        // ),
                         iconEnabledColor: HexColor("#C3A87B"),
                         //Icon color
                         style: TextStyle(
@@ -241,131 +237,142 @@ Widget _pointPicker() {
             )
           ],
         ));
+}
 
 }
 
-Widget _priorityPicker() {
+class PriorityPicker extends StatefulWidget {
+  PriorityPicker({Key? key}) : super();
 
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Container(
-        alignment: Alignment.centerLeft,
-        margin: EdgeInsets.only(left: 16.0, top: 24.0),
-        child: const Text("Priority",
-            style: TextStyle(
-              fontSize: 16.0,
-              color: Colors.black,
-            )),
-      ),
-      SizedBox(height: 12),
-      Container(
+  @override
+  State<StatefulWidget> createState() {
+    return _PriorityPicker();
+  }
+
+}
+
+class _PriorityPicker extends State<PriorityPicker> {
+  _PriorityPicker({Key? key}) : super();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
           alignment: Alignment.centerLeft,
-          margin: EdgeInsets.only(left: 16.0),
-          child:
-          DecoratedBox(
-              decoration: BoxDecoration(
-                color: HexColor("#F4F6F8"), //background color of dropdown button
-                border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
-                borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
-              ),
-
-              child:Container(
-                  width: 214,
-                  padding: EdgeInsets.only(left:12),
-                  child:DropdownButton(
-                    underline: SizedBox(),
-                    value: "Low",
-                    items: [ //add items in the dropdown
-                      DropdownMenuItem(
-                          child: Text("Low"),
-                          value: "Low"
-                      ),
-
-                      DropdownMenuItem(
-                          child: Text("Medium"),
-                          value: "Medium"
-                      ),
-
-                      DropdownMenuItem(
-                          child: Text("High"),
-                          value: "High"
-                      ),
-
-                    ],
-                    onChanged: (value){ //get value when changed
-                      print("You selected $value");
-                    },
-                    icon: Container(
-                      //Icon at tail, arrow bott
-                        width: 130,
-                        alignment: Alignment.centerRight,
-                        child: SvgPicture.asset('assets/ic_task.svg', color: HexColor("#C3A87B"),)),
-                    iconEnabledColor: HexColor("#C3A87B"), //Icon color
-                    style: TextStyle(  //te
-                        color: HexColor("#828282"), //Font color
-                        fontSize: 16 //font size on dropdown button
-                    ),
-                    dropdownColor: HexColor("#855B28"), //dropdown background color
-                  )
-              )
-          )
-      )
-    ],
-  );
-
-}
-
-Widget _datePicker() {
-
-  return
-    Container(
-      padding: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: HexColor("#F4F6F8"), //background color of dropdown button
-        border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
-        borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
-      ),
-      margin: EdgeInsets.only(left: 16, right: 16),
-      child: Row (
-        children: [
-          Text("31 July 2021",
+          margin: EdgeInsets.only(left: 16.0, top: 24.0),
+          child: const Text("Priority",
               style: TextStyle(
                 fontSize: 16.0,
-                color: Colors.grey,
+                color: Colors.black,
               )),
+        ),
+        SizedBox(height: 12),
+        Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(left: 16.0),
+            child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: HexColor("#F4F6F8"),
+                  //background color of dropdown button
+                  border: Border.all(color: HexColor("#C3A87B"), width: 1),
+                  //border of dropdown button
+                  borderRadius: BorderRadius.circular(
+                      4), //border raiuds of dropdown button
+                ),
+                child: Container(
+                    width: 214,
+                    padding: EdgeInsets.only(left: 12),
+                    child: DropdownButton(
+                      underline: SizedBox(),
+                      value: "Low",
+                      items: [
+                        //add items in the dropdown
+                        DropdownMenuItem(child: Text("Low"), value: "Low"),
 
-          Expanded(child: Container(
-              alignment: Alignment.centerRight,
-              child: SvgPicture.asset('assets/ic_calender.svg',
-                  color: HexColor("#C3A87B")),))
-        ],
-      )
+                        DropdownMenuItem(
+                            child: Text("Medium"), value: "Medium"),
+
+                        DropdownMenuItem(child: Text("High"), value: "High"),
+                      ],
+                      onChanged: (value) {
+                        //get value when changed
+                        print("You selected $value");
+                      },
+                      icon: Container(
+                          //Icon at tail, arrow bott
+                          width: 130,
+                          alignment: Alignment.centerRight,
+                          child: SvgPicture.asset(
+                            'assets/ic_task.svg',
+                            color: HexColor("#C3A87B"),
+                          )),
+                      iconEnabledColor: HexColor("#C3A87B"),
+                      //Icon color
+                      style: TextStyle(
+                          //te
+                          color: HexColor("#828282"), //Font color
+                          fontSize: 16 //font size on dropdown button
+                          ),
+                      dropdownColor:
+                          HexColor("#855B28"), //dropdown background color
+                    ))))
+      ],
     );
-
+  }
 }
 
-Widget _btnAdd() {
+class BtnAdd extends StatefulWidget {
+  BtnAdd({Key? key, required this.titleTask, required this.contentTask,
+  required this.priorityTask, required this.pointTask}) : super();
+  String titleTask;
+  String contentTask;
+  String priorityTask;
+  String pointTask;
 
-  return Container(
-    width: double.infinity,
-    margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-    child: ElevatedButton(
-      onPressed: () {},
-      child: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Text("ADD"),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8), // <-- Radius
+  @override
+  State<StatefulWidget> createState() {
+    return _BtnAdd(titleTask: titleTask, contentTask: contentTask,
+    priorityTask: priorityTask, pointTask: pointTask);
+  }
+}
+
+class _BtnAdd extends State<BtnAdd> {
+  _BtnAdd({Key? key, required this.titleTask, required this.contentTask,
+    required this.priorityTask, required this.pointTask}) : super();
+  String titleTask;
+  String contentTask;
+  String priorityTask;
+  String pointTask;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+      child: ElevatedButton(
+        onPressed: () {
+          print("titleTask: "+titleTask);
+          print("contentTask: "+contentTask);
+          print("priorityTask: "+priorityTask);
+          print("pointTask: "+pointTask);
+        },
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Text("ADD"),
         ),
-        primary: HexColor("#855B28"), // background
-        onPrimary: Colors.white, // foreground
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8), // <-- Radius
+          ),
+          primary: HexColor("#855B28"), // background
+          onPrimary: Colors.white, // foreground
+        ),
       ),
-    ),
-  );
+    );
+  }
 
 }
 
@@ -402,7 +409,6 @@ class _DatePicker extends State<DatePicker> {
           children: [
             Container(
               width: 250.0,
-              color: Colors.blueAccent,
               child: TextField(
                 controller: dateInput,
 //editing controller of this TextField
