@@ -236,9 +236,9 @@ class CardOverView extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5), //color of shadow
-            spreadRadius: 1, //spread radius
-            blurRadius: 8, // blur radius
+            color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+            spreadRadius: 1.0, //spread radius
+            blurRadius: 3, // blur radius
             offset: const Offset(5, 5), // changes position of shadow
           ),
         ],

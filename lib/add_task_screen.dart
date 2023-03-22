@@ -66,6 +66,16 @@ class _AddTaskFormState extends State<AddTaskForm> {
           ),
           SizedBox(height: 6),
           Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: HexColor("#C4C4C4").withOpacity(0.3), //color of shadow
+                  spreadRadius: 1.0, //spread radius
+                  blurRadius: 3, // blur radius
+                  offset: const Offset(4, 4), // changes position of shadow
+                ),
+              ],
+            ),
             margin: EdgeInsets.only(left: 16, right: 16),
             child: TextField(
               decoration: InputDecoration(
@@ -99,7 +109,16 @@ class _AddTaskFormState extends State<AddTaskForm> {
           SizedBox(height: 6),
 
           Container(
-
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: HexColor("#C4C4C4").withOpacity(0.3), //color of shadow
+                  spreadRadius: 1.0, //spread radius
+                  blurRadius: 3, // blur radius
+                  offset: const Offset(4, 4), // changes position of shadow
+                ),
+              ],
+            ),
             margin: EdgeInsets.only(left: 16, right: 16),
             child: TextField(
               textAlignVertical: TextAlignVertical.top,
@@ -187,6 +206,16 @@ Widget build(BuildContext context) {
             ),
             SizedBox(height: 12),
             Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+                    spreadRadius: 1.0, //spread radius
+                    blurRadius: 3, // blur radius
+                    offset: const Offset(4, 4), // changes position of shadow
+                  ),
+                ],
+              ),
               margin: EdgeInsets.only(right: 16.0),
               child: DecoratedBox(
                   decoration: BoxDecoration(
@@ -195,7 +224,8 @@ Widget build(BuildContext context) {
                     border: Border.all(color: HexColor("#C3A87B"), width: 1),
                     //border of dropdown button
                     borderRadius:
-                    BorderRadius.circular(4), //border raiuds of dropdown button
+                    BorderRadius.circular(4),
+                    //border raiuds of dropdown button
                   ),
                   child: Container(
                       padding: EdgeInsets.only(left: 12, right: 12),
@@ -274,6 +304,7 @@ class _PriorityPicker extends State<PriorityPicker> {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 16.0),
             child: DecoratedBox(
+
                 decoration: BoxDecoration(
                   color: HexColor("#F4F6F8"),
                   //background color of dropdown button
@@ -281,8 +312,17 @@ class _PriorityPicker extends State<PriorityPicker> {
                   //border of dropdown button
                   borderRadius: BorderRadius.circular(
                       4), //border raiuds of dropdown button
+                  boxShadow: [
+                    BoxShadow(
+                      color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+                      spreadRadius: 1.0, //spread radius
+                      blurRadius: 3, // blur radius
+                      offset: const Offset(4, 4), // changes position of shadow
+                    ),
+                  ],
                 ),
                 child: Container(
+
                     width: 214,
                     padding: EdgeInsets.only(left: 12),
                     child: DropdownButton(
@@ -401,6 +441,14 @@ class _DatePicker extends State<DatePicker> {
           color: HexColor("#F4F6F8"), //background color of dropdown button
           border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
           borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
+          boxShadow: [
+            BoxShadow(
+              color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+              spreadRadius: 1.0, //spread radius
+              blurRadius: 3, // blur radius
+              offset: const Offset(4, 4), // changes position of shadow
+            ),
+          ],
         ),
         margin: EdgeInsets.only(left: 16, right: 16),
         child: Row (
