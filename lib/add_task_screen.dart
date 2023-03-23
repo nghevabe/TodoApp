@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen();
@@ -393,11 +394,17 @@ class _BtnAdd extends State<BtnAdd> {
       width: double.infinity,
       margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
       child: ElevatedButton(
-        onPressed: () {
-          print("titleTask: "+titleTask);
-          print("contentTask: "+contentTask);
-          print("priorityTask: "+priorityTask);
-          print("pointTask: "+pointTask);
+        onPressed: () async {
+          // print("titleTask: "+titleTask);
+          // print("contentTask: "+contentTask);
+          // print("priorityTask: "+priorityTask);
+          // print("pointTask: "+pointTask);
+
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+          await prefs.setString('task_1', 'Shopping2');
+          await prefs.setString('task_2', 'Eating');
+
         },
         child: Container(
           padding: EdgeInsets.all(16.0),

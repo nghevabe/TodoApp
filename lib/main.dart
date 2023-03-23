@@ -7,7 +7,7 @@ import 'package:todo_app/home_screen.dart';
 import 'manager_screen.dart';
 import 'notification_screen.dart';
 import 'setting_screen.dart';
-import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 // test commit
@@ -40,6 +40,16 @@ class StatefulMainScreen extends StatefulWidget {
 }
 
 class MainScreen extends State<StatefulMainScreen> {
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  String dataSaved = "";
+
+  void _getData() async {
+    final SharedPreferences prefs = await _prefs;
+    dataSaved = prefs.getString('task_2')!;
+    print("data: "+dataSaved);
+  }
+
   List<TaskItem> listTask = <TaskItem>[
     TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1),
     TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2),
@@ -62,6 +72,13 @@ class MainScreen extends State<StatefulMainScreen> {
   String value = "";
   @override
   Widget build(BuildContext context) {
+
+    @override
+    void initState() {
+      super.initState();
+      _getData();
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: getBody(),
@@ -115,6 +132,13 @@ class MainScreen extends State<StatefulMainScreen> {
       listTask.add(taskItem);
     });
   }
+
+  // getData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   //Return String
+  //   String? stringValue = prefs.getString('task_1');
+  //   return stringValue;
+  // }
 
   Widget getBody()  {
     if(this.selectedIndex == 0) {
