@@ -44,17 +44,20 @@ class MainScreen extends State<StatefulMainScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   String dataSaved = "";
 
-  void _getData() async {
-    final SharedPreferences prefs = await _prefs;
-    dataSaved = prefs.getString('task_2')!;
-    print("data: "+dataSaved);
+  @override
+  void initState() {
+    super.initState();
+    _getData();
   }
 
-  List<TaskItem> listTask = <TaskItem>[
-    TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1),
-    TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2),
-    TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),
-    TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),];
+  void _getData() async {
+    final SharedPreferences prefs = await _prefs;
+    // dataSaved = prefs.getString('task_2')!;
+    // print("data: "+dataSaved);
+    setState(() => dataSaved = prefs.getString('task_2')!);
+  }
+
+  List<TaskItem> listTask = <TaskItem>[];
 
   TaskItem taskItem = TaskItem("Task X", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1);
   int selectedIndex = 0;
@@ -73,15 +76,17 @@ class MainScreen extends State<StatefulMainScreen> {
   @override
   Widget build(BuildContext context) {
 
-    @override
-    void initState() {
-      super.initState();
-      _getData();
-    }
+    print("dataSaved: "+dataSaved);
+    listTask = <TaskItem>[
+      TaskItem("Task A", "Content "+dataSaved, 1),
+      TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2),
+      TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),
+      TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),];
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: getBody(),
+      body: StatefulGetBody(selectedIndex: selectedIndex, icColor1: icColor1, icColor2: icColor2,
+          icColor3: icColor3, icColor4: icColor4, notiScreen: _Noti, settingScreen: _Setting, listTaskItem: listTask),
       floatingActionButton: FloatingActionButton(
         //Floating action button on Scaffold
         onPressed: () {
@@ -133,40 +138,72 @@ class MainScreen extends State<StatefulMainScreen> {
     });
   }
 
-  // getData() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   //Return String
-  //   String? stringValue = prefs.getString('task_1');
-  //   return stringValue;
-  // }
+}
 
-  Widget getBody()  {
-    if(this.selectedIndex == 0) {
-      this.icColor1 = "#855B28";
-      this.icColor2 = "#5F6368";
-      this.icColor3 = "#5F6368";
-      this.icColor4 = "#5F6368";
-      return MyHome(listTask);
-    } else if(this.selectedIndex==1) {
-      this.icColor1 = "#5F6368";
-      this.icColor2 = "#855B28";
-      this.icColor3 = "#5F6368";
-      this.icColor4 = "#5F6368";
-      return MyManager(listTask);
-    } else if(this.selectedIndex==2) {
-      this.icColor1 = "#5F6368";
-      this.icColor2 = "#5F6368";
-      this.icColor3 = "#855B28";
-      this.icColor4 = "#5F6368";
-      return this._Noti;
-    } else {
-      this.icColor1 = "#5F6368";
-      this.icColor2 = "#5F6368";
-      this.icColor3 = "#5F6368";
-      this.icColor4 = "#855B28";
-      return this._Setting;
-    }
+class StatefulGetBody extends StatefulWidget {
+  StatefulGetBody({Key? key, required this.selectedIndex, required this.icColor1,
+    required this.icColor2, required this.icColor3, required this.icColor4,
+    required this.listTaskItem, required this.notiScreen,
+    required this.settingScreen}) : super();
+  int selectedIndex = 0;
+  String icColor1 = "#5F6368";
+  String icColor2 = "#5F6368";
+  String icColor3 = "#5F6368";
+  String icColor4 = "#5F6368";
+  Widget notiScreen = MyNotification();
+  Widget settingScreen = MySetting();
+  List<TaskItem> listTaskItem;
+
+  @override
+  GetBody createState() {
+    return GetBody(selectedIndex: selectedIndex, icColor1: icColor1, icColor2: icColor2,
+    icColor3: icColor3, icColor4: icColor4, notiScreen: notiScreen, settingScreen: settingScreen, listTaskItem: listTaskItem);
   }
 
+}
+
+class GetBody extends State<StatefulGetBody>  {
+  GetBody({Key? key, required this.selectedIndex, required this.icColor1,
+    required this.icColor2, required this.icColor3, required this.icColor4,
+    required this.listTaskItem, required this.notiScreen,
+    required this.settingScreen}) : super();
+  int selectedIndex;
+  String icColor1;
+  String icColor2;
+  String icColor3;
+  String icColor4;
+  Widget notiScreen;
+  Widget settingScreen;
+  List<TaskItem> listTaskItem;
+
+  @override
+  Widget build(BuildContext context) {
+
+    if (selectedIndex == 0) {
+      icColor1 = "#855B28";
+      icColor2 = "#5F6368";
+      icColor3 = "#5F6368";
+      icColor4 = "#5F6368";
+      return MyHome(listTaskItem);
+    } else if (selectedIndex == 1) {
+      icColor1 = "#5F6368";
+      icColor2 = "#855B28";
+      icColor3 = "#5F6368";
+      icColor4 = "#5F6368";
+      return MyManager(listTaskItem);
+    } else if (selectedIndex == 2) {
+      icColor1 = "#5F6368";
+      icColor2 = "#5F6368";
+      icColor3 = "#855B28";
+      icColor4 = "#5F6368";
+      return notiScreen;
+    } else {
+      icColor1 = "#5F6368";
+      icColor2 = "#5F6368";
+      icColor3 = "#5F6368";
+      icColor4 = "#855B28";
+      return settingScreen;
+    }
+  }
 }
 
