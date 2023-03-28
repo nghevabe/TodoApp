@@ -20,7 +20,7 @@ class StatefulManagerBody extends StatefulWidget {
 
   @override
   ManagerBody createState() {
-    return new ManagerBody(listTask: listTask);
+    return ManagerBody();
   }
 }
 
@@ -72,17 +72,12 @@ class StateCardHeader extends StatefulWidget {
 
   @override
   CardHeader createState() {
-    return CardHeader(selectedIndex: selectedIndex, listTask: listTask);
+    return CardHeader();
   }
 
 }
 
 class CardHeader extends State<StateCardHeader> {
-  CardHeader({Key? key, required this.selectedIndex, required this.listTask})
-      : super();
-  int selectedIndex;
-  List<TaskItem> listTask;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,30 +98,25 @@ class CardHeader extends State<StateCardHeader> {
 }
 
 class ManagerBody extends State<StatefulManagerBody> {
-  ManagerBody({Key? key, required this.listTask}) : super();
-  List<TaskItem> listTask;
-
-  String value = "";
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
           children: [
-            StateCardManager(selectedIndex: 0, listTask: listTask,),
+            StateCardManager(selectedIndex: 0, listTask: widget.listTask,),
             _cardBody(),
             SizedBox(height: 16),
             Column(
               children:
-              listTask.asMap().entries.map((entry) {
+              widget.listTask.asMap().entries.map((entry) {
                 int index = entry.key;
                 TaskItem item = entry.value;
                 return  GestureDetector(
                     onTap: () {
                       print("Bidv Click Item Task: "+item.titleTask);
-                      onDelete(index, listTask);
+                      onDelete(index, widget.listTask);
                     },
-                    child: CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+                    child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
                       priority: item.priority,)
                 );
               }).toList(),
@@ -149,25 +139,22 @@ class StateTabMenu extends StatefulWidget {
 
   @override
   TabMenu createState() {
-    return TabMenu(selectedIndex: selectedIndex);
+    return TabMenu();
   }
 
 }
 
 class TabMenu extends State<StateTabMenu> {
-  TabMenu({Key? key, required this.selectedIndex}) : super();
-  int selectedIndex;
-
   @override
   Widget build(BuildContext context) {
     String colorTab1 = "#FFFFFF";
     String colorTab2 = "#FFFFFF";
     String colorTab3 = "#FFFFFF";
-    if (selectedIndex == 0) {
+    if (widget.selectedIndex == 0) {
       colorTab1 = "#855B28";
       colorTab2 = "#FFFFFF";
       colorTab3 = "#FFFFFF";
-    } else if (selectedIndex == 1) {
+    } else if (widget.selectedIndex == 1) {
       colorTab1 = "#FFFFFF";
       colorTab2 = "#855B28";
       colorTab3 = "#FFFFFF";
@@ -265,7 +252,7 @@ class TabMenu extends State<StateTabMenu> {
 
   void onTapHandler(int index) {
     setState(() {
-      selectedIndex = index;
+      widget.selectedIndex = index;
       StateTabMenu(selectedIndex: index);
     });
   }
@@ -288,29 +275,18 @@ class StateCardManager extends StatefulWidget{
 
   @override
   CardManager createState() {
-    return CardManager(selectedIndex: selectedIndex, listTask: listTask);
+    return CardManager();
   }
 
-  // return Stack(
-  //   children: <Widget>[
-  //     _headerScreen(),
-  //     _cardHeader(),
-  //   ],
-  // );
 }
 
 class CardManager extends State<StateCardManager> {
-  CardManager({Key? key, required this.selectedIndex, required this.listTask})
-      : super();
-  int selectedIndex;
-  List<TaskItem> listTask;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         _headerScreen(),
-        StateCardHeader(selectedIndex: selectedIndex, listTask: listTask),
+        StateCardHeader(selectedIndex: widget.selectedIndex, listTask: widget.listTask),
       ],
     );
 
@@ -324,15 +300,11 @@ class StatefulListItemDate extends StatefulWidget {
 
   @override
   ListItemDate createState() {
-    return ListItemDate(listDate: listDate);
+    return ListItemDate();
   }
 }
 
 class ListItemDate extends State<StatefulListItemDate> {
-  ListItemDate({Key? key, required this.listDate}) : super();
-  List<DateItem> listDate;
-
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -341,7 +313,7 @@ class ListItemDate extends State<StatefulListItemDate> {
         margin: EdgeInsets.only(top: 8.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: listDate.asMap().entries.map((entry) {
+          children: widget.listDate.asMap().entries.map((entry) {
             int index = entry.key;
             DateItem item = entry.value;
             return GestureDetector(
@@ -360,14 +332,14 @@ class ListItemDate extends State<StatefulListItemDate> {
   void onClickItem(int index) {
     setState(() {
       clearListDate();
-      listDate[index].isSelected = true;
-      StatefulListItemDate(listDate: listDate);
+      widget.listDate[index].isSelected = true;
+      StatefulListItemDate(listDate: widget.listDate);
     });
   }
 
   void clearListDate(){
-    for (int i = 0; i < listDate.length; i++) {
-      listDate[i].isSelected = false;
+    for (int i = 0; i < widget.listDate.length; i++) {
+      widget.listDate[i].isSelected = false;
     }
   }
   

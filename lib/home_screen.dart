@@ -23,16 +23,12 @@ class StatefulHomeBody extends StatefulWidget {
 
   @override
   HomeBody createState() {
-    return new HomeBody(listTask: listTask);
+    return new HomeBody();
   }
 }
 
 class HomeBody extends State<StatefulHomeBody> {
-
-  HomeBody({Key? key, required this.listTask}) : super();
-  List<TaskItem> listTask;
   String value = "";
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +43,8 @@ class HomeBody extends State<StatefulHomeBody> {
         SizedBox(height: 16),
         Column(
           children:
-          listTask.map((item) {
-            return CardTaskItem(titleTask: "Sleep", contendTask: item.contendTask,
+          widget.listTask.map((item) {
+            return CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
               priority: 0,);
           }).toList(),
         ),
