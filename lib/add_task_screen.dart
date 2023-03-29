@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/TaskItem.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen();
@@ -166,7 +169,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
           DatePicker(),
           SizedBox(height: 32),
           Expanded(child: Container()),
-          BtnAdd(titleTask: "Mua kem", contentTask: "Đi ra siêu thị mua kem",
+          BtnAdd(titleTask: "Đi tắm", contentTask: "Đi tắm rồi thư giãn",
               priorityTask: "Low", pointTask: "1"),
 
         ],
@@ -381,14 +384,19 @@ class _BtnAdd extends State<BtnAdd> {
       margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-          // print("titleTask: "+titleTask);
-          // print("contentTask: "+contentTask);
-          // print("priorityTask: "+priorityTask);
-          // print("pointTask: "+pointTask);
+
+          print("titleTask: "+widget.titleTask);
+          print("contentTask: "+widget.contentTask);
+          print("priorityTask: "+widget.priorityTask);
+          print("pointTask: "+widget.pointTask);
+
+          TaskItem item = TaskItem("Task Bidv 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2);
+
+          String jsonstring = json.encode(item);
 
           final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-          await prefs.setString('task_1', 'Shopping2');
+          await prefs.setString('task_1', jsonstring);
           await prefs.setString('task_2', 'Eating');
 
         },

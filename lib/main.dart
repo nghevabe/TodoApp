@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/TaskItem.dart';
@@ -43,6 +45,7 @@ class StatefulMainScreen extends StatefulWidget {
 
 class MainScreen extends State<StatefulMainScreen> {
 
+  String dataLoaded = "";
   List<TaskItem> listTask = <TaskItem>[
     TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1),
     TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2),
@@ -63,6 +66,7 @@ class MainScreen extends State<StatefulMainScreen> {
     // dataSaved = prefs.getString('task_2')!;
     setState(() {
       listTask[0].titleTask = prefs.getString('task_2')!;
+      dataLoaded = prefs.getString('task_1')!;
     });
   }
 
@@ -77,6 +81,9 @@ class MainScreen extends State<StatefulMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String jsonstring = json.encode(listTask);
+
+    print("data loaded: "+ jsonstring);
 
     if(selectedIndex == 0) {
       icColor1 = "#855B28";
