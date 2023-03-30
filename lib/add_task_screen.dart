@@ -28,7 +28,7 @@ class AddTaskBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: const Center(
+      body:  Center(
         child: SizedBox(
           width: 400,
           child: Card(
@@ -41,14 +41,27 @@ class AddTaskBody extends StatelessWidget {
 }
 
 class AddTaskForm extends StatefulWidget {
-  const AddTaskForm();
+  AddTaskForm();
+  String titleTask = "";
+  String contentTask = "";
+  String priorityTask = "";
+  String pointTask = "";
+  String dateTask = "";
 
   @override
   State<AddTaskForm> createState() => _AddTaskFormState();
+
 }
 
 class _AddTaskFormState extends State<AddTaskForm> {
   final double _formProgress = 0;
+  TextEditingController dateInput = TextEditingController();
+
+  @override
+  void initState() {
+    dateInput.text = "";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +108,10 @@ class _AddTaskFormState extends State<AddTaskForm> {
                       borderRadius: BorderRadius.circular(4))),
               onChanged: (value) {
                 // do something
+                setState(() {
+                  widget.titleTask = value;
+                });
+
               },
             ),
           ),
@@ -142,14 +159,185 @@ class _AddTaskFormState extends State<AddTaskForm> {
                       borderRadius: BorderRadius.circular(4))),
               onChanged: (value) {
                 // do something
+                setState(() {
+                  widget.contentTask = value;
+                });
+
               },
             ),
           ),
           Row(
             children: [
-              PriorityPicker(),
+
+
+            Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(left: 16.0, top: 24.0),
+                child: const Text("Priority",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    )),
+              ),
+              SizedBox(height: 12),
+              Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 16.0),
+                  child: DecoratedBox(
+
+                      decoration: BoxDecoration(
+                        color: HexColor("#F4F6F8"),
+                        //background color of dropdown button
+                        border: Border.all(color: HexColor("#C3A87B"), width: 1),
+                        //border of dropdown button
+                        borderRadius: BorderRadius.circular(
+                            4), //border raiuds of dropdown button
+                        boxShadow: [
+                          BoxShadow(
+                            color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+                            spreadRadius: 1.0, //spread radius
+                            blurRadius: 3, // blur radius
+                            offset: const Offset(4, 4), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Container(
+
+                          width: 214,
+                          padding: EdgeInsets.only(left: 12),
+                          child: DropdownButton(
+                            underline: SizedBox(),
+                            value: "Low",
+                            items: const [
+                              //add items in the dropdown
+                              DropdownMenuItem(child: Text("Low"), value: "Low"),
+                              DropdownMenuItem(
+                                  child: Text("Medium"), value: "Medium"),
+                              DropdownMenuItem(child: Text("High"), value: "High"),
+                            ],
+                            onChanged: (value) {
+                              //get value when changed
+                              setState(() {
+                                widget.priorityTask = value.toString();
+                              });
+                              print("You selected $value");
+                            },
+                            icon: Container(
+                              //Icon at tail, arrow bott
+                                width: 130,
+                                alignment: Alignment.centerRight,
+                                child: SvgPicture.asset(
+                                  'assets/ic_task.svg',
+                                  color: HexColor("#C3A87B"),
+                                )),
+                            iconEnabledColor: HexColor("#C3A87B"),
+                            //Icon color
+                            style: TextStyle(
+                              //te
+                                color: HexColor("#828282"), //Font color
+                                fontSize: 16 //font size on dropdown button
+                            ),
+                            dropdownColor:
+                            HexColor("#855B28"), //dropdown background color
+                          ))))
+            ],
+          ),
+
+
               SizedBox(width: 16),
-              PointPicker(),
+
+
+
+              Expanded(
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(top: 24.0),
+                        child: const Text("Point",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            )),
+                      ),
+                      SizedBox(height: 12),
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: HexColor("#C4C4C4").withOpacity(0.2),
+                              //color of shadow
+                              spreadRadius: 1.0,
+                              //spread radius
+                              blurRadius: 3,
+                              // blur radius
+                              offset: const Offset(4, 4), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        margin: EdgeInsets.only(right: 16.0),
+                        child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: HexColor("#F4F6F8"),
+                              //background color of dropdown button
+                              border: Border.all(color: HexColor("#C3A87B"), width: 1),
+                              //border of dropdown button
+                              borderRadius: BorderRadius.circular(4),
+                              //border raiuds of dropdown button
+                            ),
+                            child: Container(
+                                padding: EdgeInsets.only(left: 12, right: 12),
+                                child: DropdownButton(
+                                  underline: SizedBox(),
+                                  value: "1",
+                                  items: [
+                                    //add items in the dropdown
+                                    DropdownMenuItem(child: Text("1"), value: "1"),
+
+                                    DropdownMenuItem(child: Text("2"), value: "2"),
+
+                                    DropdownMenuItem(child: Text("3"), value: "3"),
+                                  ],
+                                  onChanged: (value) {
+                                    //get value when changed
+                                    setState(() {
+                                      widget.pointTask = value.toString();
+                                    });
+                                    print("You selected $value");
+                                  },
+                                  icon: Expanded(
+                                      child: Row(
+                                        children: [
+                                          Expanded(child: Container()),
+                                          Container(
+                                            //Icon at tail, arrow bott
+                                              alignment: Alignment.centerRight,
+                                              child: SvgPicture.asset(
+                                                'assets/ic_star.svg',
+                                                color: HexColor("#C3A87B"),
+                                              ))
+                                        ],
+                                      )),
+
+                                  iconEnabledColor: HexColor("#C3A87B"),
+                                  //Icon color
+                                  style: TextStyle(
+                                    //te
+                                      color: HexColor("#828282"), //Font color
+                                      fontSize: 16 //font size on dropdown button
+                                  ),
+                                  dropdownColor:
+                                  HexColor("#855B28"), //dropdown background color
+                                ))),
+                      )
+                    ],
+                  )),
+
+
 
             ],
           ),
@@ -166,11 +354,79 @@ class _AddTaskFormState extends State<AddTaskForm> {
                 )),
           ),
           SizedBox(height: 6),
-          DatePicker(),
+
+
+          Container(
+
+              padding: EdgeInsets.only(left: 12.0, right: 12.0),
+              decoration: BoxDecoration(
+                color: HexColor("#F4F6F8"), //background color of dropdown button
+                border: Border.all(color: HexColor("#C3A87B"), width:1), //border of dropdown button
+                borderRadius: BorderRadius.circular(4), //border raiuds of dropdown button
+                boxShadow: [
+                  BoxShadow(
+                    color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+                    spreadRadius: 1.0, //spread radius
+                    blurRadius: 3, // blur radius
+                    offset: const Offset(4, 4), // changes position of shadow
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.only(left: 16, right: 16),
+              child: Row (
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 250.0,
+                    child: TextField(
+                      controller: dateInput,
+//editing controller of this TextField
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Pick Date',
+                        hintStyle: TextStyle(fontSize: 16.0, color: HexColor("#828282")),
+                      ),
+                      readOnly: true,
+//set it true, so that user will not able to edit text
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1950),
+//DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(2100));
+
+                        if (pickedDate != null) {
+                          print(
+                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                          String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                          print(
+                              formattedDate); //formatted date output using intl package =>  2021-03-16
+                          setState(() {
+                            dateInput.text =
+                                formattedDate; //set output date to TextField value.
+                          });
+                        } else {}
+                      },
+                    ),
+                  ),
+
+                  Expanded(child: Container(
+                    alignment: Alignment.centerRight,
+                    child: SvgPicture.asset('assets/ic_calender.svg',
+                        color: HexColor("#C3A87B")),))
+                ],
+              )
+
+          ),
+
+
           SizedBox(height: 32),
           Expanded(child: Container()),
-          BtnAdd(titleTask: "Đi tắm", contentTask: "Đi tắm rồi thư giãn",
-              priorityTask: "Low", pointTask: "1"),
+          BtnAdd(titleTask: widget.titleTask, contentTask: widget.contentTask,
+              priorityTask: widget.priorityTask, pointTask: widget.pointTask, dateTask: dateInput.text),
 
         ],
       ),
@@ -180,6 +436,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
 
 class PointPicker extends StatefulWidget {
   PointPicker({Key? key}) : super();
+  String pointTask = "";
 
   @override
   State<StatefulWidget> createState() {
@@ -188,9 +445,16 @@ class PointPicker extends StatefulWidget {
 }
 
 class _PointPicker extends State<PointPicker> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return
+      Expanded(
         child: Column(
       children: [
         Container(
@@ -242,6 +506,9 @@ class _PointPicker extends State<PointPicker> {
                     ],
                     onChanged: (value) {
                       //get value when changed
+                      setState(() {
+                        widget.pointTask = value.toString();
+                      });
                       print("You selected $value");
                     },
                     icon: Expanded(
@@ -276,6 +543,7 @@ class _PointPicker extends State<PointPicker> {
 
 class PriorityPicker extends StatefulWidget {
   PriorityPicker({Key? key}) : super();
+  String priorityTask = "";
 
   @override
   State<StatefulWidget> createState() {
@@ -284,9 +552,16 @@ class PriorityPicker extends StatefulWidget {
 }
 
 class _PriorityPicker extends State<PriorityPicker> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return
+      Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -337,6 +612,9 @@ class _PriorityPicker extends State<PriorityPicker> {
                       ],
                       onChanged: (value) {
                         //get value when changed
+                        setState(() {
+                          widget.priorityTask = value.toString();
+                        });
                         print("You selected $value");
                       },
                       icon: Container(
@@ -364,11 +642,12 @@ class _PriorityPicker extends State<PriorityPicker> {
 
 class BtnAdd extends StatefulWidget {
   BtnAdd({Key? key, required this.titleTask, required this.contentTask,
-  required this.priorityTask, required this.pointTask}) : super();
+  required this.priorityTask, required this.pointTask, required this.dateTask}) : super();
   String titleTask;
   String contentTask;
   String priorityTask;
   String pointTask;
+  String dateTask;
 
   @override
   State<StatefulWidget> createState() {
@@ -389,9 +668,9 @@ class _BtnAdd extends State<BtnAdd> {
           print("contentTask: "+widget.contentTask);
           print("priorityTask: "+widget.priorityTask);
           print("pointTask: "+widget.pointTask);
+          print("dateTask: "+widget.dateTask);
 
           TaskItem item = TaskItem("Task Bidv 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2);
-
           String jsonstring = json.encode(item);
 
           final SharedPreferences prefs = await SharedPreferences.getInstance();

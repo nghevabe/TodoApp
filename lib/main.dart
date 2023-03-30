@@ -83,7 +83,11 @@ class MainScreen extends State<StatefulMainScreen> {
   Widget build(BuildContext context) {
     String jsonstring = json.encode(listTask);
 
-    print("data loaded: "+ jsonstring);
+    final parsed = jsonDecode(jsonstring).cast<Map<String, dynamic>>();
+
+    List<TaskItem> itemData = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+
+    print("itemData Count: "+ itemData.length.toString());
 
     if(selectedIndex == 0) {
       icColor1 = "#855B28";
