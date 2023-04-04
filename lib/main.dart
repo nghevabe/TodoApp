@@ -65,8 +65,9 @@ class MainScreen extends State<StatefulMainScreen> {
     final SharedPreferences prefs = await _prefs;
     // dataSaved = prefs.getString('task_2')!;
     setState(() {
-      listTask[0].titleTask = prefs.getString('task_2')!;
-      dataLoaded = prefs.getString('task_1')!;
+      // listTask[0].titleTask = prefs.getString('task_2')!;
+      dataLoaded = prefs.getString('task_data')!;
+      print("dataLoaded: "+dataLoaded);
     });
   }
 
@@ -81,13 +82,13 @@ class MainScreen extends State<StatefulMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String jsonstring = json.encode(listTask);
 
-    final parsed = jsonDecode(jsonstring).cast<Map<String, dynamic>>();
+    if (dataLoaded.isNotEmpty) {
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
 
-    List<TaskItem> itemData = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
-
-    print("itemData Count: "+ itemData.length.toString());
+      listTask = parsed.map<TaskItem>((json) =>
+          TaskItem.fromJson(json)).toList();
+    }
 
     if(selectedIndex == 0) {
       icColor1 = "#855B28";
@@ -125,8 +126,6 @@ class MainScreen extends State<StatefulMainScreen> {
         listTask.add(taskItem);
       });
     }
-
-
 
     return Scaffold(
       backgroundColor: Colors.white,

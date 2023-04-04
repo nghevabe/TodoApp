@@ -169,8 +169,8 @@ class _AddTaskFormState extends State<AddTaskForm> {
           Row(
             children: [
 
-
-            Column(
+              // PriorityPicker Widget
+              Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -247,11 +247,9 @@ class _AddTaskFormState extends State<AddTaskForm> {
             ],
           ),
 
-
               SizedBox(width: 16),
 
-
-
+              // PointPicker Widget
               Expanded(
                   child: Column(
                     children: [
@@ -355,9 +353,8 @@ class _AddTaskFormState extends State<AddTaskForm> {
           ),
           SizedBox(height: 6),
 
-
+          // DatePicker Widget
           Container(
-
               padding: EdgeInsets.only(left: 12.0, right: 12.0),
               decoration: BoxDecoration(
                 color: HexColor("#F4F6F8"), //background color of dropdown button
@@ -421,7 +418,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
               )
 
           ),
-
 
           SizedBox(height: 32),
           Expanded(child: Container()),
@@ -649,6 +645,8 @@ class BtnAdd extends StatefulWidget {
   String pointTask;
   String dateTask;
 
+  List<TaskItem> listTask = <TaskItem>[];
+
   @override
   State<StatefulWidget> createState() {
     return _BtnAdd();
@@ -656,28 +654,61 @@ class BtnAdd extends StatefulWidget {
 }
 
 class _BtnAdd extends State<BtnAdd> {
+
+
+  String dataLoaded = "";
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  void _getTaskData() async {
+    final SharedPreferences prefs = await _prefs;
+    // dataSaved = prefs.getString('task_2')!;
+    setState(() {
+      dataLoaded = prefs.getString('task_data')!;
+
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+
+      print("itemData Count: "+ widget.listTask.length.toString());
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _getTaskData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
       child: ElevatedButton(
+        // onPressed: () {
+        //   Navigator.pop(context);
+        // },
         onPressed: () async {
+          // print("titleTask: "+widget.titleTask);
+          // print("contentTask: "+widget.contentTask);
+          // print("priorityTask: "+widget.priorityTask);
+          // print("pointTask: "+widget.pointTask);
+          // print("dateTask: "+widget.dateTask);
 
-          print("titleTask: "+widget.titleTask);
-          print("contentTask: "+widget.contentTask);
-          print("priorityTask: "+widget.priorityTask);
-          print("pointTask: "+widget.pointTask);
-          print("dateTask: "+widget.dateTask);
+          // TaskItem item = TaskItem("Task Bidv 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2);
+          TaskItem item = TaskItem(widget.titleTask, widget.contentTask, int.parse(widget.pointTask));
 
-          TaskItem item = TaskItem("Task Bidv 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2);
-          String jsonstring = json.encode(item);
+          widget.listTask.add(item);
+
+          String jsonstring = json.encode(widget.listTask);
+
+          print("jsonstring Saved: "+jsonstring);
 
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-          await prefs.setString('task_1', jsonstring);
-          await prefs.setString('task_2', 'Eating');
-
+          await prefs.setString('task_data', jsonstring);
+          print("Saved done");
+          // Navigator.pop(context);
         },
         child: Container(
           padding: EdgeInsets.all(16.0),

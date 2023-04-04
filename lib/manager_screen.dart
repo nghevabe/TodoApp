@@ -100,6 +100,7 @@ class CardHeader extends State<StateCardHeader> {
 class ManagerBody extends State<StatefulManagerBody> {
   @override
   Widget build(BuildContext context) {
+    print("Manager Loaded");
     return SingleChildScrollView(
         child: Column(
           children: [

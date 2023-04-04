@@ -32,6 +32,7 @@ class HomeBody extends State<StatefulHomeBody> {
 
   @override
   Widget build(BuildContext context) {
+    print("Home Loaded");
     return SingleChildScrollView(child:
     Column(
       children: [
