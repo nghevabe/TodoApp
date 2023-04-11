@@ -645,8 +645,6 @@ class BtnAdd extends StatefulWidget {
   String pointTask;
   String dateTask;
 
-  List<TaskItem> listTask = <TaskItem>[];
-
   @override
   State<StatefulWidget> createState() {
     return _BtnAdd();
@@ -655,21 +653,21 @@ class BtnAdd extends StatefulWidget {
 
 class _BtnAdd extends State<BtnAdd> {
 
-
+  List<TaskItem> listTaskItem = <TaskItem>[];
   String dataLoaded = "";
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   void _getTaskData() async {
     final SharedPreferences prefs = await _prefs;
-    // dataSaved = prefs.getString('task_2')!;
+
     setState(() {
       dataLoaded = prefs.getString('task_data')!;
 
       final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
 
-      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+      listTaskItem = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
 
-      print("itemData Count: "+ widget.listTask.length.toString());
+      print("itemData Count: "+ listTaskItem.length.toString());
     });
   }
 
@@ -696,18 +694,24 @@ class _BtnAdd extends State<BtnAdd> {
           // print("pointTask: "+widget.pointTask);
           // print("dateTask: "+widget.dateTask);
 
+          // setState() callback argument returned a Future.
           // TaskItem item = TaskItem("Task Bidv 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2);
+
+
           TaskItem item = TaskItem(widget.titleTask, widget.contentTask, int.parse(widget.pointTask));
 
-          widget.listTask.add(item);
+          print("itemData Count 2: "+ listTaskItem.length.toString());
+          listTaskItem.add(item);
 
-          String jsonstring = json.encode(widget.listTask);
+          String jsonstring = json.encode(listTaskItem);
 
           print("jsonstring Saved: "+jsonstring);
 
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('task_data', jsonstring);
           print("Saved done");
+
+          Navigator.of(context, rootNavigator: true).pop(context);
           // Navigator.pop(context);
         },
         child: Container(

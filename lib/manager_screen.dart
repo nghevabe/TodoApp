@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/DateItem.dart';
 import 'package:todo_app/TaskItem.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/utils/util_components.dart';
+import 'dart:convert';
 
 class MyManager extends StatelessWidget {
   List<TaskItem> listTask;
@@ -78,6 +80,31 @@ class StateCardHeader extends StatefulWidget {
 }
 
 class CardHeader extends State<StateCardHeader> {
+
+  String dataLoaded = "";
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  void _getTaskData() async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      dataLoaded = prefs.getString('task_data')!;
+
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+
+      print("itemData Count: "+ widget.listTask.length.toString());
+    });
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getTaskData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -126,9 +153,17 @@ class ManagerBody extends State<StatefulManagerBody> {
         ));
   }
 
-  void onDelete(int index, List<TaskItem> listTask) {
+  void onDelete(int index, List<TaskItem> listTask) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       listTask.removeAt(index);
+
+      String jsonstring = json.encode(listTask);
+
+      print("jsonstring Saved: "+jsonstring);
+
+      prefs.setString('task_data', jsonstring);
+      print("Saved done");
     });
   }
 
