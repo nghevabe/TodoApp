@@ -5,14 +5,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/TaskItem.dart';
 import 'package:todo_app/add_task_screen.dart';
 import 'package:todo_app/home_screen.dart';
-
 import 'manager_screen.dart';
 import 'notification_screen.dart';
 import 'setting_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-// test commit
 void main() {
   runApp(const MainApp());
 }
@@ -67,12 +64,9 @@ class MainScreen extends State<StatefulMainScreen> {
     setState(() {
       // listTask[0].titleTask = prefs.getString('task_2')!;
       dataLoaded = prefs.getString('task_data')!;
-      print("dataLoaded: "+dataLoaded);
+      print("dataLoaded Main: "+dataLoaded);
     });
   }
-
-  // Widget _Noti = MyNotification();
-  // Widget _Setting = MySetting();
 
   @override
   void initState() {
@@ -117,6 +111,7 @@ class MainScreen extends State<StatefulMainScreen> {
 
     void onTapHandler(int index)  {
       setState(() {
+        _getData();
         selectedIndex = index;
       });
     }
@@ -132,12 +127,19 @@ class MainScreen extends State<StatefulMainScreen> {
       body: StatefulGetBody(selectedIndex: selectedIndex, listTaskItem: listTask),
       floatingActionButton: FloatingActionButton(
         //Floating action button on Scaffold
-        onPressed: () {
+        onPressed: () async {
 
-          Navigator.push(
+          final dataBack = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const AddTaskScreen()),
           );
+
+          if (dataBack) {
+            setState(() {
+              print("dataBack");
+              _getData();
+            });
+          }
 
           // TaskItem item = TaskItem("Task Bidv", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3);
           //

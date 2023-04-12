@@ -102,6 +102,7 @@ class CardHeader extends State<StateCardHeader> {
   @override
   void initState() {
     super.initState();
+    print("Manager Loaded 2");
     _getTaskData();
   }
 

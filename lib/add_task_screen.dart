@@ -13,12 +13,18 @@ class AddTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => const AddTaskBody(),
-      },
-    );
+    return AddTaskBody();
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     routes: {
+  //       '/': (context) => const AddTaskBody(),
+  //     },
+  //   );
+  // }
+
 }
 
 class AddTaskBody extends StatelessWidget {
@@ -334,8 +340,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
                       )
                     ],
                   )),
-
-
 
             ],
           ),
@@ -662,12 +666,9 @@ class _BtnAdd extends State<BtnAdd> {
 
     setState(() {
       dataLoaded = prefs.getString('task_data')!;
-
       final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
-
       listTaskItem = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
 
-      print("itemData Count: "+ listTaskItem.length.toString());
     });
   }
 
@@ -697,10 +698,8 @@ class _BtnAdd extends State<BtnAdd> {
           // setState() callback argument returned a Future.
           // TaskItem item = TaskItem("Task Bidv 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2);
 
-
           TaskItem item = TaskItem(widget.titleTask, widget.contentTask, int.parse(widget.pointTask));
 
-          print("itemData Count 2: "+ listTaskItem.length.toString());
           listTaskItem.add(item);
 
           String jsonstring = json.encode(listTaskItem);
@@ -709,10 +708,9 @@ class _BtnAdd extends State<BtnAdd> {
 
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('task_data', jsonstring);
-          print("Saved done");
 
-          Navigator.of(context, rootNavigator: true).pop(context);
-          // Navigator.pop(context);
+          // Navigator.of(context, rootNavigator: true).pop(context);
+          Navigator.pop(context, true);
         },
         child: Container(
           padding: EdgeInsets.all(16.0),
