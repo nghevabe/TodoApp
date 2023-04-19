@@ -32,17 +32,22 @@ class AddTaskBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body:  Center(
-        child: SizedBox(
-          width: 400,
-          child: Card(
-            child: AddTaskForm(),
-          ),
-        ),
-      ),
+    return Card(
+      child: AddTaskForm(),
     );
+
+    //   Scaffold(
+    //   backgroundColor: Colors.grey[200],
+    //   body:  Center(
+    //     child: SizedBox(
+    //       width: 400,
+    //       child: Card(
+    //         child: AddTaskForm(),
+    //       ),
+    //     ),
+    //   ),
+    // );
+
   }
 }
 
@@ -73,7 +78,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
   Widget build(BuildContext context) {
     return Form(
       child: Column(
-
         children: [
           LinearProgressIndicator(value: _formProgress),
           SizedBox(height: 40),

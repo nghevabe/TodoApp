@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/TaskItem.dart';
 import 'package:todo_app/utils/util_components.dart';
+import 'detail_screen.dart';
 import 'utils/util_components.dart';
 
 class MyHome extends StatelessWidget {
@@ -44,10 +45,25 @@ class HomeBody extends State<StatefulHomeBody> {
         SizedBox(height: 16),
         Column(
           children:
-          widget.listTask.map((item) {
-            return CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
-              priority: 0,);
+          widget.listTask.asMap().entries.map((entry) {
+            int index = entry.key;
+            TaskItem item = entry.value;
+            return  GestureDetector(
+                onTap: () {
+                  print("Bidv Home Click Item Task: "+item.titleTask);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DetailScreen()),
+                  );
+                },
+                child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
+                  priority: item.priority,)
+            );
           }).toList(),
+          // widget.listTask.map((item) {
+          //   return CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
+          //     priority: 0,);
+          // }).toList(),
         ),
         SizedBox(height: 32),
       ],
