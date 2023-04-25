@@ -22,24 +22,6 @@ class StatefulDetailBody extends StatefulWidget {
 }
 
 class DetailBody extends State<StatefulDetailBody> {
-  String dataLoaded = "";
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
-  void _getData() async {
-    final SharedPreferences prefs = await _prefs;
-    // dataSaved = prefs.getString('task_2')!;
-    setState(() {
-      // listTask[0].titleTask = prefs.getString('task_2')!;
-      dataLoaded = prefs.getString('task_data')!;
-      print("dataLoaded Detail: " + dataLoaded);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +56,35 @@ class StateHeaderScreen extends StatefulWidget {
 }
 
 class HeaderScreen extends State<StateHeaderScreen> {
+  List<TaskItem> listTask = <TaskItem>[];
+  String dataLoaded = "";
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  void _getData() async {
+    final SharedPreferences prefs = await _prefs;
+    // dataSaved = prefs.getString('task_2')!;
+    setState(() {
+      // listTask[0].titleTask = prefs.getString('task_2')!;
+      dataLoaded = prefs.getString('task_data')!;
+      print("dataLoaded Detail: " + dataLoaded);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    if (dataLoaded.isNotEmpty) {
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      listTask = parsed.map<TaskItem>((json) =>
+          TaskItem.fromJson(json)).toList();
+    }
     return Row(
       children: [
         Container(
@@ -98,7 +107,7 @@ class HeaderScreen extends State<StateHeaderScreen> {
           child: GestureDetector(
               onTap: () {
                 print("Click Delete");
-
+                onDelete(0, listTask);
               },
               child: SvgPicture.asset('assets/ic_delete.svg')),
         ),
@@ -107,6 +116,7 @@ class HeaderScreen extends State<StateHeaderScreen> {
   }
 
   void onDelete(int index, List<TaskItem> listTask) async {
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       listTask.removeAt(index);
@@ -116,8 +126,10 @@ class HeaderScreen extends State<StateHeaderScreen> {
       print("jsonstring Saved: "+jsonstring);
 
       prefs.setString('task_data', jsonstring);
-      print("Saved done");
+      print("Delete done");
+      Navigator.pop(context, true);
     });
+
   }
 
 }
