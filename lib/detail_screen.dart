@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:todo_app/TaskItem.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DetailScreenBody();
+    return StatefulDetailBody();
   }
 }
 
-class DetailScreenBody extends StatelessWidget {
-  const DetailScreenBody();
+class StatefulDetailBody extends StatefulWidget {
+  StatefulDetailBody({Key? key}) : super(key: key);
+
+  @override
+  DetailBody createState() {
+    return DetailBody();
+  }
+}
+
+class DetailBody extends State<StatefulDetailBody> {
+  String dataLoaded = "";
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  void _getData() async {
+    final SharedPreferences prefs = await _prefs;
+    // dataSaved = prefs.getString('task_2')!;
+    setState(() {
+      // listTask[0].titleTask = prefs.getString('task_2')!;
+      dataLoaded = prefs.getString('task_data')!;
+      print("dataLoaded Detail: " + dataLoaded);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +47,7 @@ class DetailScreenBody extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 36),
-          _headerScreen(),
+          StateHeaderScreen(),
           SizedBox(height: 18),
           _titleTask(),
           SizedBox(height: 32),
@@ -33,30 +62,64 @@ class DetailScreenBody extends StatelessWidget {
   }
 }
 
-Widget _headerScreen() {
-  return Row(
-    children: [
-      Container(
-        margin: EdgeInsets.only(left: 16.0),
-        child: SvgPicture.asset('assets/ic_back_left.svg'),
-      ),
-      Expanded(
-        child: SizedBox(),
-      ),
-      Container(
-        margin: EdgeInsets.only(right: 20.0),
-        child: SvgPicture.asset('assets/ic_share.svg'),
-      ),
-      Container(
-        margin: EdgeInsets.only(right: 20.0),
-        child: SvgPicture.asset('assets/ic_edit.svg'),
-      ),
-      Container(
-        margin: EdgeInsets.only(right: 12.0),
-        child: SvgPicture.asset('assets/ic_delete.svg'),
-      ),
-    ],
-  );
+class StateHeaderScreen extends StatefulWidget {
+
+  StateHeaderScreen({Key? key}) : super();
+
+  @override
+  HeaderScreen createState() {
+    return HeaderScreen();
+  }
+
+}
+
+class HeaderScreen extends State<StateHeaderScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: 16.0),
+          child: SvgPicture.asset('assets/ic_back_left.svg'),
+        ),
+        Expanded(
+          child: SizedBox(),
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 20.0),
+          child: SvgPicture.asset('assets/ic_share.svg'),
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 20.0),
+          child: SvgPicture.asset('assets/ic_edit.svg'),
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 12.0),
+          child: GestureDetector(
+              onTap: () {
+                print("Click Delete");
+
+              },
+              child: SvgPicture.asset('assets/ic_delete.svg')),
+        ),
+      ],
+    );
+  }
+
+  void onDelete(int index, List<TaskItem> listTask) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      listTask.removeAt(index);
+
+      String jsonstring = json.encode(listTask);
+
+      print("jsonstring Saved: "+jsonstring);
+
+      prefs.setString('task_data', jsonstring);
+      print("Saved done");
+    });
+  }
+
 }
 
 Widget _titleTask() {
@@ -182,7 +245,7 @@ class buttonStatus extends StatelessWidget {
                     Container(
                         width: 120.0,
                         height: 4.0,
-                        margin: EdgeInsets.only(top: 12.0,bottom: 10.0),
+                        margin: EdgeInsets.only(top: 12.0, bottom: 10.0),
                         decoration: BoxDecoration(
                             color: HexColor("#DEDEDE"),
                             borderRadius:
