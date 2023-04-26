@@ -5,6 +5,8 @@ import 'package:todo_app/TaskItem.dart';
 import 'package:todo_app/utils/util_components.dart';
 import 'detail_screen.dart';
 import 'utils/util_components.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class MyHome extends StatelessWidget {
   //MyHome({Key? key, required this.listTask}) : super(key: key);
@@ -31,6 +33,31 @@ class StatefulHomeBody extends StatefulWidget {
 class HomeBody extends State<StatefulHomeBody> {
   String value = "";
 
+  String dataLoaded = "";
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  void _getTaskData() async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      dataLoaded = prefs.getString('task_data')!;
+
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+
+      print("itemData Count: "+ widget.listTask.length.toString());
+    });
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("Home Loaded 2");
+    _getTaskData();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("Home Loaded");
@@ -49,12 +76,26 @@ class HomeBody extends State<StatefulHomeBody> {
             int index = entry.key;
             TaskItem item = entry.value;
             return  GestureDetector(
-                onTap: () {
+                onTap: () async {
                   print("Bidv Home Click Item Task: "+item.titleTask);
-                  Navigator.push(
+
+                  final dataBack = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => DetailScreen()),
                   );
+
+                  if (dataBack) {
+                    setState(() {
+                      print("dataBack Home");
+                      _getTaskData();
+                    });
+                  }
+                  //
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => DetailScreen()),
+                  // );
+
                 },
                 child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
                   priority: item.priority,)

@@ -127,7 +127,11 @@ class HeaderScreen extends State<StateHeaderScreen> {
 
       prefs.setString('task_data', jsonstring);
       print("Delete done");
-      Navigator.pop(context, true);
+
+      Future.delayed(Duration(seconds: 3), () {
+        Navigator.pop(context, true);
+      });
+
     });
 
   }
