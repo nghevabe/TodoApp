@@ -22,7 +22,6 @@ class StatefulDetailBody extends StatefulWidget {
 }
 
 class DetailBody extends State<StatefulDetailBody> {
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -45,14 +44,12 @@ class DetailBody extends State<StatefulDetailBody> {
 }
 
 class StateHeaderScreen extends StatefulWidget {
-
   StateHeaderScreen({Key? key}) : super();
 
   @override
   HeaderScreen createState() {
     return HeaderScreen();
   }
-
 }
 
 class HeaderScreen extends State<StateHeaderScreen> {
@@ -76,14 +73,13 @@ class HeaderScreen extends State<StateHeaderScreen> {
     _getData();
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (dataLoaded.isNotEmpty) {
       final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
 
-      listTask = parsed.map<TaskItem>((json) =>
-          TaskItem.fromJson(json)).toList();
+      listTask =
+          parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
     }
     return Row(
       children: [
@@ -116,26 +112,17 @@ class HeaderScreen extends State<StateHeaderScreen> {
   }
 
   void onDelete(int index, List<TaskItem> listTask) async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      listTask.removeAt(index);
+    listTask.removeAt(index);
+    String jsonstring = json.encode(listTask);
 
-      String jsonstring = json.encode(listTask);
+    await prefs.setString('task_data', jsonstring);
+    print("Delete done");
 
-      print("jsonstring Saved: "+jsonstring);
-
-      prefs.setString('task_data', jsonstring);
-      print("Delete done");
-
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.pop(context, true);
-      });
-
+    Future.delayed(Duration(seconds: 1), () {
+      Navigator.pop(context, true);
     });
-
   }
-
 }
 
 Widget _titleTask() {

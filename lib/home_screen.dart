@@ -54,13 +54,13 @@ class HomeBody extends State<StatefulHomeBody> {
   @override
   void initState() {
     super.initState();
-    print("Home Loaded 2");
+    print("Home Loaded");
     _getTaskData();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Home Loaded");
+    print("Home Loaded 2");
     return SingleChildScrollView(child:
     Column(
       children: [

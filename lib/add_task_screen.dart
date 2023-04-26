@@ -714,7 +714,9 @@ class _BtnAdd extends State<BtnAdd> {
           await prefs.setString('task_data', jsonstring);
 
           // Navigator.of(context, rootNavigator: true).pop(context);
+          Future.delayed(Duration(seconds: 1), () {
           Navigator.pop(context, true);
+          });
         },
         child: Container(
           padding: EdgeInsets.all(16.0),

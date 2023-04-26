@@ -26,6 +26,77 @@ class StatefulManagerBody extends StatefulWidget {
   }
 }
 
+class ManagerBody extends State<StatefulManagerBody> {
+
+  String dataLoaded = "";
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  void _getTaskData() async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      dataLoaded = prefs.getString('task_data')!;
+
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+
+      print("itemData Count: "+ widget.listTask.length.toString());
+    });
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("Manager Loaded");
+    _getTaskData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Manager Loaded 2");
+    return SingleChildScrollView(
+        child: Column(
+          children: [
+            StateCardManager(selectedIndex: 0, listTask: widget.listTask,),
+            _cardBody(),
+            SizedBox(height: 16),
+            Column(
+              children:
+              widget.listTask.asMap().entries.map((entry) {
+                int index = entry.key;
+                TaskItem item = entry.value;
+                return  GestureDetector(
+                    onTap: () {
+                      print("Bidv Click Item Task: "+item.titleTask);
+                      onDelete(index, widget.listTask);
+                    },
+                    child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
+                      priority: item.priority,)
+                );
+              }).toList(),
+            ),
+          ],
+        ));
+  }
+
+  void onDelete(int index, List<TaskItem> listTask) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      listTask.removeAt(index);
+
+      String jsonstring = json.encode(listTask);
+
+      print("jsonstring Saved: "+jsonstring);
+
+      prefs.setString('task_data', jsonstring);
+      print("Saved done");
+    });
+  }
+
+}
+
 Widget _headerScreen() {
 
   List<DateItem> listDate = <DateItem>[
@@ -81,31 +152,6 @@ class StateCardHeader extends StatefulWidget {
 
 class CardHeader extends State<StateCardHeader> {
 
-  String dataLoaded = "";
-
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  void _getTaskData() async {
-    final SharedPreferences prefs = await _prefs;
-
-    setState(() {
-      dataLoaded = prefs.getString('task_data')!;
-
-      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
-
-      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
-
-      print("itemData Count: "+ widget.listTask.length.toString());
-    });
-
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    print("Manager Loaded 2");
-    _getTaskData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -125,50 +171,7 @@ class CardHeader extends State<StateCardHeader> {
   }
 }
 
-class ManagerBody extends State<StatefulManagerBody> {
-  @override
-  Widget build(BuildContext context) {
-    print("Manager Loaded");
-    return SingleChildScrollView(
-        child: Column(
-          children: [
-            StateCardManager(selectedIndex: 0, listTask: widget.listTask,),
-            _cardBody(),
-            SizedBox(height: 16),
-            Column(
-              children:
-              widget.listTask.asMap().entries.map((entry) {
-                int index = entry.key;
-                TaskItem item = entry.value;
-                return  GestureDetector(
-                    onTap: () {
-                      print("Bidv Click Item Task: "+item.titleTask);
-                      onDelete(index, widget.listTask);
-                    },
-                    child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
-                      priority: item.priority,)
-                );
-              }).toList(),
-            ),
-          ],
-        ));
-  }
 
-  void onDelete(int index, List<TaskItem> listTask) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      listTask.removeAt(index);
-
-      String jsonstring = json.encode(listTask);
-
-      print("jsonstring Saved: "+jsonstring);
-
-      prefs.setString('task_data', jsonstring);
-      print("Saved done");
-    });
-  }
-
-}
 
 class StateTabMenu extends StatefulWidget {
   StateTabMenu({Key? key, required this.selectedIndex}) : super();
