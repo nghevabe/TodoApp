@@ -103,7 +103,26 @@ class HeaderScreen extends State<StateHeaderScreen> {
           child: GestureDetector(
               onTap: () {
                 print("Click Delete");
-                onDelete(0, listTask);
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    content: const Text('Bạn có chắc muốn xóa Task này không ?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'false'),
+                        child: const Text('Quay Lại'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, 'true');
+                          onDelete(0, listTask);
+                        },
+                        child: const Text('Đồng Ý'),
+                      ),
+                    ],
+                  ),
+                );
+                // onDelete(0, listTask);
               },
               child: SvgPicture.asset('assets/ic_delete.svg')),
         ),
