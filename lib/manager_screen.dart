@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/DateItem.dart';
 import 'package:todo_app/TaskItem.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/utils/util_components.dart';
+import 'dart:convert';
 
 class MyManager extends StatelessWidget {
   List<TaskItem> listTask;
@@ -20,19 +22,90 @@ class StatefulManagerBody extends StatefulWidget {
 
   @override
   ManagerBody createState() {
-    return new ManagerBody(listTask: listTask);
+    return ManagerBody();
   }
+}
+
+class ManagerBody extends State<StatefulManagerBody> {
+
+  String dataLoaded = "";
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  void _getTaskData() async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      dataLoaded = prefs.getString('task_data')!;
+
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+
+      print("itemData Count: "+ widget.listTask.length.toString());
+    });
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("Manager Loaded");
+    _getTaskData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Manager Loaded 2");
+    return SingleChildScrollView(
+        child: Column(
+          children: [
+            StateCardManager(selectedIndex: 0, listTask: widget.listTask,),
+            _cardBody(),
+            SizedBox(height: 16),
+            Column(
+              children:
+              widget.listTask.asMap().entries.map((entry) {
+                int index = entry.key;
+                TaskItem item = entry.value;
+                return  GestureDetector(
+                    onTap: () {
+                      print("Bidv Click Item Task: "+item.titleTask);
+                      onDelete(index, widget.listTask);
+                    },
+                    child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
+                      priority: item.priority,)
+                );
+              }).toList(),
+            ),
+          ],
+        ));
+  }
+
+  void onDelete(int index, List<TaskItem> listTask) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      listTask.removeAt(index);
+
+      String jsonstring = json.encode(listTask);
+
+      print("jsonstring Saved: "+jsonstring);
+
+      prefs.setString('task_data', jsonstring);
+      print("Saved done");
+    });
+  }
+
 }
 
 Widget _headerScreen() {
 
   List<DateItem> listDate = <DateItem>[
     DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),
-    DateItem("Mon", "8", false),];
+    DateItem("Tue", "9", false),
+    DateItem("Wed", "10", false),
+    DateItem("Thu", "11", false),
+    DateItem("Fri", "12", false),
+    DateItem("Sat", "13", false),];
 
   return Container(
       decoration: const BoxDecoration(
@@ -64,49 +137,41 @@ Widget _headerScreen() {
   );
 }
 
-Widget _cardHeader() {
-  return Container(
-    width: double.infinity,
-    margin: EdgeInsets.only(top: 180.0),
-    alignment: Alignment.topLeft,
-    child: Container(
-      decoration:  const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          )
-      ),
-      child: StateTabMenu(selectedIndex: 0),
-    ),
-  );
-}
+class StateCardHeader extends StatefulWidget {
 
-class ManagerBody extends State<StatefulManagerBody> {
-  ManagerBody({Key? key, required this.listTask}) : super();
+  StateCardHeader({Key? key, required this.selectedIndex, required this.listTask}) : super();
+  int selectedIndex;
   List<TaskItem> listTask;
 
-  String value = "";
+  @override
+  CardHeader createState() {
+    return CardHeader();
+  }
+
+}
+
+class CardHeader extends State<StateCardHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
-          children: [
-            _cardManager(),
-            _cardBody(),
-            SizedBox(height: 16),
-            Column(
-              children:
-              listTask.map((item) {
-                return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-                  priority: item.priority,);
-              }).toList(),
-            ),
-          ],
-        ));
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 180.0),
+      alignment: Alignment.topLeft,
+      child: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            )),
+        child: StateTabMenu(selectedIndex: 0),
+      ),
+    );
   }
 }
+
+
 
 class StateTabMenu extends StatefulWidget {
   StateTabMenu({Key? key, required this.selectedIndex}) : super();
@@ -114,25 +179,22 @@ class StateTabMenu extends StatefulWidget {
 
   @override
   TabMenu createState() {
-    return TabMenu(selectedIndex: selectedIndex);
+    return TabMenu();
   }
 
 }
 
 class TabMenu extends State<StateTabMenu> {
-  TabMenu({Key? key, required this.selectedIndex}) : super();
-  int selectedIndex;
-
   @override
   Widget build(BuildContext context) {
     String colorTab1 = "#FFFFFF";
     String colorTab2 = "#FFFFFF";
     String colorTab3 = "#FFFFFF";
-    if (selectedIndex == 0) {
+    if (widget.selectedIndex == 0) {
       colorTab1 = "#855B28";
       colorTab2 = "#FFFFFF";
       colorTab3 = "#FFFFFF";
-    } else if (selectedIndex == 1) {
+    } else if (widget.selectedIndex == 1) {
       colorTab1 = "#FFFFFF";
       colorTab2 = "#855B28";
       colorTab3 = "#FFFFFF";
@@ -230,7 +292,7 @@ class TabMenu extends State<StateTabMenu> {
 
   void onTapHandler(int index) {
     setState(() {
-      selectedIndex = index;
+      widget.selectedIndex = index;
       StateTabMenu(selectedIndex: index);
     });
   }
@@ -245,16 +307,32 @@ Widget _cardBody() {
   );
 }
 
-Widget _cardManager(){
+class StateCardManager extends StatefulWidget{
+  StateCardManager({Key? key, required this.selectedIndex, required this.listTask})
+      : super();
+  int selectedIndex;
+  List<TaskItem> listTask;
 
-  return Stack(
-    children: <Widget>[
-      _headerScreen(),
-      _cardHeader(),
-    ],
-  );
+  @override
+  CardManager createState() {
+    return CardManager();
+  }
+
 }
 
+class CardManager extends State<StateCardManager> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        _headerScreen(),
+        StateCardHeader(selectedIndex: widget.selectedIndex, listTask: widget.listTask),
+      ],
+    );
+
+  }
+
+}
 
 class StatefulListItemDate extends StatefulWidget {
   StatefulListItemDate({Key? key, required this.listDate}) : super(key: key);
@@ -262,15 +340,11 @@ class StatefulListItemDate extends StatefulWidget {
 
   @override
   ListItemDate createState() {
-    return ListItemDate(listDate: listDate);
+    return ListItemDate();
   }
 }
 
 class ListItemDate extends State<StatefulListItemDate> {
-  ListItemDate({Key? key, required this.listDate}) : super();
-  List<DateItem> listDate;
-
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -279,7 +353,7 @@ class ListItemDate extends State<StatefulListItemDate> {
         margin: EdgeInsets.only(top: 8.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: listDate.asMap().entries.map((entry) {
+          children: widget.listDate.asMap().entries.map((entry) {
             int index = entry.key;
             DateItem item = entry.value;
             return GestureDetector(
@@ -298,36 +372,18 @@ class ListItemDate extends State<StatefulListItemDate> {
   void onClickItem(int index) {
     setState(() {
       clearListDate();
-      listDate[index].isSelected = true;
-      StatefulListItemDate(listDate: listDate);
+      widget.listDate[index].isSelected = true;
+      StatefulListItemDate(listDate: widget.listDate);
     });
   }
 
   void clearListDate(){
-    for (int i = 0; i < listDate.length; i++) {
-      listDate[i].isSelected = false;
+    for (int i = 0; i < widget.listDate.length; i++) {
+      widget.listDate[i].isSelected = false;
     }
   }
   
 }
-
-// SingleChildScrollView(
-// scrollDirection: Axis.horizontal,
-// child: Container(
-// margin: EdgeInsets.only(top: 8.0),
-// child: Row(
-// children: [
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// _itemDate(),
-// ],
-// ),
-// ),
-// ),
 
 class ItemDateCard extends StatelessWidget {
   ItemDateCard({Key? key,
@@ -381,22 +437,3 @@ class ItemDateCard extends StatelessWidget {
     );
   }
 }
-
-// class ListItemDate extends State<StatefulItemDate> {
-//   ListItemDate({Key? key, required this.listDate}) : super();
-//   List<DateItem> listDate;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: ListView.builder(
-//         itemCount: listDate.length,
-//         scrollDirection: Axis.horizontal,
-//         shrinkWrap: true,
-//         itemBuilder: (context,index)=> ItemDateCard(dayOfWeek: listDate[index].dayOfWeek,
-//             dayOfMonth: listDate[index].dayOfMonth),
-//       ),
-//     );
-//   }
-//
-// }

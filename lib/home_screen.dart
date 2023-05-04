@@ -3,7 +3,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/TaskItem.dart';
 import 'package:todo_app/utils/util_components.dart';
+import 'detail_screen.dart';
 import 'utils/util_components.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class MyHome extends StatelessWidget {
   //MyHome({Key? key, required this.listTask}) : super(key: key);
@@ -23,19 +26,41 @@ class StatefulHomeBody extends StatefulWidget {
 
   @override
   HomeBody createState() {
-    return new HomeBody(listTask: listTask);
+    return new HomeBody();
   }
 }
 
 class HomeBody extends State<StatefulHomeBody> {
-
-  HomeBody({Key? key, required this.listTask}) : super();
-  List<TaskItem> listTask;
   String value = "";
 
+  String dataLoaded = "";
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  void _getTaskData() async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      dataLoaded = prefs.getString('task_data')!;
+
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+
+      print("itemData Count: "+ widget.listTask.length.toString());
+    });
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("Home Loaded");
+    _getTaskData();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("Home Loaded 2");
     return SingleChildScrollView(child:
     Column(
       children: [
@@ -47,10 +72,39 @@ class HomeBody extends State<StatefulHomeBody> {
         SizedBox(height: 16),
         Column(
           children:
-          listTask.map((item) {
-            return CardTaskItem(titleTask: "Sleep", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-              priority: 0,);
+          widget.listTask.asMap().entries.map((entry) {
+            int index = entry.key;
+            TaskItem item = entry.value;
+            return  GestureDetector(
+                onTap: () async {
+                  print("Bidv Home Click Item Task: "+item.titleTask);
+
+                  final dataBack = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DetailScreen()),
+                  );
+
+                  if (dataBack) {
+                    setState(() {
+                      print("dataBack Home");
+                      _getTaskData();
+                    });
+                  }
+                  //
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => DetailScreen()),
+                  // );
+
+                },
+                child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
+                  priority: item.priority,)
+            );
           }).toList(),
+          // widget.listTask.map((item) {
+          //   return CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
+          //     priority: 0,);
+          // }).toList(),
         ),
         SizedBox(height: 32),
       ],
@@ -111,7 +165,7 @@ Widget _titleDate() {
   return Container(
     margin: EdgeInsets.only(left: 12.0),
     width: 200,
-    child: const Text("Thứ 3, 27 tháng 12, 2022",
+    child: const Text("Thứ 3, 21 tháng 2, 2023",
         textAlign: TextAlign.left,
         style: TextStyle(
           fontSize: 14.0,
@@ -150,7 +204,7 @@ Widget _listOverView() {
     child: Column(
       children: <Widget>[
         _upperOverView(),
-        SizedBox(height: 16),
+        SizedBox(height: 4),
         _lowerOverView()
       ],
     ),
@@ -162,10 +216,12 @@ Widget _upperOverView() {
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[CardOverView(taskNumber: "5",contend: "Todo", textColor: "#855B28"),
-          CardOverView(taskNumber: "8",contend: "In Progress", textColor: "#000000")],
-      )
-  );
+        children: const <Widget>[
+          CardOverView(taskNumber: "5", contend: "Todo", textColor: "#855B28"),
+          CardOverView(
+              taskNumber: "8", contend: "In Progress", textColor: "#000000")
+        ],
+      ));
 }
 
 Widget _lowerOverView() {
@@ -234,14 +290,14 @@ class CardOverView extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5), //color of shadow
-            spreadRadius: 1, //spread radius
-            blurRadius: 8, // blur radius
+            color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+            spreadRadius: 1.0, //spread radius
+            blurRadius: 3, // blur radius
             offset: const Offset(5, 5), // changes position of shadow
           ),
         ],
       ),
-      margin: const EdgeInsets.only(left:8.0, right: 8.0),
+      margin: const EdgeInsets.only(left:2.0, right: 2.0),
 
     );
   }

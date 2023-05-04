@@ -1,17 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/TaskItem.dart';
+import 'package:todo_app/add_task_screen.dart';
 import 'package:todo_app/home_screen.dart';
-
 import 'manager_screen.dart';
 import 'notification_screen.dart';
 import 'setting_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,22 +25,24 @@ class MainApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StatefulMainScreen(),
+      home: const StatefulMainScreen(),
     );
   }
 }
 
 class StatefulMainScreen extends StatefulWidget {
-  StatefulMainScreen({Key? key}) : super(key: key);
+  const StatefulMainScreen({Key? key}) : super(key: key);
 
   @override
-  MainScreen createState() {
-    return new MainScreen(title: 'Home',);
+  State<StatefulWidget> createState() {
+    return MainScreen();
   }
 
 }
 
 class MainScreen extends State<StatefulMainScreen> {
+
+  String dataLoaded = "";
   List<TaskItem> listTask = <TaskItem>[
     TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1),
     TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2),
@@ -49,30 +56,106 @@ class MainScreen extends State<StatefulMainScreen> {
   String icColor3 = "#5F6368";
   String icColor4 = "#5F6368";
 
-  //Widget _Home = MyHome(listTask);
-  Widget _Noti = MyNotification();
-  Widget _Setting = MySetting();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  MainScreen({Key? key, required this.title}) : super();
-  final String title;
-  String value = "";
+  void _getData() async {
+    final SharedPreferences prefs = await _prefs;
+    // dataSaved = prefs.getString('task_2')!;
+    setState(() {
+      // listTask[0].titleTask = prefs.getString('task_2')!;
+      dataLoaded = prefs.getString('task_data')!;
+      print("dataLoaded Main: "+dataLoaded);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    if (dataLoaded.isNotEmpty) {
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      listTask = parsed.map<TaskItem>((json) =>
+          TaskItem.fromJson(json)).toList();
+    }
+
+    if(selectedIndex == 0) {
+      icColor1 = "#855B28";
+      icColor2 = "#5F6368";
+      icColor3 = "#5F6368";
+      icColor4 = "#5F6368";
+    } else if(selectedIndex==1) {
+      icColor1 = "#5F6368";
+      icColor2 = "#855B28";
+      icColor3 = "#5F6368";
+      icColor4 = "#5F6368";
+
+    } else if(selectedIndex==2) {
+      icColor1 = "#5F6368";
+      icColor2 = "#5F6368";
+      icColor3 = "#855B28";
+      icColor4 = "#5F6368";
+
+    } else {
+      icColor1 = "#5F6368";
+      icColor2 = "#5F6368";
+      icColor3 = "#5F6368";
+      icColor4 = "#855B28";
+
+    }
+
+    void onTapHandler(int index)  {
+      setState(() {
+        _getData();
+        selectedIndex = index;
+      });
+    }
+
+    void onAddItem()  {
+      setState(() {
+        listTask.add(taskItem);
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: getBody(),
+      body: StatefulGetBody(selectedIndex: selectedIndex, listTaskItem: listTask),
       floatingActionButton: FloatingActionButton(
         //Floating action button on Scaffold
-        onPressed: () {
-          onAddItem();
+        onPressed: () async {
+
+          final dataBack = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddTaskScreen()),
+          );
+
+          if (dataBack) {
+            setState(() {
+              print("dataBack");
+              _getData();
+            });
+          }
+
+          // TaskItem item = TaskItem("Task Bidv", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3);
+          //
+          // String jsonstring = json.encode(listTask);
+          // print("json data: "+ jsonstring);
+          //
+          // onAddItem();
+
           //code to execute on button press
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: HexColor("#855B28"),//icon inside button
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar( //bottom navigation bar on scaffold
-        shape: CircularNotchedRectangle(), //shape of notch
+        shape: const CircularNotchedRectangle(), //shape of notch
         notchMargin: 5, //notche margin between floating button and bottom appbar
         child: Row( //children inside bottom appbar
           mainAxisSize: MainAxisSize.max,
@@ -86,47 +169,37 @@ class MainScreen extends State<StatefulMainScreen> {
         ),
       ),
     );
+
   }
 
-  void onTapHandler(int index)  {
-    this.setState(() {
-      this.selectedIndex = index;
-    });
+}
+
+class StatefulGetBody extends StatefulWidget {
+  StatefulGetBody({Key? key, required this.selectedIndex,
+    required this.listTaskItem}) : super();
+  int selectedIndex;
+  List<TaskItem> listTaskItem;
+
+  @override
+  State<StatefulWidget> createState() {
+    return GetBody();
   }
 
-  void onAddItem()  {
-    this.setState(() {
-      listTask.add(taskItem);
-    });
-  }
+}
 
-  Widget getBody()  {
-    if(this.selectedIndex == 0) {
-      this.icColor1 = "#855B28";
-      this.icColor2 = "#5F6368";
-      this.icColor3 = "#5F6368";
-      this.icColor4 = "#5F6368";
-      return MyHome(listTask);
-    } else if(this.selectedIndex==1) {
-      this.icColor1 = "#5F6368";
-      this.icColor2 = "#855B28";
-      this.icColor3 = "#5F6368";
-      this.icColor4 = "#5F6368";
-      return MyManager(listTask);
-    } else if(this.selectedIndex==2) {
-      this.icColor1 = "#5F6368";
-      this.icColor2 = "#5F6368";
-      this.icColor3 = "#855B28";
-      this.icColor4 = "#5F6368";
-      return this._Noti;
+class GetBody extends State<StatefulGetBody>  {
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.selectedIndex == 0) {
+      return MyHome(widget.listTaskItem);
+    } else if (widget.selectedIndex == 1) {
+      return MyManager(widget.listTaskItem);
+    } else if (widget.selectedIndex == 2) {
+      return MyNotification();
     } else {
-      this.icColor1 = "#5F6368";
-      this.icColor2 = "#5F6368";
-      this.icColor3 = "#5F6368";
-      this.icColor4 = "#855B28";
-      return this._Setting;
+      return MySetting();
     }
   }
-
 }
 

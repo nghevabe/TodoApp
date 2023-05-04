@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_app/TaskItem.dart';
 
 
 class CardTaskItem extends StatelessWidget {
@@ -146,10 +145,10 @@ class CardTaskItem extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5), //color of shadow
-            spreadRadius: 0.2, //spread radius
-            blurRadius: 4, // blur radius
-            offset: const Offset(0, 0), // changes position of shadow
+            color: HexColor("#C4C4C4").withOpacity(0.2), //color of shadow
+            spreadRadius: 1.0, //spread radius
+            blurRadius: 3, // blur radius
+            offset: const Offset(4, 4), // changes position of shadow
           ),
         ],
       ),
