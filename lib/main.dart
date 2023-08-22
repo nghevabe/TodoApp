@@ -64,7 +64,12 @@ class MainScreen extends State<StatefulMainScreen> {
     setState(() {
       // listTask[0].titleTask = prefs.getString('task_2')!;
       dataLoaded = prefs.getString('task_data')!;
+
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+
+      listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
       print("dataLoaded Main: "+dataLoaded);
+      print("itemData Count Main: "+ listTask.length.toString());
     });
   }
 
@@ -77,12 +82,12 @@ class MainScreen extends State<StatefulMainScreen> {
   @override
   Widget build(BuildContext context) {
 
-    if (dataLoaded.isNotEmpty) {
-      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
-
-      listTask = parsed.map<TaskItem>((json) =>
-          TaskItem.fromJson(json)).toList();
-    }
+    // if (dataLoaded.isNotEmpty) {
+    //   final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+    //
+    //   listTask = parsed.map<TaskItem>((json) =>
+    //       TaskItem.fromJson(json)).toList();
+    // }
 
     if(selectedIndex == 0) {
       icColor1 = "#855B28";

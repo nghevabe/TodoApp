@@ -140,7 +140,7 @@ class HeaderScreen extends State<StateHeaderScreen> {
     await prefs.setString('task_data', jsonstring);
     print("Delete done");
 
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       Navigator.pop(context, true);
     });
   }
