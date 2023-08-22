@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:todo_app/TaskItem.dart';
-import 'package:todo_app/add_task_screen.dart';
-import 'package:todo_app/home_screen.dart';
-import 'manager_screen.dart';
-import 'notification_screen.dart';
-import 'setting_screen.dart';
+import 'package:todo_app/ui/base_component/task_item.dart';
+import 'package:todo_app/ui/add/add_task_screen.dart';
+import 'package:todo_app/ui/home/home_screen.dart';
+import '../manager/manager_screen.dart';
+import '../notification/notification_screen.dart';
+import '../setting/setting_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

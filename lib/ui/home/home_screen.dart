@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_app/TaskItem.dart';
-import 'package:todo_app/utils/util_components.dart';
-import 'detail_screen.dart';
-import 'utils/util_components.dart';
+import 'package:todo_app/ui/base_component/task_item.dart';
+import 'package:todo_app/ui/base_component/util_components.dart';
+import '../detail/detail_screen.dart';
+import '../base_component/util_components.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 

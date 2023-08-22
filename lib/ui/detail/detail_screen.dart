@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:todo_app/TaskItem.dart';
+import 'package:todo_app/ui/base_component/task_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 

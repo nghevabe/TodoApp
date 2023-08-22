@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:todo_app/DateItem.dart';
-import 'package:todo_app/TaskItem.dart';
+import 'package:todo_app/ui/base_component/date_item.dart';
+import 'package:todo_app/ui/base_component/task_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/utils/util_components.dart';
+import 'package:todo_app/ui/base_component/util_components.dart';
 import 'dart:convert';
 
-import 'detail_screen.dart';
+import '../detail/detail_screen.dart';
 
 class MyManager extends StatelessWidget {
   List<TaskItem> listTask;
