@@ -10,6 +10,38 @@ import '../notification/notification_screen.dart';
 import '../setting/setting_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/*
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Set cache app
+  initCacheImageNetworkMemory(1024 * 1024 * 500);
+  setUpLocator();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting("vi");
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Cash Centre',
+      translationsKeys:
+          AppTranslationsKey([CashCentreTranslationsKeys()]).translationsKeys(),
+      theme: cashCentreThemeData,
+      locale: const Locale('vi', 'VI'),
+      initialBinding: AppBinding(),
+      getPages: AppPage.pages,
+      initialRoute: AppRouteName.login,
+    );
+  }
+}
+
+ */
+
 void main() {
   runApp(const MainApp());
 }
