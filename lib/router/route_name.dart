@@ -11,4 +11,5 @@ class AppRouteName {
   static String detailTelegram = '/detailTelegram';
   static String faceValueStructure = '/faceValueStructure';
   static String funds = '/funds';
+  static String main = '/main';
 }
