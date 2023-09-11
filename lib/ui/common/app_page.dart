@@ -10,7 +10,7 @@ class AppPage {
 
     GetPage(
       name: AppRouteName.main,
-      page: () => const MainView(),
+      page: () => MainView(),
       binding: MainBinding(),
     ),
 

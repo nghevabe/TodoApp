@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../base_view/base_view.dart';
+import '../base_component/task_item.dart';
+import '../home/home_view.dart';
 import 'main_controller.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class MainView extends BaseView<MainController> {
-  const MainView({super.key});
+   MainView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class MainView extends BaseView<MainController> {
 
   Widget _getBody(int index) {
     if (index == 0) {
-      return Center(child: Text("Home1"));
+      return HomeView(listTask);
     } else if (index == 1) {
       return Center(child: Text("Home2"));
     } else if (index == 2) {
@@ -74,4 +76,11 @@ class MainView extends BaseView<MainController> {
       return Center(child: Text("Home4"));
     }
   }
+
+  List<TaskItem> listTask = <TaskItem>[
+    TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 1),
+    TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 2),
+    TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),
+    TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 3),];
+
 }
