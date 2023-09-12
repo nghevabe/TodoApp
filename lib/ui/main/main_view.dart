@@ -67,7 +67,7 @@ class MainView extends BaseView<MainController> {
 
   Widget _getBody(int index) {
     if (index == 0) {
-      return HomeView(listTask);
+      return HomeView();
     } else if (index == 1) {
       return Center(child: Text("Home2"));
     } else if (index == 2) {

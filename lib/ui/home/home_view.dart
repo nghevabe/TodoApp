@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 
+import '../base_component/util_components.dart';
 import 'home_controller.dart';
 
 class HomeView extends BaseView<HomeController> {
   //MyHome({Key? key, required this.listTask}) : super(key: key);
 
-  List<TaskItem> listTask;
-  HomeView(this.listTask, {Key? key}) : super(key: key);
+  // List<TaskItem> listTask;
+  HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // return StatefulHomeBody(listTask: listTask);
-    return _homeBody(context);
+    controller.getTaskData();
+    return Obx(() => _homeBody(context, controller.listTaskData)) ;
   }
 
 }
 
-Widget _homeBody(BuildContext context) {
+Widget _homeBody(BuildContext context,List<TaskItem> listTask) {
   return SingleChildScrollView(child:
   Column(
     children: [
@@ -30,44 +33,38 @@ Widget _homeBody(BuildContext context) {
       _listOverView(),
       _titleHighPriority(),
       SizedBox(height: 16),
-      /*
+
       Column(
         children:
-        widget.listTask.asMap().entries.map((entry) {
+        listTask.asMap().entries.map((entry) {
           int index = entry.key;
           TaskItem item = entry.value;
           return  GestureDetector(
               onTap: () async {
                 print("Bidv Home Click Item Task: "+item.titleTask);
 
-                final dataBack = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetailScreen()),
-                );
-
-                if (dataBack) {
-                  setState(() {
-                    print("dataBack Home");
-                    _getTaskData();
-                  });
-                }
-                //
-                // Navigator.push(
+                // final dataBack = await Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => DetailScreen()),
                 // );
+                //
+                // if (dataBack) {
+                //   setState(() {
+                //     print("dataBack Home");
+                //     _getTaskData();
+                //   });
+                // }
+
 
               },
               child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
                 priority: item.priority,)
           );
         }).toList(),
-        // widget.listTask.map((item) {
-        //   return CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
-        //     priority: 0,);
-        // }).toList(),
+
       ),
-      */
+
+
       SizedBox(height: 32),
     ],
   ));
