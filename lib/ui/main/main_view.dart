@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../base_view/base_view.dart';
 import '../base_component/task_item.dart';
 import '../home/home_view.dart';
+import '../manager/manager_view.dart';
 import 'main_controller.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -69,7 +70,7 @@ class MainView extends BaseView<MainController> {
     if (index == 0) {
       return HomeView();
     } else if (index == 1) {
-      return Center(child: Text("Home2"));
+      return ManagerView();
     } else if (index == 2) {
       return Center(child: Text("Home3"));
     } else {
