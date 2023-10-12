@@ -13,47 +13,42 @@ class ManagerView extends BaseView<ManagerController> {
   @override
   Widget build(BuildContext context) {
     controller.getTaskData();
-    return Obx(() => _managerBody(context, controller.listTaskData)) ;
+    return Obx(() => _managerBody(context, controller));
   }
-
 }
 
-Widget _managerBody(BuildContext context, List<TaskItem> listTask) {
-
+Widget _managerBody(BuildContext context, ManagerController controller) {
   return SingleChildScrollView(
       child: Column(
-        children: [
-          _cardManager(0, listTask),
-          _cardBody(),
-          SizedBox(height: 16),
-          Column(
-            children:
-            listTask.asMap().entries.map((entry) {
-              int index = entry.key;
-              TaskItem item = entry.value;
-              return  GestureDetector(
-                  onTap: () async {
-                    print("Bidv Click Item Task: "+item.titleTask);
+    children: [
+      _cardManager(controller),
+      _cardBody(),
+      SizedBox(height: 16),
+      Column(
+        children: controller.listTaskData.asMap().entries.map((entry) {
+          int index = entry.key;
+          TaskItem item = entry.value;
+          return GestureDetector(
+              onTap: () async {
+                print("Bidv Click Item Task: " + item.titleTask);
 
-                    // final dataBack = await Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => DetailScreen()),
-                    // );
-
-                  },
-                  child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
-                    priority: item.priority,)
-              );
-            }).toList(),
-          ),
-        ],
-      ));
-
+                // final dataBack = await Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => DetailScreen()),
+                // );
+              },
+              child: CardTaskItem(
+                titleTask: item.titleTask,
+                contendTask: item.contendTask,
+                priority: item.priority,
+              ));
+        }).toList(),
+      ),
+    ],
+  ));
 }
 
-Widget _tabMenu(int selectedIndex) {
-
-
+Widget _tabMenu(ManagerController controller) {
   return Container(
     padding: EdgeInsets.only(top: 16.0),
     child: Row(
@@ -63,7 +58,7 @@ Widget _tabMenu(int selectedIndex) {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-
+                  controller.clickOnTab(0);
                 },
                 child: Container(
                   child: Text(
@@ -80,7 +75,7 @@ Widget _tabMenu(int selectedIndex) {
               Container(
                 height: 2,
                 width: 50,
-                color: HexColor('#FFFFFF'),
+                color: HexColor(controller.colorTab1.value),
               )
             ],
           ),
@@ -90,14 +85,13 @@ Widget _tabMenu(int selectedIndex) {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  print("Clike 2");
-
+                  controller.clickOnTab(1);
                 },
                 child: Container(
                   child: Text(
                     "In progress",
                     style:
-                    TextStyle(color: HexColor("#855B28"), fontSize: 16.0),
+                        TextStyle(color: HexColor("#855B28"), fontSize: 16.0),
                   ),
                 ),
               ),
@@ -105,7 +99,7 @@ Widget _tabMenu(int selectedIndex) {
               Container(
                 height: 2,
                 width: 50,
-                color: HexColor('#FFFFFF'),
+                color: HexColor(controller.colorTab2.value),
               )
             ],
           ),
@@ -116,7 +110,7 @@ Widget _tabMenu(int selectedIndex) {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      print("Clike 3");
+                      controller.clickOnTab(2);
                     },
                     child: Container(
                       child: Text(
@@ -129,7 +123,7 @@ Widget _tabMenu(int selectedIndex) {
                 Container(
                   height: 2,
                   width: 50,
-                  color: HexColor('#FFFFFF'),
+                  color: HexColor(controller.colorTab3.value),
                 )
               ],
             ),
@@ -138,22 +132,18 @@ Widget _tabMenu(int selectedIndex) {
       ],
     ),
   );
-
 }
 
-Widget _cardManager(int selectedIndex, List<TaskItem> listTask) {
-
+Widget _cardManager(ManagerController controller) {
   return Stack(
     children: <Widget>[
       _headerScreen(),
-      _cardHeader(selectedIndex, listTask),
+      _cardHeader(controller),
     ],
   );
-
 }
 
-Widget _cardHeader(int selectedIndex, List<TaskItem> listTask) {
-
+Widget _cardHeader(ManagerController controller) {
   return Container(
     width: double.infinity,
     margin: EdgeInsets.only(top: 180.0),
@@ -165,10 +155,9 @@ Widget _cardHeader(int selectedIndex, List<TaskItem> listTask) {
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
           )),
-      child: _tabMenu(0),
+      child: _tabMenu(controller),
     ),
   );
-  
 }
 
 Widget _cardBody() {
@@ -180,14 +169,14 @@ Widget _cardBody() {
 }
 
 Widget _headerScreen() {
-
   List<DateItem> listDate = <DateItem>[
     DateItem("Mon", "8", false),
     DateItem("Tue", "9", false),
     DateItem("Wed", "10", false),
     DateItem("Thu", "11", false),
     DateItem("Fri", "12", false),
-    DateItem("Sat", "13", false),];
+    DateItem("Sat", "13", false),
+  ];
 
   return Container(
       decoration: const BoxDecoration(
@@ -212,15 +201,13 @@ Widget _headerScreen() {
             ),
           ),
           // listDate
-          SizedBox(height:12),
+          SizedBox(height: 12),
           _listItemDate(listDate)
         ],
-      )
-  );
+      ));
 }
 
 Widget _listItemDate(List<DateItem> listDate) {
-
   return SingleChildScrollView(
     scrollDirection: Axis.horizontal,
     child: Container(
@@ -231,20 +218,14 @@ Widget _listItemDate(List<DateItem> listDate) {
               int index = entry.key;
               DateItem item = entry.value;
               return GestureDetector(
-                  onTap: () {
-
-                  },
-                  child: _itemDateCard(item.dayOfWeek,
-                      item.dayOfMonth, item.isSelected));
-            }).toList()
-        )
-    ),
+                  onTap: () {},
+                  child: _itemDateCard(
+                      item.dayOfWeek, item.dayOfMonth, item.isSelected));
+            }).toList())),
   );
-
-
 }
 
-Widget _itemDateCard(String dayOfWeek, String dayOfMonth, bool isSelected)  {
+Widget _itemDateCard(String dayOfWeek, String dayOfMonth, bool isSelected) {
   double transparentValue = 0.0;
 
   if (isSelected) {
@@ -258,8 +239,7 @@ Widget _itemDateCard(String dayOfWeek, String dayOfMonth, bool isSelected)  {
     padding: EdgeInsets.only(left: 8.0, top: 12.0, right: 8.0, bottom: 12.0),
     decoration: BoxDecoration(
         color: Colors.grey.withOpacity(transparentValue),
-        borderRadius:
-        BorderRadius.all(Radius.circular(16))),
+        borderRadius: BorderRadius.all(Radius.circular(16))),
     child: Column(
       children: [
         Container(
@@ -285,5 +265,4 @@ Widget _itemDateCard(String dayOfWeek, String dayOfMonth, bool isSelected)  {
       ],
     ),
   );
-
 }

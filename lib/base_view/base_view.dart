@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'base_controller.dart';
 
 abstract class BaseView<C extends BaseController> extends GetView<C> {
-  const BaseView({super.key});
+  const BaseView({Key? key}) : super(key: key);
 
   Widget body({required Widget child}) {
     return GestureDetector(

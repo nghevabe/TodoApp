@@ -9,7 +9,7 @@ import 'main_controller.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class MainView extends BaseView<MainController> {
-   MainView({super.key});
+   MainView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
