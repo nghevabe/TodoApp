@@ -4,20 +4,18 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
-
-import '../base_component/date_item.dart';
 import '../base_component/util_components.dart';
 import 'manager_controller.dart';
 
 class ManagerView extends BaseView<ManagerController> {
   @override
   Widget build(BuildContext context) {
-    controller.getTaskData();
     return Obx(() => _managerBody(context, controller));
   }
 }
 
 Widget _managerBody(BuildContext context, ManagerController controller) {
+  print("_managerBody");
   return SingleChildScrollView(
       child: Column(
     children: [
@@ -49,6 +47,7 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
 }
 
 Widget _tabMenu(ManagerController controller) {
+  print("tabMenu");
   return Container(
     padding: EdgeInsets.only(top: 16.0),
     child: Row(
@@ -137,7 +136,7 @@ Widget _tabMenu(ManagerController controller) {
 Widget _cardManager(ManagerController controller) {
   return Stack(
     children: <Widget>[
-      _headerScreen(),
+      _headerScreen(controller),
       _cardHeader(controller),
     ],
   );
@@ -168,16 +167,7 @@ Widget _cardBody() {
   );
 }
 
-Widget _headerScreen() {
-  List<DateItem> listDate = <DateItem>[
-    DateItem("Mon", "8", false),
-    DateItem("Tue", "9", false),
-    DateItem("Wed", "10", false),
-    DateItem("Thu", "11", false),
-    DateItem("Fri", "12", false),
-    DateItem("Sat", "13", false),
-  ];
-
+Widget _headerScreen(ManagerController controller) {
   return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -193,7 +183,7 @@ Widget _headerScreen() {
             margin: EdgeInsets.only(top: 42.0),
             alignment: Alignment.center,
             child: Text(
-              "December",
+              controller.title.value,
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
@@ -202,28 +192,32 @@ Widget _headerScreen() {
           ),
           // listDate
           SizedBox(height: 12),
-          _listItemDate(listDate)
+          _listItemDate(controller)
         ],
       ));
 }
 
-Widget _listItemDate(List<DateItem> listDate) {
-  return SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
+Widget _listItemDate(ManagerController controller) {
+  return Expanded(
     child: Container(
-        margin: EdgeInsets.only(top: 8.0),
-        child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: listDate.asMap().entries.map((entry) {
-              int index = entry.key;
-              DateItem item = entry.value;
-              return GestureDetector(
-                  onTap: () {},
-                  child: _itemDateCard(
-                      item.dayOfWeek, item.dayOfMonth, item.isSelected));
-            }).toList())),
+        margin: EdgeInsets.only(top: 8.0, bottom: 36),
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(8),
+            itemCount: controller.listDate.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {controller.clickOnDate(index);},
+                child: _itemDateCard(
+                    controller.listDate[index].dayOfWeek,
+                    controller.listDate[index].dayOfMonth,
+                    controller.listDate[index].isSelected),
+              );
+            })),
   );
 }
+
 
 Widget _itemDateCard(String dayOfWeek, String dayOfMonth, bool isSelected) {
   double transparentValue = 0.0;

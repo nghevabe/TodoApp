@@ -112,7 +112,7 @@ Widget _headerScreen() {
           Container(
             margin: EdgeInsets.only(top: 42.0),
             alignment: Alignment.center,
-            child: Text(
+            child: const Text(
               "December",
               style: TextStyle(
                   color: Colors.black,
@@ -121,7 +121,7 @@ Widget _headerScreen() {
             ),
           ),
         // listDate
-          SizedBox(height:12),
+          const SizedBox(height:12),
           StatefulListItemDate(listDate: listDate)
         ],
       )
