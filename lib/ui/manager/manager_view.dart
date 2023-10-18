@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 import '../base_component/util_components.dart';
@@ -14,8 +15,20 @@ class ManagerView extends BaseView<ManagerController> {
   }
 }
 
+bool testDate(String inputDate, String fromDate, String toDate) {
+  var inputFormat = DateFormat('dd/MM/yyyy');
+
+  DateTime dtFrom = inputFormat.parse(fromDate);
+  DateTime dtTo = inputFormat.parse(toDate);
+  DateTime dtInput = inputFormat.parse(inputDate);
+
+  return dtInput.isAfter(dtFrom) && dtInput.isBefore(dtTo);
+
+}
+
 Widget _managerBody(BuildContext context, ManagerController controller) {
   print("_managerBody");
+  print(testDate("19/10/2023", "12/10/2023", "20/10/2023"));
   return SingleChildScrollView(
       child: Column(
     children: [
