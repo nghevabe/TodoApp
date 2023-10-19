@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:todo_app/ui/detail/detail_screen_binding.dart';
+import 'package:todo_app/ui/detail/detail_screen_view.dart';
 import 'package:todo_app/ui/home/home_binding.dart';
 import 'package:todo_app/ui/main/main_view.dart';
 
@@ -20,6 +22,12 @@ class AppPage {
       name: AppRouteName.home,
       page: () => HomeView(),
       binding: HomeBinding(),
+    ),
+
+    GetPage(
+      name: AppRouteName.detail,
+      page: () => DetailScreenView(),
+      binding: DetailScreenBinding(),
     ),
 
   ];
