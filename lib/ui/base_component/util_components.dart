@@ -12,8 +12,6 @@ class CardTaskItem extends StatelessWidget {
   final String contendTask;
   final int priority;
 
-
-
   @override
   Widget build(BuildContext context) {
     String priorityValue;

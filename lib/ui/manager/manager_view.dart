@@ -36,11 +36,10 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
       SizedBox(height: 16),
       Column(
         children: controller.listTaskData.asMap().entries.map((entry) {
-          int index = entry.key;
           TaskItem item = entry.value;
           return GestureDetector(
               onTap: () async {
-                print("Bidv Click Item Task: " + item.titleTask);
+                print("Bidv Click Item Task: " + item.titleTask.toString());
 
                 /*
                 final dataBack = await Navigator.push(
@@ -49,13 +48,13 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
                 );
                 */
 
-                Get.toNamed(AppRouteName.detail);
+                Get.toNamed(AppRouteName.detail, arguments: item);
 
               },
               child: CardTaskItem(
-                titleTask: item.titleTask,
-                contendTask: item.contendTask,
-                priority: item.priority,
+                titleTask: item.titleTask ?? "",
+                contendTask: item.contendTask ?? "",
+                priority: item.priority ?? 0,
               ));
         }).toList(),
       ),

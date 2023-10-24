@@ -66,21 +66,21 @@ class ManagerController extends BaseController {
 
     listTaskData.value = <TaskItem>[
       TaskItem(
-          "Task A",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          1),
+          titleTask: "Task A",
+          contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
+          priority: 1),
       TaskItem(
-          "Task B",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          2),
+          titleTask: "Task B",
+          contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
+          priority: 2),
       TaskItem(
-          "Task C",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          3),
+          titleTask: "Task C",
+          contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
+          priority: 3),
       TaskItem(
-          "Task D",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          3),
+          titleTask: "Task D",
+          contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
+          priority: 3),
     ];
 
     print("itemData Count: " + listTaskData.length.toString());

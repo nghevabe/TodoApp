@@ -18,14 +18,13 @@ class HomeView extends BaseView<HomeController> {
   Widget build(BuildContext context) {
     // return StatefulHomeBody(listTask: listTask);
     controller.getTaskData();
-    return Obx(() => _homeBody(context, controller.listTaskData)) ;
+    return Obx(() => _homeBody(context, controller.listTaskData));
   }
-
 }
 
-Widget _homeBody(BuildContext context,List<TaskItem> listTask) {
-  return SingleChildScrollView(child:
-  Column(
+Widget _homeBody(BuildContext context, List<TaskItem> listTask) {
+  return SingleChildScrollView(
+      child: Column(
     children: [
       _headerScreen(),
       _titleOverview(),
@@ -33,15 +32,14 @@ Widget _homeBody(BuildContext context,List<TaskItem> listTask) {
       _listOverView(),
       _titleHighPriority(),
       SizedBox(height: 16),
-
       Column(
-        children:
-        listTask.asMap().entries.map((entry) {
+        children: listTask.asMap().entries.map((entry) {
           int index = entry.key;
           TaskItem item = entry.value;
-          return  GestureDetector(
+          return GestureDetector(
               onTap: () async {
-                print("Bidv Home Click Item Task: "+item.titleTask);
+                print(
+                    "Bidv Home Click Item Task: " + item.titleTask.toString());
 
                 // final dataBack = await Navigator.push(
                 //   context,
@@ -54,17 +52,14 @@ Widget _homeBody(BuildContext context,List<TaskItem> listTask) {
                 //     _getTaskData();
                 //   });
                 // }
-
-
               },
-              child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
-                priority: item.priority,)
-          );
+              child: CardTaskItem(
+                titleTask: item.titleTask.toString(),
+                contendTask: item.contendTask.toString(),
+                priority: item.priority ?? 0,
+              ));
         }).toList(),
-
       ),
-
-
       SizedBox(height: 32),
     ],
   ));
@@ -110,12 +105,10 @@ Widget _titleHeader() {
 Widget _goDetailButton() {
   return Expanded(
       child: Container(
-        alignment: Alignment.topRight,
-        margin: EdgeInsets.only(right: 16.0, top: 24.0),
-        child: SvgPicture.asset('assets/ic_back_black.svg'),
-      )
-  );
-
+    alignment: Alignment.topRight,
+    margin: EdgeInsets.only(right: 16.0, top: 24.0),
+    child: SvgPicture.asset('assets/ic_back_black.svg'),
+  ));
 }
 
 Widget _titleDate() {
@@ -147,7 +140,7 @@ Widget _titleName() {
 Widget _titleOverview() {
   return Container(
     alignment: Alignment.centerLeft,
-    margin: EdgeInsets.only(left: 16.0,top: 32.0),
+    margin: EdgeInsets.only(left: 16.0, top: 32.0),
     child: const Text("Overview",
         style: TextStyle(
           fontSize: 24.0,
@@ -185,16 +178,17 @@ Widget _lowerOverView() {
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[_cardOverView("12","Done", "#36976A"),
-          _cardOverView("2","To Day", "#FF9900")],
-      )
-  );
+        children: <Widget>[
+          _cardOverView("12", "Done", "#36976A"),
+          _cardOverView("2", "To Day", "#FF9900")
+        ],
+      ));
 }
 
 Widget _titleHighPriority() {
   return Container(
     alignment: Alignment.centerLeft,
-    margin: EdgeInsets.only(left: 16.0,top: 32.0),
+    margin: EdgeInsets.only(left: 16.0, top: 32.0),
     child: const Text("High Priority",
         style: TextStyle(
           fontSize: 24.0,
@@ -206,34 +200,34 @@ Widget _titleHighPriority() {
 Widget _cardOverView(String taskNumber, String contend, String textColor) {
   return Container(
     child: Card(
-        child:Container(
-          padding: const EdgeInsets.only(left: 32.0, top: 16.0, right: 32.0, bottom: 16.0),
-          child:  Column(
-            children: <Widget>[
-              Container(
-                width: 100,
-                alignment: Alignment.center,
-                child: Text(taskNumber,
-                    style: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                      color: HexColor(textColor),
-                    )),
-              ),
-              Container(
-                width: 100,
-                alignment: Alignment.center,
-                child:Text(contend,
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
-                      color: HexColor(textColor),
-                    )),
-              ),
-            ],
+        child: Container(
+      padding: const EdgeInsets.only(
+          left: 32.0, top: 16.0, right: 32.0, bottom: 16.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: 100,
+            alignment: Alignment.center,
+            child: Text(taskNumber,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                  color: HexColor(textColor),
+                )),
           ),
-        )
-    ),
+          Container(
+            width: 100,
+            alignment: Alignment.center,
+            child: Text(contend,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                  color: HexColor(textColor),
+                )),
+          ),
+        ],
+      ),
+    )),
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
@@ -244,10 +238,6 @@ Widget _cardOverView(String taskNumber, String contend, String textColor) {
         ),
       ],
     ),
-    margin: const EdgeInsets.only(left:2.0, right: 2.0),
-
+    margin: const EdgeInsets.only(left: 2.0, right: 2.0),
   );
 }
-
-
-

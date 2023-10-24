@@ -10,7 +10,7 @@ class HomeController extends BaseController {
   String dataLoaded = "";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final listTaskData = <TaskItem>[
-    TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X", 1),].obs;
+    TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X", priority: 1),].obs;
 
   @override
   void onInit() {
@@ -27,10 +27,10 @@ class HomeController extends BaseController {
       // listTaskData.value = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
 
      listTaskData.value = <TaskItem>[
-      TaskItem("Task A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", 1),
-      TaskItem("Task B", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", 2),
-      TaskItem("Task C", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", 3),
-      TaskItem("Task D", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", 3),];
+      TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", priority: 1),
+      TaskItem(titleTask: "Task B", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", priority: 2),
+      TaskItem(titleTask: "Task C", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", priority: 3),
+      TaskItem(titleTask: "Task D", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX", priority: 3),];
 
       print("itemData Count: "+ listTaskData.length.toString());
 
