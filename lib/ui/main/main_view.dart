@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../base_view/base_view.dart';
+import '../../router/route_name.dart';
 import '../base_component/task_item.dart';
 import '../home/home_view.dart';
 import '../manager/manager_view.dart';
@@ -20,7 +20,7 @@ class MainView extends BaseView<MainController> {
         _getBody(controller.indexTab.value),
       floatingActionButton: FloatingActionButton(
         //Floating action button on Scaffold
-        onPressed: () async {},
+        onPressed: () async {Get.toNamed(AppRouteName.add);},
         child: const Icon(Icons.add),
         backgroundColor: HexColor("#855B28"), //icon inside button
       ),

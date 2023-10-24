@@ -5,6 +5,8 @@ import 'package:todo_app/ui/home/home_binding.dart';
 import 'package:todo_app/ui/main/main_view.dart';
 
 import '../../router/route_name.dart';
+import '../add/add_task_binding.dart';
+import '../add/add_task_view.dart';
 import '../home/home_view.dart';
 import '../main/main_binding.dart';
 
@@ -28,6 +30,12 @@ class AppPage {
       name: AppRouteName.detail,
       page: () => DetailScreenView(),
       binding: DetailScreenBinding(),
+    ),
+
+    GetPage(
+      name: AppRouteName.add,
+      page: () => AddTaskView(),
+      binding: AddTaskBinding(),
     ),
 
   ];

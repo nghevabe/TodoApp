@@ -3,4 +3,5 @@ class AppRouteName {
   static String home = '/home';
   static String detail = '/detail';
   static String main = '/main';
+  static String add = '/add';
 }
