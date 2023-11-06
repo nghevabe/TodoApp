@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../base_view/base_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+import '../../router/route_name.dart';
 import '../base_component/task_item.dart';
 import 'add_task_controller.dart';
 
@@ -415,7 +416,7 @@ class AddTaskView extends BaseView<AddTaskController> {
 
           // Navigator.of(context, rootNavigator: true).pop(context);
           Future.delayed(const Duration(milliseconds: 1500), () {
-            Navigator.pop(context, true);
+            Get.offAllNamed(AppRouteName.main);
           });
         },
         child: Container(

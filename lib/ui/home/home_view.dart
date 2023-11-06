@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -10,7 +11,6 @@ import 'home_controller.dart';
 
 class HomeView extends BaseView<HomeController> {
   //MyHome({Key? key, required this.listTask}) : super(key: key);
-
   // List<TaskItem> listTask;
   HomeView({Key? key}) : super(key: key);
 
@@ -18,16 +18,16 @@ class HomeView extends BaseView<HomeController> {
   Widget build(BuildContext context) {
     // return StatefulHomeBody(listTask: listTask);
     controller.getTaskData();
-    return Obx(() => _homeBody(context, controller.listTaskData));
+    return Obx(() => _homeBody(context, controller.listTaskData, controller));
   }
 }
 
-Widget _homeBody(BuildContext context, List<TaskItem> listTask) {
+Widget _homeBody(BuildContext context, List<TaskItem> listTask, HomeController controller) {
   return SingleChildScrollView(
       child: Column(
     children: [
       _headerScreen(),
-      _titleOverview(),
+      _titleOverview(controller),
       SizedBox(height: 16),
       _listOverView(),
       _titleHighPriority(),
@@ -137,11 +137,11 @@ Widget _titleName() {
   );
 }
 
-Widget _titleOverview() {
+Widget _titleOverview(HomeController controller) {
   return Container(
     alignment: Alignment.centerLeft,
     margin: EdgeInsets.only(left: 16.0, top: 32.0),
-    child: const Text("Overview",
+    child: Text(controller.total.value,
         style: TextStyle(
           fontSize: 24.0,
           color: Colors.black,
