@@ -1,8 +1,11 @@
+import 'package:get/get.dart';
 import 'package:todo_app/ui/detail/detail_screen_controller.dart';
 import 'package:flutter/material.dart';
 import '../../base_view/base_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import '../../router/route_name.dart';
 
 class DetailScreenView extends BaseView<DetailScreenController> {
   @override
@@ -17,7 +20,7 @@ Widget _detailBody(DetailScreenController detailScreenController, BuildContext c
       child: Column(
         children: [
           SizedBox(height: 36),
-          _headerScreen(context),
+          _headerScreen(context, detailScreenController),
           // StateHeaderScreen(),
           SizedBox(height: 18),
           _titleTask(detailScreenController),
@@ -33,7 +36,7 @@ Widget _detailBody(DetailScreenController detailScreenController, BuildContext c
 
 }
 
-Widget _headerScreen(BuildContext context) {
+Widget _headerScreen(BuildContext context, DetailScreenController controller) {
 
   return Row(
     children: [
@@ -68,7 +71,12 @@ Widget _headerScreen(BuildContext context) {
                     ),
                     TextButton(
                       onPressed: () {
+                        controller.deleteTask();
                         Navigator.pop(context, 'true');
+
+                        Future.delayed(const Duration(milliseconds: 1500), () {
+                          Get.offAllNamed(AppRouteName.main);
+                        });
                         // onDelete(0, listTask);
                       },
                       child: const Text('Đồng Ý'),
