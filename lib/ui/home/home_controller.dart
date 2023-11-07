@@ -10,12 +10,13 @@ class HomeController extends BaseController {
   String dataLoaded = "";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final listTaskData = <TaskItem>[
-    TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X", priority: 1),].obs;
+    TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X", priority: "Low", point: 1),].obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    getTaskData();
 
   }
 

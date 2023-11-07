@@ -77,11 +77,5 @@ class MainView extends BaseView<MainController> {
       return Center(child: Text("Home4"));
     }
   }
-
-  List<TaskItem> listTask = <TaskItem>[
-    TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", priority: 1),
-    TaskItem(titleTask: "Task B", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", priority: 2),
-    TaskItem(titleTask: "Task C", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", priority: 3),
-    TaskItem(titleTask: "Task D", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", priority: 3),];
-
+  
 }

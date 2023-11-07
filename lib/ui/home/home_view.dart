@@ -18,7 +18,6 @@ class HomeView extends BaseView<HomeController> {
   @override
   Widget build(BuildContext context) {
     // return StatefulHomeBody(listTask: listTask);
-    controller.getTaskData();
     return Obx(() => _homeBody(context, controller.listTaskData, controller));
   }
 }
@@ -44,7 +43,8 @@ Widget _homeBody(BuildContext context, List<TaskItem> listTask, HomeController c
               child: CardTaskItem(
                 titleTask: item.titleTask.toString(),
                 contendTask: item.contendTask.toString(),
-                priority: item.priority ?? 0,
+                priority: item.priority.toString(),
+                point: item.point ?? 1,
               ));
         }).toList(),
       ),

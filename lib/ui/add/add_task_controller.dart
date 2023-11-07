@@ -28,7 +28,8 @@ class AddTaskController extends BaseController {
     TaskItem item = TaskItem(
         titleTask: taskItem.titleTask,
         contendTask: taskItem.contendTask,
-        priority: taskItem.priority);
+        priority: taskItem.priority,
+        point: taskItem.point);
 
     listTaskItem.add(item);
 
@@ -38,7 +39,6 @@ class AddTaskController extends BaseController {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('task_data', jsonstring);
-
   }
 
   void loadTask() async {
@@ -50,5 +50,4 @@ class AddTaskController extends BaseController {
           parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
     }
   }
-
 }

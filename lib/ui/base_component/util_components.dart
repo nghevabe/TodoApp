@@ -5,25 +5,26 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CardTaskItem extends StatelessWidget {
    CardTaskItem({Key? key, required this.titleTask,
-    required this.contendTask, required this.priority})
+    required this.contendTask, required this.priority, required this.point})
       : super(key: key);
 
   final String titleTask;
   final String contendTask;
-  final int priority;
+  final String priority;
+  final int point;
 
   @override
   Widget build(BuildContext context) {
     String priorityValue;
     String priorityColor;
 
-    if(priority == 1) {
+    if(priority == "Low") {
       priorityValue = "Low";
       priorityColor = "#638C79";
-    } else if(priority == 2) {
+    } else if(priority == "Medium") {
       priorityValue = "Medium";
       priorityColor = "#C3A87B";
-    } else if(priority == 3) {
+    } else if(priority == "High") {
       priorityValue = "High";
       priorityColor = "#FF9900";
     } else {
@@ -74,9 +75,9 @@ class CardTaskItem extends StatelessWidget {
                               SvgPicture.asset('assets/ic_star.svg'),
                               Container(
                                 margin: const EdgeInsets.only(left: 4.0, top: 1.0),
-                                child:const Text("3",
+                                child: Text(point.toString(),
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,

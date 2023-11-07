@@ -54,7 +54,7 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
               child: CardTaskItem(
                 titleTask: item.titleTask ?? "",
                 contendTask: item.contendTask ?? "",
-                priority: item.priority ?? 0,
+                priority: item.priority.toString(), point: item.point ?? 1,
               ));
         }).toList(),
       ),

@@ -3,16 +3,19 @@ import 'package:flutter/cupertino.dart';
 class TaskItem {
   final String? titleTask;
   final String? contendTask;
-  final int? priority;
+  final String? priority;
+  final int? point;
 
   TaskItem({Key? key, this.titleTask,
-    this.contendTask, this.priority});
+    this.contendTask, this.priority, this.point});
 
   factory TaskItem.fromJson(Map<String, dynamic> json) {
     return TaskItem(
         titleTask: json['titleTask'] as String,
         contendTask: json['contendTask'] as String,
-        priority: json['priority'] as int);
+        priority: json['priority'] as String,
+        point: json['point'] as int
+    );
   }
 
   Map<String, dynamic> toJson() => _itemToJson(this);
@@ -21,7 +24,8 @@ class TaskItem {
     return <String, dynamic>{
       'titleTask': instance.titleTask,
       'contendTask': instance.contendTask,
-      'priority': instance.priority
+      'priority': instance.priority,
+      'point': instance.point,
     };
   }
 }

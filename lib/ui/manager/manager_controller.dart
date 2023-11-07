@@ -66,27 +66,24 @@ class ManagerController extends BaseController {
   }
 
   void getTaskData() {
-    // final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
-
-    // listTaskData.value = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
 
     listTaskData.value = <TaskItem>[
       TaskItem(
           titleTask: "Task A",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: 1),
+          priority: "Low"),
       TaskItem(
           titleTask: "Task B",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: 2),
+          priority: "Low"),
       TaskItem(
           titleTask: "Task C",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: 3),
+          priority: "Low"),
       TaskItem(
           titleTask: "Task D",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: 3),
+          priority: "Low"),
     ];
 
     print("itemData Count: " + listTaskData.length.toString());
