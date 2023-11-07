@@ -32,7 +32,9 @@ class AddTaskController extends BaseController {
   }
 
   void saveTask(TaskItem taskItem) async {
+    final idTask = DateTime.now().millisecondsSinceEpoch;
     TaskItem item = TaskItem(
+        id: idTask.toString(),
         titleTask: taskItem.titleTask,
         contendTask: taskItem.contendTask,
         priority: taskItem.priority,
