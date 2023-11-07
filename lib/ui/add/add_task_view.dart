@@ -171,17 +171,15 @@ class AddTaskView extends BaseView<AddTaskController> {
                                     items: const [
                                       //add items in the dropdown
                                       DropdownMenuItem(
-                                          child: Text("Low"), value: "Low"),
+                                          child: Text("Low"), value: 1),
                                       DropdownMenuItem(
-                                          child: Text("Medium"),
-                                          value: "Medium"),
+                                          child: Text("Medium"), value: 2),
                                       DropdownMenuItem(
-                                          child: Text("High"), value: "High"),
+                                          child: Text("High"), value: 3),
                                     ],
                                     onChanged: (value) {
                                       //get value when changed
-                                      controller.inputPriority.value =
-                                          value.toString();
+                                      controller.inputPriority.value = value ?? 1;
                                       print("You selected $value");
                                     },
                                     icon: Container(
@@ -366,7 +364,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                               print(
                                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                               String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
+                                  DateFormat('yyyy-MMM-dd').format(pickedDate);
                               print(
                                   formattedDate); //formatted date output using intl package =>  2021-03-16
                               controller.inputDate.value = formattedDate;
@@ -392,7 +390,8 @@ class AddTaskView extends BaseView<AddTaskController> {
                       titleTask: controller.inputTitle.value,
                       contendTask: controller.inputContend.value,
                       priority: controller.inputPriority.value,
-                      point: controller.inputPoint.value)),
+                      point: controller.inputPoint.value,
+                      dateTime: controller.inputDate.value)),
             ],
           ),
         ));

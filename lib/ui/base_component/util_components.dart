@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class CardTaskItem extends StatelessWidget {
-   CardTaskItem({Key? key, required this.titleTask,
-    required this.contendTask, required this.priority, required this.point})
+  const CardTaskItem(
+      {Key? key,
+      required this.titleTask,
+      required this.contendTask,
+      required this.priority,
+      required this.dateTime,
+      required this.point})
       : super(key: key);
 
   final String titleTask;
   final String contendTask;
-  final String priority;
+  final int priority;
+  final String dateTime;
   final int point;
 
   @override
@@ -18,13 +23,13 @@ class CardTaskItem extends StatelessWidget {
     String priorityValue;
     String priorityColor;
 
-    if(priority == "Low") {
+    if (priority == 1) {
       priorityValue = "Low";
       priorityColor = "#638C79";
-    } else if(priority == "Medium") {
+    } else if (priority == 2) {
       priorityValue = "Medium";
       priorityColor = "#C3A87B";
-    } else if(priority == "High") {
+    } else if (priority == 3) {
       priorityValue = "High";
       priorityColor = "#FF9900";
     } else {
@@ -38,9 +43,10 @@ class CardTaskItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             //set border radius more than 50% of height and width to make circle
           ),
-          child:Container(
+          child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(left: 4.0, top: 8.0, right: 8.0, bottom: 8.0),
+            padding: const EdgeInsets.only(
+                left: 4.0, top: 8.0, right: 8.0, bottom: 8.0),
             child: Column(
               children: <Widget>[
                 Container(
@@ -74,7 +80,8 @@ class CardTaskItem extends StatelessWidget {
                             children: [
                               SvgPicture.asset('assets/ic_star.svg'),
                               Container(
-                                margin: const EdgeInsets.only(left: 4.0, top: 1.0),
+                                margin:
+                                    const EdgeInsets.only(left: 4.0, top: 1.0),
                                 child: Text(point.toString(),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
@@ -84,9 +91,7 @@ class CardTaskItem extends StatelessWidget {
                                     )),
                               )
                             ],
-                          )
-                      ),
-
+                          )),
                       Container(
                           alignment: Alignment.topLeft,
                           padding: EdgeInsets.only(left: 42.0, top: 8.0),
@@ -95,20 +100,19 @@ class CardTaskItem extends StatelessWidget {
                               SvgPicture.asset('assets/ic_calender.svg'),
                               Container(
                                 margin: EdgeInsets.only(left: 4.0, top: 1.0),
-                                child:const Text("31 July 2021",
+                                child:  Text(dateTime.toString(),
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     )),
                               )
                             ],
-                          )
-                      ),
+                          )),
                       Expanded(
                           child: Container(
-                            padding: EdgeInsets.only(right: 8.0),
+                              padding: EdgeInsets.only(right: 8.0),
                               alignment: Alignment.topRight,
                               child: Container(
                                 padding: EdgeInsets.only(
@@ -133,10 +137,7 @@ class CardTaskItem extends StatelessWidget {
                 )
               ],
             ),
-          )
-      ),
-
-
+          )),
       decoration: BoxDecoration(
         // border: Border.all(
         //   color: Colors.red![500],
@@ -152,8 +153,6 @@ class CardTaskItem extends StatelessWidget {
         ],
       ),
       margin: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
-
     );
   }
-
 }

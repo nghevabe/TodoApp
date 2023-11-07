@@ -43,8 +43,9 @@ Widget _homeBody(BuildContext context, List<TaskItem> listTask, HomeController c
               child: CardTaskItem(
                 titleTask: item.titleTask.toString(),
                 contendTask: item.contendTask.toString(),
-                priority: item.priority.toString(),
+                priority: item.priority ?? 1,
                 point: item.point ?? 1,
+                dateTime: item.dateTime.toString(),
               ));
         }).toList(),
       ),

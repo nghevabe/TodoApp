@@ -27,7 +27,6 @@ bool testDate(String inputDate, String fromDate, String toDate) {
 }
 
 Widget _managerBody(BuildContext context, ManagerController controller) {
-
   return SingleChildScrollView(
       child: Column(
     children: [
@@ -49,12 +48,13 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
                 */
 
                 Get.toNamed(AppRouteName.detail, arguments: item);
-
               },
               child: CardTaskItem(
                 titleTask: item.titleTask ?? "",
                 contendTask: item.contendTask ?? "",
-                priority: item.priority.toString(), point: item.point ?? 1,
+                priority: item.priority ?? 1,
+                point: item.point ?? 1,
+                dateTime: item.dateTime.toString(),
               ));
         }).toList(),
       ),
@@ -224,7 +224,9 @@ Widget _listItemDate(ManagerController controller) {
             itemCount: controller.listDate.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
-                onTap: () {controller.clickOnDate(index);},
+                onTap: () {
+                  controller.clickOnDate(index);
+                },
                 child: _itemDateCard(
                     controller.listDate[index].dayOfWeek,
                     controller.listDate[index].dayOfMonth,
@@ -233,7 +235,6 @@ Widget _listItemDate(ManagerController controller) {
             })),
   );
 }
-
 
 Widget _itemDateCard(String dayOfWeek, String dayOfMonth, bool isSelected) {
   double transparentValue = 0.0;

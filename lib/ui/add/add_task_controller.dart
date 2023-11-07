@@ -11,7 +11,7 @@ class AddTaskController extends BaseController {
   final inputTitle = "".obs;
   final inputContend = "".obs;
   final inputPoint = 1.obs;
-  final inputPriority = "Low".obs;
+  final inputPriority = 1.obs;
   final inputDate = "Pick date".obs;
 
   String dataLoaded = "";
@@ -29,7 +29,8 @@ class AddTaskController extends BaseController {
         titleTask: taskItem.titleTask,
         contendTask: taskItem.contendTask,
         priority: taskItem.priority,
-        point: taskItem.point);
+        point: taskItem.point,
+        dateTime: taskItem.dateTime);
 
     listTaskItem.add(item);
 

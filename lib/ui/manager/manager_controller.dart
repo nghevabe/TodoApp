@@ -71,19 +71,19 @@ class ManagerController extends BaseController {
       TaskItem(
           titleTask: "Task A",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: "Low"),
+          priority: 1),
       TaskItem(
           titleTask: "Task B",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: "Low"),
+          priority: 1),
       TaskItem(
           titleTask: "Task C",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: "Low"),
+          priority: 1),
       TaskItem(
           titleTask: "Task D",
           contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod XXX",
-          priority: "Low"),
+          priority: 1),
     ];
 
     print("itemData Count: " + listTaskData.length.toString());
