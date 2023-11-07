@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:todo_app/DateItem.dart';
-import 'package:todo_app/TaskItem.dart';
+import 'package:todo_app/ui/base_component/date_item.dart';
+import 'package:todo_app/ui/base_component/task_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/utils/util_components.dart';
+import 'package:todo_app/ui/base_component/util_components.dart';
 import 'dart:convert';
+
+import '../detail/detail_screen.dart';
 
 class MyManager extends StatelessWidget {
   List<TaskItem> listTask;
@@ -41,6 +43,7 @@ class ManagerBody extends State<StatefulManagerBody> {
 
       widget.listTask = parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
 
+      print("dataLoaded Manager: "+dataLoaded);
       print("itemData Count: "+ widget.listTask.length.toString());
     });
 
@@ -68,9 +71,12 @@ class ManagerBody extends State<StatefulManagerBody> {
                 int index = entry.key;
                 TaskItem item = entry.value;
                 return  GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       print("Bidv Click Item Task: "+item.titleTask);
-                      onDelete(index, widget.listTask);
+                      final dataBack = await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DetailScreen()),
+                      );
                     },
                     child: CardTaskItem(titleTask: item.titleTask, contendTask: item.contendTask,
                       priority: item.priority,)
@@ -80,21 +86,6 @@ class ManagerBody extends State<StatefulManagerBody> {
           ],
         ));
   }
-
-  void onDelete(int index, List<TaskItem> listTask) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      listTask.removeAt(index);
-
-      String jsonstring = json.encode(listTask);
-
-      print("jsonstring Saved: "+jsonstring);
-
-      prefs.setString('task_data', jsonstring);
-      print("Saved done");
-    });
-  }
-
 }
 
 Widget _headerScreen() {
@@ -121,7 +112,7 @@ Widget _headerScreen() {
           Container(
             margin: EdgeInsets.only(top: 42.0),
             alignment: Alignment.center,
-            child: Text(
+            child: const Text(
               "December",
               style: TextStyle(
                   color: Colors.black,
@@ -130,7 +121,7 @@ Widget _headerScreen() {
             ),
           ),
         // listDate
-          SizedBox(height:12),
+          const SizedBox(height:12),
           StatefulListItemDate(listDate: listDate)
         ],
       )

@@ -6,7 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/TaskItem.dart';
+import 'package:todo_app/ui/base_component/task_item.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen();
@@ -714,7 +714,7 @@ class _BtnAdd extends State<BtnAdd> {
           await prefs.setString('task_data', jsonstring);
 
           // Navigator.of(context, rootNavigator: true).pop(context);
-          Future.delayed(Duration(seconds: 1), () {
+          Future.delayed(const Duration(milliseconds: 1500), () {
           Navigator.pop(context, true);
           });
         },
