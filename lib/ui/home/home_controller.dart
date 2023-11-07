@@ -9,8 +9,9 @@ import '../base_component/task_item.dart';
 class HomeController extends BaseController {
   String dataLoaded = "";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  final listTaskData = <TaskItem>[
-    TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X", priority: 1, point: 1),].obs;
+  // final listTaskData = <TaskItem>[
+  //   TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X", priority: 1, point: 1),].obs;
+  final listTaskData = <TaskItem>[].obs;
 
   @override
   void onInit() {

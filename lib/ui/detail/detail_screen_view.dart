@@ -22,9 +22,9 @@ Widget _detailBody(DetailScreenController detailScreenController, BuildContext c
           SizedBox(height: 18),
           _titleTask(detailScreenController),
           SizedBox(height: 32),
-          _contentTask(),
+          _contentTask(detailScreenController),
           SizedBox(height: 36),
-          _footerScreen(),
+          _footerScreen(detailScreenController),
           Expanded(child: SizedBox()),
           _buttonStatus(context)
         ],
@@ -97,12 +97,12 @@ Widget _titleTask(DetailScreenController controller) {
   );
 }
 
-Widget _contentTask() {
+Widget _contentTask(DetailScreenController controller) {
   return Container(
     alignment: Alignment.centerLeft,
     margin: EdgeInsets.only(left: 16.0, right: 16.0),
     child: Text(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ",
+        controller.taskItem.value.contendTask.toString(),
         style: TextStyle(
           fontSize: 16.0,
           color: HexColor("#7E7E7E"),
@@ -110,7 +110,27 @@ Widget _contentTask() {
   );
 }
 
-Widget _footerScreen() {
+Widget _footerScreen(DetailScreenController controller) {
+
+  String priorityValue;
+  String priorityColor;
+
+  int priority = controller.taskItem.value.priority ?? 1;
+
+  if (priority == 1) {
+    priorityValue = "Low";
+    priorityColor = "#638C79";
+  } else if (priority == 2) {
+    priorityValue = "Medium";
+    priorityColor = "#C3A87B";
+  } else if (priority == 3) {
+    priorityValue = "High";
+    priorityColor = "#FF9900";
+  } else {
+    priorityValue = "None";
+    priorityColor = "#FFFFFF";
+  }
+
   return Row(
     children: [
       Container(
@@ -119,9 +139,9 @@ Widget _footerScreen() {
             padding:
             EdgeInsets.only(left: 10.0, top: 6.0, right: 10.0, bottom: 6.0),
             decoration: BoxDecoration(
-                color: HexColor("#FF9900"),
+                color: HexColor(priorityColor),
                 borderRadius: BorderRadius.all(Radius.circular(16))),
-            child: Text("High",
+            child: Text(priorityValue,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12.0,
@@ -139,9 +159,9 @@ Widget _footerScreen() {
                 margin: const EdgeInsets.only(right: 36.0),
                 child: Container(
                   margin: EdgeInsets.only(left: 4.0),
-                  child: const Text("3",
+                  child: Text(controller.taskItem.value.point.toString(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -158,9 +178,9 @@ Widget _footerScreen() {
               SvgPicture.asset('assets/ic_calender.svg'),
               Container(
                 margin: EdgeInsets.only(left: 4.0, top: 1.0),
-                child: const Text("31 July 2021",
+                child: Text(controller.taskItem.value.dateTime.toString(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
