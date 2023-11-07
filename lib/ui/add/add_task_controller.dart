@@ -6,6 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../base_view/base_controller.dart';
 import '../base_component/task_item.dart';
 
+class StatusTaskConstant {
+  static const int todo = 1;
+  static const int inProgress = 2;
+  static const int done = 3;
+  static const int cancel = 4;
+}
+
 class AddTaskController extends BaseController {
   final listTaskItem = <TaskItem>[].obs;
   final inputTitle = "".obs;
@@ -30,7 +37,8 @@ class AddTaskController extends BaseController {
         contendTask: taskItem.contendTask,
         priority: taskItem.priority,
         point: taskItem.point,
-        dateTime: taskItem.dateTime);
+        dateTime: taskItem.dateTime,
+        status: StatusTaskConstant.todo);
 
     listTaskItem.add(item);
 
