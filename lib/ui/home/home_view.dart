@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 
+import '../../router/route_name.dart';
 import '../base_component/util_components.dart';
 import 'home_controller.dart';
 
@@ -38,20 +39,7 @@ Widget _homeBody(BuildContext context, List<TaskItem> listTask, HomeController c
           TaskItem item = entry.value;
           return GestureDetector(
               onTap: () async {
-                print(
-                    "Bidv Home Click Item Task: " + item.titleTask.toString());
-
-                // final dataBack = await Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => DetailScreen()),
-                // );
-                //
-                // if (dataBack) {
-                //   setState(() {
-                //     print("dataBack Home");
-                //     _getTaskData();
-                //   });
-                // }
+                Get.toNamed(AppRouteName.detail, arguments: item);
               },
               child: CardTaskItem(
                 titleTask: item.titleTask.toString(),

@@ -165,7 +165,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                               padding: EdgeInsets.only(left: 12),
                               child: DropdownButton(
                                 underline: SizedBox(),
-                                value: "Low",
+                                value: controller.inputPriority.value,
                                 items: const [
                                   //add items in the dropdown
                                   DropdownMenuItem(
@@ -248,7 +248,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                             padding: EdgeInsets.only(left: 12, right: 12),
                             child: DropdownButton(
                               underline: SizedBox(),
-                              value: 1,
+                              value: controller.inputPoint.value,
                               items: [
                                 //add items in the dropdown
                                 DropdownMenuItem(child: Text("1"), value: 1),
@@ -339,7 +339,7 @@ class AddTaskView extends BaseView<AddTaskController> {
 //editing controller of this TextField
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Pick Date',
+                        hintText: controller.inputDate.value,
                         hintStyle: TextStyle(
                             fontSize: 16.0, color: HexColor("#828282")),
                       ),

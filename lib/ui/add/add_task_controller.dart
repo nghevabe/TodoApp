@@ -10,9 +10,9 @@ class AddTaskController extends BaseController {
   final listTaskItem = <TaskItem>[].obs;
   final inputTitle = "".obs;
   final inputContend = "".obs;
-  final inputPoint = 0.obs;
-  final inputPriority = "".obs;
-  final inputDate = "".obs;
+  final inputPoint = 1.obs;
+  final inputPriority = "Low".obs;
+  final inputDate = "Pick date".obs;
 
   String dataLoaded = "";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
