@@ -179,7 +179,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                                     ],
                                     onChanged: (value) {
                                       //get value when changed
-                                      controller.inputPriority.value = value ?? 1;
+                                      controller.inputPriority.value = int.parse(value.toString()) ;
                                       print("You selected $value");
                                     },
                                     icon: Container(
