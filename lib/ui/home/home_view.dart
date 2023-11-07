@@ -141,7 +141,7 @@ Widget _titleOverview(HomeController controller) {
   return Container(
     alignment: Alignment.centerLeft,
     margin: EdgeInsets.only(left: 16.0, top: 32.0),
-    child: Text(controller.total.value,
+    child: Text("Overview",
         style: TextStyle(
           fontSize: 24.0,
           color: Colors.black,

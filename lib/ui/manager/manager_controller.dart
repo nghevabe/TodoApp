@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/base_view/base_controller.dart';
 
 import '../base_component/date_item.dart';
@@ -13,12 +16,15 @@ class ManagerController extends BaseController {
   final colorTab2 = "#FFFFFF".obs;
   final colorTab3 = "#FFFFFF".obs;
 
+  String dataLoaded = "";
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     initDates();
-    getTaskData();
+    loadTask();
   }
 
   void clickOnDate(int index) {
@@ -85,4 +91,15 @@ class ManagerController extends BaseController {
 
     print("itemData Count: " + listTaskData.length.toString());
   }
+
+  void loadTask() async {
+    SharedPreferences prefs = await _prefs;
+    if (prefs.getString('task_data') != null) {
+      dataLoaded = prefs.getString('task_data')!;
+      final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
+      listTaskData.value =
+          parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+    }
+  }
+
 }
