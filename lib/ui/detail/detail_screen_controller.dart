@@ -28,14 +28,17 @@ class DetailScreenController extends BaseController {
       listTaskData.value =
           parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
 
-      listTaskData.removeAt(0);
+      for (int i = 0; i < listTaskData.length; i++) {
+        if (listTaskData[i].id == taskItem.value.id){
+          listTaskData.removeAt(i);
+          break;
+        }
+      }
 
       String jsonstring = json.encode(listTaskData);
 
       await prefs.setString('task_data', jsonstring);
       print("Delete done");
-
     }
   }
-
 }
