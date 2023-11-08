@@ -31,7 +31,7 @@ Widget _detailBody(
         _footerScreen(detailScreenController),
         const Expanded(child: SizedBox()),
         ButtonStatus(
-            title: 'Done',
+            status: detailScreenController.taskItem.value.status ?? 1,
             context: context,
             detailScreenController: detailScreenController),
       ],
