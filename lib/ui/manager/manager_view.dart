@@ -67,9 +67,9 @@ Widget _tabMenu(ManagerController controller) {
             height: 600,
             child: TabBarView(
               children: [
-                _buildList(controller),
-                _buildList(controller),
-                _buildList(controller),
+                _buildList(controller, 1),
+                _buildList(controller, 2),
+                _buildList(controller, 3),
               ],
               physics: NeverScrollableScrollPhysics(),
             ),
@@ -78,14 +78,14 @@ Widget _tabMenu(ManagerController controller) {
       ));
 }
 
-Widget _buildList(ManagerController controller) {
+Widget _buildList(ManagerController controller, int status) {
+  final listItem = controller.listTaskData.where((item) => item.status == status).toList();
   return SingleChildScrollView(
     child: Column(
-      children: controller.listTaskData.asMap().entries.map((entry) {
+      children: listItem.asMap().entries.map((entry) {
         TaskItem item = entry.value;
         return GestureDetector(
             onTap: () async {
-              print("Bidv Click Item Task: " + item.titleTask.toString());
               Get.toNamed(AppRouteName.detail, arguments: item);
             },
             child: CardTaskItem(
@@ -100,102 +100,11 @@ Widget _buildList(ManagerController controller) {
   );
 }
 
-/*
-Widget _tabMenu(ManagerController controller) {
-  print("tabMenu");
-  return Container(
-    padding: EdgeInsets.only(top: 16.0),
-    child: Row(
-      children: <Widget>[
-        Expanded(
-          child: Column(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  controller.clickOnTab(0);
-                },
-                child: Container(
-                  child: Text(
-                    "Todo",
-                    style: TextStyle(
-                      color: HexColor("#855B28"),
-                      fontSize: 16.0,
-                      // fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 4),
-              Container(
-                height: 2,
-                width: 50,
-                color: HexColor(controller.colorTab1.value),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  controller.clickOnTab(1);
-                },
-                child: Container(
-                  child: Text(
-                    "In progress",
-                    style:
-                        TextStyle(color: HexColor("#855B28"), fontSize: 16.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 4),
-              Container(
-                height: 2,
-                width: 50,
-                color: HexColor(controller.colorTab2.value),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                GestureDetector(
-                    onTap: () {
-                      controller.clickOnTab(2);
-                    },
-                    child: Container(
-                      child: Text(
-                        "Done",
-                        style: TextStyle(
-                            color: HexColor("#855B28"), fontSize: 16.0),
-                      ),
-                    )),
-                SizedBox(height: 4),
-                Container(
-                  height: 2,
-                  width: 50,
-                  color: HexColor(controller.colorTab3.value),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
- */
-
 Widget _cardManager(ManagerController controller) {
   return Stack(
     children: <Widget>[
       _headerScreen(controller),
-
       Container(
-        width: double.infinity,
         margin: EdgeInsets.only(top: 180.0),
         alignment: Alignment.topLeft,
         child: Container(
@@ -205,62 +114,11 @@ Widget _cardManager(ManagerController controller) {
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
               )),
-          child: Column(
-            children: [
-              _tabMenu(controller),
-            ],
-          ),
+          child: _tabMenu(controller),
         ),
       ),
 
-      // _cardBody(),
-      // SizedBox(height: 16),
-      // Padding(
-      //   padding: EdgeInsets.only(top: 232),
-      //   child: Column(
-      //     children: controller.listTaskData.asMap().entries.map((entry) {
-      //       TaskItem item = entry.value;
-      //       return GestureDetector(
-      //           onTap: () async {
-      //             print("Bidv Click Item Task: " + item.titleTask.toString());
-      //             Get.toNamed(AppRouteName.detail, arguments: item);
-      //           },
-      //           child: CardTaskItem(
-      //             titleTask: item.titleTask ?? "",
-      //             contendTask: item.contendTask ?? "",
-      //             priority: item.priority ?? 1,
-      //             point: item.point ?? 1,
-      //             dateTime: item.dateTime.toString(),
-      //           ));
-      //     }).toList(),
-      //   ),
-      // ),
     ],
-  );
-}
-
-Widget _cardHeader(ManagerController controller) {
-  return Container(
-    width: double.infinity,
-    margin: EdgeInsets.only(top: 180.0),
-    alignment: Alignment.topLeft,
-    child: Container(
-      decoration: const BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          )),
-      child: _tabMenu(controller),
-    ),
-  );
-}
-
-Widget _cardBody() {
-  return Container(
-    color: HexColor("#E6E6E6"),
-    height: 2.0,
-    margin: EdgeInsets.only(left: 10.0, right: 10.0),
   );
 }
 

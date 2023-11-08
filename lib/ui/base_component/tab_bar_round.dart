@@ -62,12 +62,6 @@ class _TabBarRoundState extends State<TabBarRound>
               unselectedLabelColor:
                   widget.unselectedLabelColor ?? Colors.lightBlue,
 
-              // unselectedLabelStyle: widget.unselectedLabelStyle ??
-              //     styles.textField2(Colors.lightBlue),
-              // labelPadding: widget.paddingTabItem ??
-              //     const EdgeInsets.symmetric(horizontal: 11, vertical: 0),
-              // labelStyle: styles.textField2(colors.PrimaryColor9),
-
               onTap: (index) {
                 _tabIndexNotifier.value = index;
                 widget.onChangeTab?.call(index);
