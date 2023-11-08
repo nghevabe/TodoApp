@@ -7,7 +7,6 @@ import 'package:hexcolor/hexcolor.dart';
 
 class ButtonItemStatus extends StatelessWidget {
   const ButtonItemStatus({
-    super.key,
     required this.title,
     required this.colorCodeText,
     required this.colorCodeBackGround,

@@ -14,18 +14,17 @@ class TabBarRound extends StatefulWidget {
   final bool isScrollable;
 
   TabBarRound(
-      {super.key,
-        required this.tabs,
-        required this.tabsView,
-        this.onChangeTab,
-        this.padding,
-        this.paddingTabItem,
-        this.indicator,
-        this.backgroundColor,
-        this.labelColor,
-        this.unselectedLabelColor,
-        this.unselectedLabelStyle,
-        this.isScrollable = true});
+      {required this.tabs,
+      required this.tabsView,
+      this.onChangeTab,
+      this.padding,
+      this.paddingTabItem,
+      this.indicator,
+      this.backgroundColor,
+      this.labelColor,
+      this.unselectedLabelColor,
+      this.unselectedLabelStyle,
+      this.isScrollable = true});
 
   @override
   State<TabBarRound> createState() => _TabBarRoundState();
@@ -61,7 +60,7 @@ class _TabBarRoundState extends State<TabBarRound>
               physics: const NeverScrollableScrollPhysics(),
               labelColor: widget.labelColor ?? Colors.white,
               unselectedLabelColor:
-              widget.unselectedLabelColor ?? Colors.lightBlue,
+                  widget.unselectedLabelColor ?? Colors.lightBlue,
 
               // unselectedLabelStyle: widget.unselectedLabelStyle ??
               //     styles.textField2(Colors.lightBlue),
@@ -75,20 +74,20 @@ class _TabBarRoundState extends State<TabBarRound>
               },
               indicator: widget.indicator ??
                   BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8),
                   ),
               tabs: widget.tabs,
             ),
           ),
           widget.isScrollable
               ? Expanded(
-              child: TabBarView(
-                  children: widget.tabsView,
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: _tabController))
+                  child: TabBarView(
+                      children: widget.tabsView,
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: _tabController))
               : ValueListenableBuilder<int>(
-              valueListenable: _tabIndexNotifier,
-              builder: (context, index, child) => widget.tabsView[index])
+                  valueListenable: _tabIndexNotifier,
+                  builder: (context, index, child) => widget.tabsView[index])
         ],
       ),
     );

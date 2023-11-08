@@ -10,8 +10,7 @@ class ButtonStatus extends StatelessWidget {
   final DetailScreenController detailScreenController;
 
   const ButtonStatus(
-      {super.key,
-      required this.status,
+      {required this.status,
       required this.context,
       required this.detailScreenController});
 
@@ -20,7 +19,7 @@ class ButtonStatus extends StatelessWidget {
     String title = "";
     String colorBackground = "";
     String colorText = "";
-    switch(status) {
+    switch (status) {
       case 1:
         title = 'To do';
         colorText = "#FFFFFF";

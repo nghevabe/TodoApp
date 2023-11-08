@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 import '../../router/route_name.dart';
-import '../base_component/tab_bar_round.dart';
 import '../base_component/util_components.dart';
-import '../detail/detail_screen.dart';
 import 'manager_controller.dart';
 
 class ManagerView extends BaseView<ManagerController> {
@@ -37,48 +34,70 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
 }
 
 Widget _tabMenu(ManagerController controller) {
-
   return DefaultTabController(
-    length: 3,
-    child: Column(
-      children: [
-        Container(
-          child: TabBar(
-            tabs: [
-              Text("Tab 1", style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.black,
-              )),
-              Text("Tab 2", style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.black,
-              )),
-              Text("Tab 3", style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.black,
-              )),
-            ],
+      length: 3,
+      child: Column(
+        children: [
+          Container(
+            child: TabBar(
+              physics: const NeverScrollableScrollPhysics(),
+              indicatorColor: HexColor("#855B28"),
+              labelColor: HexColor("#855B28"),
+              unselectedLabelColor: HexColor("#7E7E7E"),
+              tabs: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Text("To do",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      )),
+                ),
+                Text("In progress",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    )),
+                Text("Done",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    )),
+              ],
+            ),
           ),
-        ),
+          Container(
+            height: 600,
+            child: TabBarView(
+              children: [
+                _buildList(controller),
+                _buildList(controller),
+                _buildList(controller),
+              ],
+              physics: NeverScrollableScrollPhysics(),
+            ),
+          )
+        ],
+      ));
+}
 
-        // Expanded(
-        //   child: Container(),
-        //
-        //   child: TabBarView(
-        //     children: [
-        //       Icon(Icons.directions_car),
-        //       Icon(Icons.directions_transit),
-        //       Icon(Icons.directions_bike),
-        //     ],
-        //     physics: NeverScrollableScrollPhysics(),
-        //   ),
-        //
-        // )
-
-      ],
-    )
+Widget _buildList(ManagerController controller) {
+  return SingleChildScrollView(
+    child: Column(
+      children: controller.listTaskData.asMap().entries.map((entry) {
+        TaskItem item = entry.value;
+        return GestureDetector(
+            onTap: () async {
+              print("Bidv Click Item Task: " + item.titleTask.toString());
+              Get.toNamed(AppRouteName.detail, arguments: item);
+            },
+            child: CardTaskItem(
+              titleTask: item.titleTask ?? "",
+              contendTask: item.contendTask ?? "",
+              priority: item.priority ?? 1,
+              point: item.point ?? 1,
+              dateTime: item.dateTime.toString(),
+            ));
+      }).toList(),
+    ),
   );
-
 }
 
 /*
@@ -170,13 +189,10 @@ Widget _tabMenu(ManagerController controller) {
 }
  */
 
-
 Widget _cardManager(ManagerController controller) {
   return Stack(
     children: <Widget>[
       _headerScreen(controller),
-
-      // _cardHeader(controller),
 
       Container(
         width: double.infinity,
@@ -184,12 +200,16 @@ Widget _cardManager(ManagerController controller) {
         alignment: Alignment.topLeft,
         child: Container(
           decoration: const BoxDecoration(
-              color: Colors.red,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
               )),
-          child: _tabMenu(controller),
+          child: Column(
+            children: [
+              _tabMenu(controller),
+            ],
+          ),
         ),
       ),
 
