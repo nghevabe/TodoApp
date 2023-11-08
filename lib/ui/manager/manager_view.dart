@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 import '../../router/route_name.dart';
+import '../base_component/tab_bar_round.dart';
 import '../base_component/util_components.dart';
 import '../detail/detail_screen.dart';
 import 'manager_controller.dart';
@@ -31,37 +32,56 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
       child: Column(
     children: [
       _cardManager(controller),
-      _cardBody(),
-      SizedBox(height: 16),
-      Column(
-        children: controller.listTaskData.asMap().entries.map((entry) {
-          TaskItem item = entry.value;
-          return GestureDetector(
-              onTap: () async {
-                print("Bidv Click Item Task: " + item.titleTask.toString());
-
-                /*
-                final dataBack = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetailScreen()),
-                );
-                */
-
-                Get.toNamed(AppRouteName.detail, arguments: item);
-              },
-              child: CardTaskItem(
-                titleTask: item.titleTask ?? "",
-                contendTask: item.contendTask ?? "",
-                priority: item.priority ?? 1,
-                point: item.point ?? 1,
-                dateTime: item.dateTime.toString(),
-              ));
-        }).toList(),
-      ),
     ],
   ));
 }
 
+Widget _tabMenu(ManagerController controller) {
+
+  return DefaultTabController(
+    length: 3,
+    child: Column(
+      children: [
+        Container(
+          child: TabBar(
+            tabs: [
+              Text("Tab 1", style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black,
+              )),
+              Text("Tab 2", style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black,
+              )),
+              Text("Tab 3", style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black,
+              )),
+            ],
+          ),
+        ),
+
+        // Expanded(
+        //   child: Container(),
+        //
+        //   child: TabBarView(
+        //     children: [
+        //       Icon(Icons.directions_car),
+        //       Icon(Icons.directions_transit),
+        //       Icon(Icons.directions_bike),
+        //     ],
+        //     physics: NeverScrollableScrollPhysics(),
+        //   ),
+        //
+        // )
+
+      ],
+    )
+  );
+
+}
+
+/*
 Widget _tabMenu(ManagerController controller) {
   print("tabMenu");
   return Container(
@@ -148,12 +168,53 @@ Widget _tabMenu(ManagerController controller) {
     ),
   );
 }
+ */
+
 
 Widget _cardManager(ManagerController controller) {
   return Stack(
     children: <Widget>[
       _headerScreen(controller),
-      _cardHeader(controller),
+
+      // _cardHeader(controller),
+
+      Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 180.0),
+        alignment: Alignment.topLeft,
+        child: Container(
+          decoration: const BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              )),
+          child: _tabMenu(controller),
+        ),
+      ),
+
+      // _cardBody(),
+      // SizedBox(height: 16),
+      // Padding(
+      //   padding: EdgeInsets.only(top: 232),
+      //   child: Column(
+      //     children: controller.listTaskData.asMap().entries.map((entry) {
+      //       TaskItem item = entry.value;
+      //       return GestureDetector(
+      //           onTap: () async {
+      //             print("Bidv Click Item Task: " + item.titleTask.toString());
+      //             Get.toNamed(AppRouteName.detail, arguments: item);
+      //           },
+      //           child: CardTaskItem(
+      //             titleTask: item.titleTask ?? "",
+      //             contendTask: item.contendTask ?? "",
+      //             priority: item.priority ?? 1,
+      //             point: item.point ?? 1,
+      //             dateTime: item.dateTime.toString(),
+      //           ));
+      //     }).toList(),
+      //   ),
+      // ),
     ],
   );
 }
@@ -165,7 +226,7 @@ Widget _cardHeader(ManagerController controller) {
     alignment: Alignment.topLeft,
     child: Container(
       decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Colors.red,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
