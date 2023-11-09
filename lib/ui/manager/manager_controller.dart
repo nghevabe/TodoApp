@@ -8,6 +8,7 @@ import '../base_component/date_item.dart';
 import '../base_component/task_item.dart';
 
 class ManagerController extends BaseController {
+  String dataLoaded = "";
   final listTaskData = <TaskItem>[].obs;
   final listDate = <DateItem>[].obs;
   final title = "December".obs;
@@ -16,7 +17,6 @@ class ManagerController extends BaseController {
   final colorTab2 = "#FFFFFF".obs;
   final colorTab3 = "#FFFFFF".obs;
 
-  String dataLoaded = "";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
@@ -24,7 +24,7 @@ class ManagerController extends BaseController {
     // TODO: implement onInit
     super.onInit();
     initDates();
-    loadTask();
+    getTaskData();
   }
 
   void clickOnDate(int index) {
@@ -65,7 +65,7 @@ class ManagerController extends BaseController {
 
   }
 
-  void loadTask() async {
+  void getTaskData() async {
     SharedPreferences prefs = await _prefs;
     if (prefs.getString('task_data') != null) {
       dataLoaded = prefs.getString('task_data')!;
