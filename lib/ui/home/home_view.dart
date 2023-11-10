@@ -7,6 +7,7 @@ import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 
 import '../../router/route_name.dart';
+import '../base_component/empty_task_view.dart';
 import '../base_component/util_components.dart';
 import 'home_controller.dart';
 
@@ -23,35 +24,49 @@ class HomeView extends BaseView<HomeController> {
 }
 
 Widget _homeBody(BuildContext context, List<TaskItem> listTask, HomeController controller) {
+
   return SingleChildScrollView(
-      child: Column(
+      child: Container(
+        child: Column(
     children: [
-      _headerScreen(),
-      _titleOverview(controller),
-      SizedBox(height: 16),
-      _listOverView(),
-      _titleHighPriority(),
-      SizedBox(height: 16),
-      Column(
-        children: listTask.asMap().entries.map((entry) {
-          int index = entry.key;
-          TaskItem item = entry.value;
-          return GestureDetector(
-              onTap: () async {
-                Get.toNamed(AppRouteName.detail, arguments: item);
-              },
-              child: CardTaskItem(
-                titleTask: item.titleTask.toString(),
-                contendTask: item.contendTask.toString(),
-                priority: item.priority ?? 1,
-                point: item.point ?? 1,
-                dateTime: item.dateTime.toString(),
-              ));
-        }).toList(),
-      ),
-      SizedBox(height: 32),
+        _headerScreen(),
+        _titleOverview(controller),
+        SizedBox(height: 16),
+        _listOverView(),
+        _titleHighPriority(),
+        SizedBox(height: 16),
+        Visibility(
+          visible: controller.listTaskData.isEmpty,
+          child: Padding(
+            padding: EdgeInsets.only(top: 32),
+              child: EmptyTaskView(title: 'No tasks', contend: 'There is no task assigned to you. Check back later.')
+          ),
+        ),
+        Visibility(
+          visible: controller.listTaskData.isNotEmpty,
+          child: Column(
+            children: listTask.asMap().entries.map((entry) {
+              int index = entry.key;
+              TaskItem item = entry.value;
+              return GestureDetector(
+                  onTap: () async {
+                    Get.toNamed(AppRouteName.detail, arguments: item);
+                  },
+                  child: CardTaskItem(
+                    titleTask: item.titleTask.toString(),
+                    contendTask: item.contendTask.toString(),
+                    priority: item.priority ?? 1,
+                    point: item.point ?? 1,
+                    dateTime: item.dateTime.toString(),
+                  ));
+            }).toList(),
+          ),
+        ),
+
+        SizedBox(height: 32),
     ],
-  ));
+  ),
+      ));
 }
 
 Widget _headerScreen() {

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 import '../../router/route_name.dart';
+import '../base_component/empty_task_view.dart';
 import '../base_component/util_components.dart';
 import 'manager_controller.dart';
 
@@ -80,9 +81,12 @@ Widget _tabMenu(ManagerController controller) {
 
 Widget _buildList(ManagerController controller, int status) {
   final listItem = controller.listTaskData.where((item) => item.status == status).toList();
-  return SingleChildScrollView(
-    child: Column(
-      children: listItem.asMap().entries.map((entry) {
+  if (listItem.isNotEmpty) {
+    return Column(
+      children: listItem
+          .asMap()
+          .entries
+          .map((entry) {
         TaskItem item = entry.value;
         return GestureDetector(
             onTap: () async {
@@ -96,8 +100,28 @@ Widget _buildList(ManagerController controller, int status) {
               dateTime: item.dateTime.toString(),
             ));
       }).toList(),
-    ),
-  );
+    );
+  } else {
+    String emptyTitle = "";
+    switch (status) {
+      case 1:
+        emptyTitle = 'To do';
+        break; // The switch statement must be told to exit, or it will execute every case.
+      case 2:
+        emptyTitle = 'In Progress';
+        break;
+      case 3:
+        emptyTitle = 'Done';
+        break;
+      case 4:
+        emptyTitle = 'Cancel';
+        break;
+    }
+    return  Padding(
+        padding: EdgeInsets.only(top: 200),
+        child: EmptyTaskView(title: "${'No tasks'} $emptyTitle", contend: 'There is no task assigned to you. Check back later.')
+    );
+  }
 }
 
 Widget _cardManager(ManagerController controller) {

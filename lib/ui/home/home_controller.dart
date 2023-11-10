@@ -18,7 +18,6 @@ class HomeController extends BaseController {
     // TODO: implement onInit
     super.onInit();
     getTaskData();
-
   }
 
   void getTaskData() async {
