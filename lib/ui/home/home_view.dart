@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -23,50 +22,55 @@ class HomeView extends BaseView<HomeController> {
   }
 }
 
-Widget _homeBody(BuildContext context, List<TaskItem> listTask, HomeController controller) {
-
+Widget _homeBody(
+    BuildContext context, List<TaskItem> listTask, HomeController controller) {
   return SingleChildScrollView(
       child: Container(
-        child: Column(
-    children: [
+    child: Column(
+      children: [
         _headerScreen(),
         _titleOverview(controller),
         SizedBox(height: 16),
-        _listOverView(),
+        _listOverView(controller),
         _titleHighPriority(),
         SizedBox(height: 16),
         Visibility(
           visible: controller.listTaskData.isEmpty,
           child: Padding(
-            padding: EdgeInsets.only(top: 32),
-              child: EmptyTaskView(title: 'No tasks', contend: 'There is no task assigned to you. Check back later.')
-          ),
+              padding: EdgeInsets.only(top: 32),
+              child: EmptyTaskView(
+                  title: 'No tasks',
+                  contend:
+                      'There is no task assigned to you. Check back later.')),
         ),
         Visibility(
           visible: controller.listTaskData.isNotEmpty,
-          child: Column(
-            children: listTask.asMap().entries.map((entry) {
-              int index = entry.key;
-              TaskItem item = entry.value;
-              return GestureDetector(
-                  onTap: () async {
-                    Get.toNamed(AppRouteName.detail, arguments: item);
-                  },
-                  child: CardTaskItem(
-                    titleTask: item.titleTask.toString(),
-                    contendTask: item.contendTask.toString(),
-                    priority: item.priority ?? 1,
-                    point: item.point ?? 1,
-                    dateTime: item.dateTime.toString(),
-                  ));
-            }).toList(),
-          ),
+          child: _listHighPriority(listTask),
         ),
-
         SizedBox(height: 32),
-    ],
-  ),
-      ));
+      ],
+    ),
+  ));
+}
+
+Widget _listHighPriority(List<TaskItem> listTask) {
+  final listItem = listTask.where((item) => item.status == 1 || item.status == 2).toList();
+  return Column(
+    children: listItem.asMap().entries.map((entry) {
+      TaskItem item = entry.value;
+      return GestureDetector(
+          onTap: () async {
+            Get.toNamed(AppRouteName.detail, arguments: item);
+          },
+          child: CardTaskItem(
+            titleTask: item.titleTask.toString(),
+            contendTask: item.contendTask.toString(),
+            priority: item.priority ?? 1,
+            point: item.point ?? 1,
+            dateTime: item.dateTime.toString(),
+          ));
+    }).toList(),
+  );
 }
 
 Widget _headerScreen() {
@@ -153,37 +157,39 @@ Widget _titleOverview(HomeController controller) {
   );
 }
 
-Widget _listOverView() {
+Widget _listOverView(HomeController controller) {
   return Container(
     child: Column(
       children: <Widget>[
-        _upperOverView(),
+        _upperOverView(controller),
         SizedBox(height: 4),
-        _lowerOverView()
+        _lowerOverView(controller)
       ],
     ),
   );
 }
 
-Widget _upperOverView() {
+Widget _upperOverView(HomeController controller) {
   return Container(
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _cardOverView("5", "Todo", "#855B28"),
-          _cardOverView("8", "In Progress", "#000000"),
+          _cardOverView(
+              controller.todoCount.value.toString(), "To do", "#855B28"),
+          _cardOverView(controller.inProgressCount.value.toString(),
+              "In Progress", "#000000"),
         ],
       ));
 }
 
-Widget _lowerOverView() {
+Widget _lowerOverView(HomeController controller) {
   return Container(
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _cardOverView("12", "Done", "#36976A"),
+          _cardOverView(controller.doneCount.value.toString(), "Done", "#36976A"),
           _cardOverView("2", "To Day", "#FF9900")
         ],
       ));

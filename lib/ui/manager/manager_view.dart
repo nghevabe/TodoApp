@@ -6,6 +6,7 @@ import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 import '../../router/route_name.dart';
 import '../base_component/empty_task_view.dart';
+import '../base_component/tab_bar_menu.dart';
 import '../base_component/util_components.dart';
 import 'manager_controller.dart';
 
@@ -32,51 +33,6 @@ Widget _managerBody(BuildContext context, ManagerController controller) {
       _cardManager(controller),
     ],
   ));
-}
-
-Widget _tabMenu(ManagerController controller) {
-  return DefaultTabController(
-      length: 3,
-      child: Column(
-        children: [
-          Container(
-            child: TabBar(
-              physics: const NeverScrollableScrollPhysics(),
-              indicatorColor: HexColor("#855B28"),
-              labelColor: HexColor("#855B28"),
-              unselectedLabelColor: HexColor("#7E7E7E"),
-              tabs: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Text("To do",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                      )),
-                ),
-                Text("In progress",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                    )),
-                Text("Done",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                    )),
-              ],
-            ),
-          ),
-          Container(
-            height: 600,
-            child: TabBarView(
-              children: [
-                _buildList(controller, 1),
-                _buildList(controller, 2),
-                _buildList(controller, 3),
-              ],
-              physics: NeverScrollableScrollPhysics(),
-            ),
-          )
-        ],
-      ));
 }
 
 Widget _buildList(ManagerController controller, int status) {
@@ -138,7 +94,28 @@ Widget _cardManager(ManagerController controller) {
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
               )),
-          child: _tabMenu(controller),
+          // child: _tabMenu(controller),
+          child: TabBarMenu(controller: controller, tabs: const [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 12.0),
+              child: Text("To do",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  )),
+            ),
+            Text("In progress",
+                style: TextStyle(
+                  fontSize: 16.0,
+                )),
+            Text("Done",
+                style: TextStyle(
+                  fontSize: 16.0,
+                )),
+          ], tabsView: [
+            _buildList(controller, 1),
+            _buildList(controller, 2),
+            _buildList(controller, 3),
+          ],),
         ),
       ),
 

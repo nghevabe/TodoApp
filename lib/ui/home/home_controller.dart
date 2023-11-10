@@ -12,6 +12,9 @@ class HomeController extends BaseController {
   // final listTaskData = <TaskItem>[
   //   TaskItem(titleTask: "Task A", contendTask: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X", priority: 1, point: 1),].obs;
   final listTaskData = <TaskItem>[].obs;
+  final todoCount = 0.obs;
+  final inProgressCount = 0.obs;
+  final doneCount = 0.obs;
 
   @override
   void onInit() {
@@ -27,7 +30,21 @@ class HomeController extends BaseController {
       final parsed = jsonDecode(dataLoaded).cast<Map<String, dynamic>>();
       listTaskData.value =
           parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
+      getOverViewCount(listTaskData);
     }
   }
 
+  void getOverViewCount(List<TaskItem> lst) {
+    for (var item in lst) {
+      if (item.status == 1) {
+        todoCount.value++;
+      }
+      if (item.status == 2) {
+        inProgressCount.value++;
+      }
+      if (item.status == 3) {
+        doneCount.value++;
+      }
+    }
+  }
 }
