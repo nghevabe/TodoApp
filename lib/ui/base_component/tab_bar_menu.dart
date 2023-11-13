@@ -25,11 +25,13 @@ class TabBarMenu extends StatelessWidget {
                 tabs: tabs,
               ),
             ),
-            Container(
-              height: 600,
-              child: TabBarView(
-                children: tabsView,
-                physics: NeverScrollableScrollPhysics(),
+            Expanded(
+              child: Container(
+                height: 600,
+                child: TabBarView(
+                  children: tabsView,
+                  physics: NeverScrollableScrollPhysics(),
+                ),
               ),
             )
           ],

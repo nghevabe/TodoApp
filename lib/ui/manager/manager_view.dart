@@ -27,35 +27,36 @@ bool testDate(String inputDate, String fromDate, String toDate) {
 }
 
 Widget _managerBody(BuildContext context, ManagerController controller) {
-  return SingleChildScrollView(
-      child: Column(
+  return Column(
     children: [
-      _cardManager(controller),
+  _cardManager(controller),
     ],
-  ));
+  );
 }
 
 Widget _buildList(ManagerController controller, int status) {
   final listItem = controller.listTaskData.where((item) => item.status == status).toList();
   if (listItem.isNotEmpty) {
-    return Column(
-      children: listItem
-          .asMap()
-          .entries
-          .map((entry) {
-        TaskItem item = entry.value;
-        return GestureDetector(
-            onTap: () async {
-              Get.toNamed(AppRouteName.detail, arguments: item);
-            },
-            child: CardTaskItem(
-              titleTask: item.titleTask ?? "",
-              contendTask: item.contendTask ?? "",
-              priority: item.priority ?? 1,
-              point: item.point ?? 1,
-              dateTime: item.dateTime.toString(),
-            ));
-      }).toList(),
+    return SingleChildScrollView(
+      child: Column(
+        children: listItem
+            .asMap()
+            .entries
+            .map((entry) {
+          TaskItem item = entry.value;
+          return GestureDetector(
+              onTap: () async {
+                Get.toNamed(AppRouteName.detail, arguments: item);
+              },
+              child: CardTaskItem(
+                titleTask: item.titleTask ?? "",
+                contendTask: item.contendTask ?? "",
+                priority: item.priority ?? 1,
+                point: item.point ?? 1,
+                dateTime: item.dateTime.toString(),
+              ));
+        }).toList(),
+      ),
     );
   } else {
     String emptyTitle = "";
@@ -81,45 +82,47 @@ Widget _buildList(ManagerController controller, int status) {
 }
 
 Widget _cardManager(ManagerController controller) {
-  return Stack(
-    children: <Widget>[
-      _headerScreen(controller),
-      Container(
-        margin: EdgeInsets.only(top: 180.0),
-        alignment: Alignment.topLeft,
-        child: Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
-              )),
-          // child: _tabMenu(controller),
-          child: TabBarMenu(controller: controller, tabs: const [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 12.0),
-              child: Text("To do",
+  return Expanded(
+    child: Stack(
+      children: <Widget>[
+        _headerScreen(controller),
+        Container(
+          margin: EdgeInsets.only(top: 180.0),
+          alignment: Alignment.topLeft,
+          child: Container(
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                )),
+            // child: _tabMenu(controller),
+            child: TabBarMenu(controller: controller, tabs: const [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                child: Text("To do",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    )),
+              ),
+              Text("In progress",
                   style: TextStyle(
                     fontSize: 16.0,
                   )),
-            ),
-            Text("In progress",
-                style: TextStyle(
-                  fontSize: 16.0,
-                )),
-            Text("Done",
-                style: TextStyle(
-                  fontSize: 16.0,
-                )),
-          ], tabsView: [
-            _buildList(controller, 1),
-            _buildList(controller, 2),
-            _buildList(controller, 3),
-          ],),
+              Text("Done",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  )),
+            ], tabsView: [
+              _buildList(controller, 1),
+              _buildList(controller, 2),
+              _buildList(controller, 3),
+            ],),
+          ),
         ),
-      ),
 
-    ],
+      ],
+    ),
   );
 }
 
