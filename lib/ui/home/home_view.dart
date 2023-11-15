@@ -54,7 +54,8 @@ Widget _homeBody(
 }
 
 Widget _listHighPriority(List<TaskItem> listTask) {
-  final listItem = listTask.where((item) => item.status == 1 || item.status == 2).toList();
+  final listItem =
+      listTask.where((item) => item.status == 1 || item.status == 2).toList();
   return Column(
     children: listItem.asMap().entries.map((entry) {
       TaskItem item = entry.value;
@@ -162,7 +163,6 @@ Widget _listOverView(HomeController controller) {
     child: Column(
       children: <Widget>[
         _upperOverView(controller),
-        SizedBox(height: 4),
         _lowerOverView(controller)
       ],
     ),
@@ -171,28 +171,25 @@ Widget _listOverView(HomeController controller) {
 
 Widget _upperOverView(HomeController controller) {
   return Container(
-      alignment: Alignment.center,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _cardOverView(
-              controller.todoCount.value.toString(), "To do", "#855B28"),
-          _cardOverView(controller.inProgressCount.value.toString(),
-              "In Progress", "#000000"),
-        ],
-      ));
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      _cardOverView(controller.todoCount.value.toString(), "To do", "#855B28", controller, 0),
+      _cardOverView(controller.inProgressCount.value.toString(), "In Progress",
+          "#000000", controller, 1),
+    ],
+  ));
 }
 
 Widget _lowerOverView(HomeController controller) {
   return Container(
-      alignment: Alignment.center,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _cardOverView(controller.doneCount.value.toString(), "Done", "#36976A"),
-          _cardOverView("2", "To Day", "#FF9900")
-        ],
-      ));
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      _cardOverView(controller.doneCount.value.toString(), "Done", "#36976A", controller, 2),
+      _cardOverView("2", "To Day", "#FF9900", controller, 0)
+    ],
+  ));
 }
 
 Widget _titleHighPriority() {
@@ -207,37 +204,40 @@ Widget _titleHighPriority() {
   );
 }
 
-Widget _cardOverView(String taskNumber, String contend, String textColor) {
+Widget _cardOverView(String taskNumber, String contend, String textColor, HomeController controller, int indexStatus) {
   return Container(
     child: Card(
-        child: Container(
+        child: InkWell(
+          onTap: () {controller.goToManagerWithStatus(indexStatus);},
+          child: Container(
       padding: const EdgeInsets.only(
-          left: 32.0, top: 16.0, right: 32.0, bottom: 16.0),
+            left: 32.0, top: 16.0, right: 32.0, bottom: 16.0),
       child: Column(
-        children: <Widget>[
-          Container(
-            width: 100,
-            alignment: Alignment.center,
-            child: Text(taskNumber,
-                style: TextStyle(
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
-                  color: HexColor(textColor),
-                )),
-          ),
-          Container(
-            width: 100,
-            alignment: Alignment.center,
-            child: Text(contend,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
-                  color: HexColor(textColor),
-                )),
-          ),
-        ],
+          children: <Widget>[
+            Container(
+              width: 110,
+              alignment: Alignment.center,
+              child: Text(taskNumber,
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                    color: HexColor(textColor),
+                  )),
+            ),
+            Container(
+              width: 110,
+              alignment: Alignment.center,
+              child: Text(contend,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: HexColor(textColor),
+                  )),
+            ),
+          ],
       ),
-    )),
+    ),
+        )),
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
@@ -248,6 +248,6 @@ Widget _cardOverView(String taskNumber, String contend, String textColor) {
         ),
       ],
     ),
-    margin: const EdgeInsets.only(left: 2.0, right: 2.0),
+    // margin: const EdgeInsets.only(left: 2.0, right: 2.0),
   );
 }

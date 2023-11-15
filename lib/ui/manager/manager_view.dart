@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
@@ -11,9 +10,13 @@ import '../base_component/util_components.dart';
 import 'manager_controller.dart';
 
 class ManagerView extends BaseView<ManagerController> {
+  final int? initialIndex;
+
+  ManagerView({this.initialIndex});
+
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _managerBody(context, controller));
+    return Obx(() => _managerBody(context, controller, initialIndex ?? 0));
   }
 }
 
@@ -26,10 +29,10 @@ bool testDate(String inputDate, String fromDate, String toDate) {
   return dtInput.isAfter(dtFrom) && dtInput.isBefore(dtTo);
 }
 
-Widget _managerBody(BuildContext context, ManagerController controller) {
+Widget _managerBody(BuildContext context, ManagerController controller, int initialIndex) {
   return Column(
     children: [
-  _cardManager(controller),
+  _cardManager(controller, initialIndex),
     ],
   );
 }
@@ -81,7 +84,7 @@ Widget _buildList(ManagerController controller, int status) {
   }
 }
 
-Widget _cardManager(ManagerController controller) {
+Widget _cardManager(ManagerController controller, int initialIndex) {
   return Expanded(
     child: Stack(
       children: <Widget>[
@@ -113,7 +116,7 @@ Widget _cardManager(ManagerController controller) {
                   style: TextStyle(
                     fontSize: 16.0,
                   )),
-            ], tabsView: [
+            ], initialIndex: initialIndex, tabsView: [
               _buildList(controller, 1),
               _buildList(controller, 2),
               _buildList(controller, 3),

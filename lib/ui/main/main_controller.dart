@@ -4,6 +4,7 @@ import 'package:todo_app/base_view/base_controller.dart';
 class MainController extends BaseController {
 
   final indexTab = 0.obs;
+  final indexTabStatus = 0.obs;
   final icTab1Color = "".obs;
   final icTab2Color = "".obs;
   final icTab3Color = "".obs;
@@ -19,8 +20,9 @@ class MainController extends BaseController {
     icTab4Color.value = "#5F6368";
   }
 
-  void selectTab(int tab) {
+  void selectTab(int tab, int? tabStatus) {
     indexTab.value = tab;
+    indexTabStatus.value = tabStatus ?? 0;
 
     if(tab == 0) {
       icTab1Color.value = "#855B28";
