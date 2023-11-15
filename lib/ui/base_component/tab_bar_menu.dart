@@ -4,16 +4,22 @@ import 'package:hexcolor/hexcolor.dart';
 import '../manager/manager_controller.dart';
 
 class TabBarMenu extends StatelessWidget {
-  const TabBarMenu({required this.controller, required this.tabs, required this.tabsView});
+  TabBarMenu(
+      {required this.controller,
+      required this.tabs,
+      required this.tabsView,
+      this.initialIndex});
 
   final ManagerController controller;
   final List<Widget> tabs;
   final List<Widget> tabsView;
+  final int? initialIndex;
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 3,
+        initialIndex: initialIndex ?? 0,
         child: Column(
           children: [
             Container(
@@ -37,5 +43,4 @@ class TabBarMenu extends StatelessWidget {
           ],
         ));
   }
-
 }

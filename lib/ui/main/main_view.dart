@@ -16,7 +16,7 @@ class MainView extends BaseView<MainController> {
       Obx(() =>  Scaffold(
       backgroundColor: Colors.white,
       body:
-        _getBody(controller.indexTab.value),
+        _getBody(controller.indexTab.value, controller.indexTabStatus.value),
       floatingActionButton: FloatingActionButton(
         //Floating action button on Scaffold
         onPressed: () async {Get.toNamed(AppRouteName.add);},
@@ -39,25 +39,25 @@ class MainView extends BaseView<MainController> {
                 icon: Icon(Icons.home,
                     color: HexColor(controller.icTab1Color.value)),
                 onPressed: () {
-                  controller.selectTab(0);
+                  controller.selectTab(0, 0);
                 }),
             IconButton(
                 icon: Icon(Icons.file_copy,
                     color: HexColor(controller.icTab2Color.value)),
                 onPressed: () {
-                  controller.selectTab(1);
+                  controller.selectTab(1, 0);
                 }),
             IconButton(
                 icon: Icon(Icons.notifications,
                     color: HexColor(controller.icTab3Color.value)),
                 onPressed: () {
-                  controller.selectTab(2);
+                  controller.selectTab(2, 0);
                 }),
             IconButton(
                 icon: Icon(Icons.settings,
                     color: HexColor(controller.icTab4Color.value)),
                 onPressed: () {
-                  controller.selectTab(3);
+                  controller.selectTab(3, 0);
                 }),
           ],
         )
@@ -65,11 +65,11 @@ class MainView extends BaseView<MainController> {
     ));
   }
 
-  Widget _getBody(int index) {
+  Widget _getBody(int index, int indexStatus) {
     if (index == 0) {
       return HomeView();
     } else if (index == 1) {
-      return ManagerView();
+      return ManagerView(initialIndex: indexStatus);
     } else if (index == 2) {
       return Center(child: Text("Home3"));
     } else {

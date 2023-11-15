@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/base_view/base_controller.dart';
 
 import '../base_component/task_item.dart';
+import '../main/main_controller.dart';
 
 class HomeController extends BaseController {
   String dataLoaded = "";
@@ -47,4 +48,14 @@ class HomeController extends BaseController {
       }
     }
   }
+
+  void goToManagerWithStatus(int indexStatus) {
+
+    final MainController mainController =
+    Get.put(MainController(), permanent: true);
+
+    mainController.selectTab(1, indexStatus);
+
+  }
+
 }
