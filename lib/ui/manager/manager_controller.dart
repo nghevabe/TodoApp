@@ -64,67 +64,67 @@ class ManagerController extends BaseController {
   }
 
   void getTaskData() async {
-    final listTaskDataX = <TaskItem>[
-      TaskItem(
-          titleTask: "Task A",
-          contendTask:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
-          priority: 1,
-          point: 1,
-          dateTime: '2023-Nov-10',
-          status: 1),
-      TaskItem(
-          titleTask: "Task A",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
-          priority: 1,
-          point: 1,
-          dateTime: '2023-Nov-10',
-          status: 1),
-      TaskItem(
-          titleTask: "Task A",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
-          priority: 1,
-          point: 1,
-          dateTime: '2023-Nov-10',
-          status: 1),
-      TaskItem(
-          titleTask: "Task A",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
-          priority: 1,
-          point: 1,
-          dateTime: '2023-Nov-10',
-          status: 1),
-      TaskItem(
-          titleTask: "Task A",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
-          priority: 1,
-          point: 1,
-          dateTime: '2023-Nov-10',
-          status: 1),
-      TaskItem(
-          titleTask: "Task A",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
-          priority: 1,
-          point: 1,
-          dateTime: '2023-Nov-10',
-          status: 1),
-      TaskItem(
-          titleTask: "Task A",
-          contendTask:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
-          priority: 1,
-          point: 1,
-          dateTime: '2023-Nov-10',
-          status: 1),
-    ].obs;
+    // final listTaskDataX = <TaskItem>[
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    // ].obs;
+    //
+    // listTaskData.value = listTaskDataX;
 
-    listTaskData.value = listTaskDataX;
-    /*
     SharedPreferences prefs = await _prefs;
     if (prefs.getString('task_data') != null) {
       dataLoaded = prefs.getString('task_data')!;
@@ -132,6 +132,6 @@ class ManagerController extends BaseController {
       listTaskData.value =
           parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
     }
-     */
+
   }
 }
