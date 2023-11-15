@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 import '../../router/route_name.dart';
+import '../base_component/empty_task_view.dart';
+import '../base_component/tab_bar_menu.dart';
 import '../base_component/util_components.dart';
 import 'manager_controller.dart';
 
@@ -25,100 +27,102 @@ bool testDate(String inputDate, String fromDate, String toDate) {
 }
 
 Widget _managerBody(BuildContext context, ManagerController controller) {
-  return SingleChildScrollView(
-      child: Column(
+  return Column(
     children: [
-      _cardManager(controller),
+  _cardManager(controller),
     ],
-  ));
-}
-
-Widget _tabMenu(ManagerController controller) {
-  return DefaultTabController(
-      length: 3,
-      child: Column(
-        children: [
-          Container(
-            child: TabBar(
-              physics: const NeverScrollableScrollPhysics(),
-              indicatorColor: HexColor("#855B28"),
-              labelColor: HexColor("#855B28"),
-              unselectedLabelColor: HexColor("#7E7E7E"),
-              tabs: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Text("To do",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                      )),
-                ),
-                Text("In progress",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                    )),
-                Text("Done",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                    )),
-              ],
-            ),
-          ),
-          Container(
-            height: 600,
-            child: TabBarView(
-              children: [
-                _buildList(controller, 1),
-                _buildList(controller, 2),
-                _buildList(controller, 3),
-              ],
-              physics: NeverScrollableScrollPhysics(),
-            ),
-          )
-        ],
-      ));
+  );
 }
 
 Widget _buildList(ManagerController controller, int status) {
   final listItem = controller.listTaskData.where((item) => item.status == status).toList();
-  return SingleChildScrollView(
-    child: Column(
-      children: listItem.asMap().entries.map((entry) {
-        TaskItem item = entry.value;
-        return GestureDetector(
-            onTap: () async {
-              Get.toNamed(AppRouteName.detail, arguments: item);
-            },
-            child: CardTaskItem(
-              titleTask: item.titleTask ?? "",
-              contendTask: item.contendTask ?? "",
-              priority: item.priority ?? 1,
-              point: item.point ?? 1,
-              dateTime: item.dateTime.toString(),
-            ));
-      }).toList(),
-    ),
-  );
+  if (listItem.isNotEmpty) {
+    return SingleChildScrollView(
+      child: Column(
+        children: listItem
+            .asMap()
+            .entries
+            .map((entry) {
+          TaskItem item = entry.value;
+          return GestureDetector(
+              onTap: () async {
+                Get.toNamed(AppRouteName.detail, arguments: item);
+              },
+              child: CardTaskItem(
+                titleTask: item.titleTask ?? "",
+                contendTask: item.contendTask ?? "",
+                priority: item.priority ?? 1,
+                point: item.point ?? 1,
+                dateTime: item.dateTime.toString(),
+              ));
+        }).toList(),
+      ),
+    );
+  } else {
+    String emptyTitle = "";
+    switch (status) {
+      case 1:
+        emptyTitle = 'To do';
+        break; // The switch statement must be told to exit, or it will execute every case.
+      case 2:
+        emptyTitle = 'In Progress';
+        break;
+      case 3:
+        emptyTitle = 'Done';
+        break;
+      case 4:
+        emptyTitle = 'Cancel';
+        break;
+    }
+    return  Padding(
+        padding: EdgeInsets.only(top: 200),
+        child: EmptyTaskView(title: "${'No tasks'} $emptyTitle", contend: 'There is no task assigned to you. Check back later.')
+    );
+  }
 }
 
 Widget _cardManager(ManagerController controller) {
-  return Stack(
-    children: <Widget>[
-      _headerScreen(controller),
-      Container(
-        margin: EdgeInsets.only(top: 180.0),
-        alignment: Alignment.topLeft,
-        child: Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
-              )),
-          child: _tabMenu(controller),
+  return Expanded(
+    child: Stack(
+      children: <Widget>[
+        _headerScreen(controller),
+        Container(
+          margin: EdgeInsets.only(top: 180.0),
+          alignment: Alignment.topLeft,
+          child: Container(
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                )),
+            // child: _tabMenu(controller),
+            child: TabBarMenu(controller: controller, tabs: const [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                child: Text("To do",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    )),
+              ),
+              Text("In progress",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  )),
+              Text("Done",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  )),
+            ], tabsView: [
+              _buildList(controller, 1),
+              _buildList(controller, 2),
+              _buildList(controller, 3),
+            ],),
+          ),
         ),
-      ),
 
-    ],
+      ],
+    ),
   );
 }
 

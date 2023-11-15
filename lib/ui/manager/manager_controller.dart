@@ -8,6 +8,7 @@ import '../base_component/date_item.dart';
 import '../base_component/task_item.dart';
 
 class ManagerController extends BaseController {
+  String dataLoaded = "";
   final listTaskData = <TaskItem>[].obs;
   final listDate = <DateItem>[].obs;
   final title = "December".obs;
@@ -16,7 +17,6 @@ class ManagerController extends BaseController {
   final colorTab2 = "#FFFFFF".obs;
   final colorTab3 = "#FFFFFF".obs;
 
-  String dataLoaded = "";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
@@ -24,7 +24,7 @@ class ManagerController extends BaseController {
     // TODO: implement onInit
     super.onInit();
     initDates();
-    loadTask();
+    getTaskData();
   }
 
   void clickOnDate(int index) {
@@ -53,7 +53,6 @@ class ManagerController extends BaseController {
   }
 
   void initDates() {
-
     listDate.value = <DateItem>[
       DateItem("Mon", "8", true),
       DateItem("Tue", "9", false),
@@ -62,10 +61,70 @@ class ManagerController extends BaseController {
       DateItem("Fri", "12", false),
       DateItem("Sat", "13", false),
     ];
-
   }
 
-  void loadTask() async {
+  void getTaskData() async {
+    // final listTaskDataX = <TaskItem>[
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    //   TaskItem(
+    //       titleTask: "Task A",
+    //       contendTask:
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor X",
+    //       priority: 1,
+    //       point: 1,
+    //       dateTime: '2023-Nov-10',
+    //       status: 1),
+    // ].obs;
+    //
+    // listTaskData.value = listTaskDataX;
+
     SharedPreferences prefs = await _prefs;
     if (prefs.getString('task_data') != null) {
       dataLoaded = prefs.getString('task_data')!;
@@ -73,6 +132,6 @@ class ManagerController extends BaseController {
       listTaskData.value =
           parsed.map<TaskItem>((json) => TaskItem.fromJson(json)).toList();
     }
-  }
 
+  }
 }

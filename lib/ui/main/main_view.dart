@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../base_view/base_view.dart';
 import '../../router/route_name.dart';
-import '../base_component/task_item.dart';
 import '../home/home_view.dart';
 import '../manager/manager_view.dart';
 import 'main_controller.dart';
