@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../base_view/base_controller.dart';
@@ -19,7 +20,9 @@ class AddTaskController extends BaseController {
   final inputContend = "".obs;
   final inputPoint = 1.obs;
   final inputPriority = 1.obs;
-  final inputDate = "Pick date".obs;
+  final inputDate = "".obs;
+  final hintTextTitle = "Task Title".obs;
+  final hintColorTitle = "#828282".obs;
 
   String dataLoaded = "";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -28,15 +31,25 @@ class AddTaskController extends BaseController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    inputDate.value = getCurrentDate();
     loadTask();
   }
 
+  void showAlertEmptyTitle() {
+    hintTextTitle.value = "Trường Title này bắt buộc";
+    hintColorTitle.value = "#CF0000";
+  }
+
   void saveTask(TaskItem taskItem) async {
+    String content = "";
+    if (taskItem.contendTask!.isEmpty){
+      content = taskItem.titleTask ?? "";
+    }
     final idTask = DateTime.now().millisecondsSinceEpoch;
     TaskItem item = TaskItem(
         id: idTask.toString(),
         titleTask: taskItem.titleTask,
-        contendTask: taskItem.contendTask,
+        contendTask: content,
         priority: taskItem.priority,
         point: taskItem.point,
         dateTime: taskItem.dateTime,
@@ -50,6 +63,12 @@ class AddTaskController extends BaseController {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('task_data', jsonstring);
+  }
+
+  String getCurrentDate() {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MMM-dd');
+    return formatter.format(now);
   }
 
   void loadTask() async {

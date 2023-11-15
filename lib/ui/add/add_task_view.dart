@@ -26,18 +26,18 @@ class AddTaskView extends BaseView<AddTaskController> {
           child: Column(
             children: [
               // LinearProgressIndicator(value: _formProgress),
-              LinearProgressIndicator(value: 0),
-              SizedBox(height: 40),
+              const LinearProgressIndicator(value: 0),
+              const SizedBox(height: 40),
               Container(
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 16.0),
+                margin: const EdgeInsets.only(left: 16.0),
                 child: const Text("Title",
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.black,
                     )),
               ),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               Container(
                 decoration: BoxDecoration(
                   boxShadow: [
@@ -50,14 +50,15 @@ class AddTaskView extends BaseView<AddTaskController> {
                     ),
                   ],
                 ),
-                margin: EdgeInsets.only(left: 16, right: 16),
+                margin: const EdgeInsets.only(left: 16, right: 16),
                 child: TextField(
                   decoration: InputDecoration(
-                      hintText: 'Task Title',
+                      hintText: controller.hintTextTitle.value,
                       filled: true,
                       fillColor: HexColor("#F4F6F8"),
-                      hintStyle:
-                          TextStyle(fontSize: 16.0, color: HexColor("#828282")),
+                      hintStyle: TextStyle(
+                          fontSize: 16.0,
+                          color: HexColor(controller.hintColorTitle.value)),
                       contentPadding: const EdgeInsets.all(15),
                       enabledBorder: OutlineInputBorder(
                         // width: 0.0 produces a thin "hairline" border
@@ -74,7 +75,7 @@ class AddTaskView extends BaseView<AddTaskController> {
 
               Container(
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 16.0, top: 24.0),
+                margin: const EdgeInsets.only(left: 16.0, top: 24.0),
                 child: const Text("Content",
                     style: TextStyle(
                       fontSize: 16.0,
@@ -82,7 +83,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                     )),
               ),
 
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
 
               Container(
                 decoration: BoxDecoration(
@@ -96,7 +97,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                     ),
                   ],
                 ),
-                margin: EdgeInsets.only(left: 16, right: 16),
+                margin: const EdgeInsets.only(left: 16, right: 16),
                 child: TextField(
                   textAlignVertical: TextAlignVertical.top,
                   keyboardType: TextInputType.multiline,
@@ -131,17 +132,17 @@ class AddTaskView extends BaseView<AddTaskController> {
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 16.0, top: 24.0),
+                        margin: const EdgeInsets.only(left: 16.0, top: 24.0),
                         child: const Text("Priority",
                             style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.black,
                             )),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Container(
                           alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 16.0),
+                          margin: const EdgeInsets.only(left: 16.0),
                           child: DecoratedBox(
                               decoration: BoxDecoration(
                                 color: HexColor("#F4F6F8"),
@@ -164,9 +165,9 @@ class AddTaskView extends BaseView<AddTaskController> {
                               ),
                               child: Container(
                                   width: 214,
-                                  padding: EdgeInsets.only(left: 12),
+                                  padding: const EdgeInsets.only(left: 12),
                                   child: DropdownButton(
-                                    underline: SizedBox(),
+                                    underline: const SizedBox(),
                                     value: controller.inputPriority.value,
                                     items: const [
                                       //add items in the dropdown
@@ -179,8 +180,8 @@ class AddTaskView extends BaseView<AddTaskController> {
                                     ],
                                     onChanged: (value) {
                                       //get value when changed
-                                      controller.inputPriority.value = int.parse(value.toString()) ;
-                                      print("You selected $value");
+                                      controller.inputPriority.value =
+                                          int.parse(value.toString());
                                     },
                                     icon: Container(
                                         //Icon at tail, arrow bott
@@ -204,7 +205,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                     ],
                   ),
 
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
 
                   // PointPicker Widget
                   Expanded(
@@ -212,14 +213,14 @@ class AddTaskView extends BaseView<AddTaskController> {
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(top: 24.0),
+                        margin: const EdgeInsets.only(top: 24.0),
                         child: const Text("Point",
                             style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.black,
                             )),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -235,7 +236,7 @@ class AddTaskView extends BaseView<AddTaskController> {
                             ),
                           ],
                         ),
-                        margin: EdgeInsets.only(right: 16.0),
+                        margin: const EdgeInsets.only(right: 16.0),
                         child: DecoratedBox(
                             decoration: BoxDecoration(
                               color: HexColor("#F4F6F8"),
@@ -244,14 +245,14 @@ class AddTaskView extends BaseView<AddTaskController> {
                                   color: HexColor("#C3A87B"), width: 1),
                               //border of dropdown button
                               borderRadius: BorderRadius.circular(4),
-                              //border raiuds of dropdown button
                             ),
                             child: Container(
-                                padding: EdgeInsets.only(left: 12, right: 12),
+                                padding:
+                                    const EdgeInsets.only(left: 12, right: 12),
                                 child: DropdownButton(
-                                  underline: SizedBox(),
+                                  underline: const SizedBox(),
                                   value: controller.inputPoint.value,
-                                  items: [
+                                  items: const [
                                     //add items in the dropdown
                                     DropdownMenuItem(
                                         child: Text("1"), value: 1),
@@ -261,12 +262,17 @@ class AddTaskView extends BaseView<AddTaskController> {
 
                                     DropdownMenuItem(
                                         child: Text("3"), value: 3),
+
+                                    DropdownMenuItem(
+                                        child: Text("4"), value: 4),
+
+                                    DropdownMenuItem(
+                                        child: Text("5"), value: 5),
                                   ],
                                   onChanged: (value) {
                                     //get value when changed
                                     controller.inputPoint.value =
                                         int.parse(value.toString());
-                                    print("You selected $value");
                                   },
                                   icon: Expanded(
                                       child: Row(
@@ -299,22 +305,21 @@ class AddTaskView extends BaseView<AddTaskController> {
                 ],
               ),
 
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               Container(
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 16.0),
+                margin: const EdgeInsets.only(left: 16.0),
                 child: const Text("Date time",
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.black,
                     )),
               ),
-              SizedBox(height: 6),
-
+              const SizedBox(height: 6),
               // DatePicker Widget
               Container(
-                  padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
                   decoration: BoxDecoration(
                     color: HexColor(
                         "#F4F6F8"), //background color of dropdown button
@@ -334,12 +339,12 @@ class AddTaskView extends BaseView<AddTaskController> {
                       ),
                     ],
                   ),
-                  margin: EdgeInsets.only(left: 16, right: 16),
+                  margin: const EdgeInsets.only(left: 16, right: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 250.0,
                         child: TextField(
                           controller: dateInput,
@@ -381,9 +386,8 @@ class AddTaskView extends BaseView<AddTaskController> {
                     ],
                   )),
 
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Expanded(child: Container()),
-
               _btnAddTask(
                   context,
                   TaskItem(
@@ -400,19 +404,18 @@ class AddTaskView extends BaseView<AddTaskController> {
   Widget _btnAddTask(BuildContext context, TaskItem taskItem) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+      margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-          controller.saveTask(taskItem);
-
-          // Navigator.of(context, rootNavigator: true).pop(context);
-          Future.delayed(const Duration(milliseconds: 1500), () {
-            Get.offAllNamed(AppRouteName.main);
-          });
+          if (controller.inputTitle.isNotEmpty) {
+            saveTask(taskItem);
+          } else {
+            controller.showAlertEmptyTitle();
+          }
         },
         child: Container(
-          padding: EdgeInsets.all(16.0),
-          child: Text("ADD"),
+          padding: const EdgeInsets.all(16.0),
+          child: const Text("ADD"),
         ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
@@ -423,5 +426,12 @@ class AddTaskView extends BaseView<AddTaskController> {
         ),
       ),
     );
+  }
+
+  void saveTask(TaskItem taskItem) {
+    controller.saveTask(taskItem);
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      Get.offAllNamed(AppRouteName.main);
+    });
   }
 }
