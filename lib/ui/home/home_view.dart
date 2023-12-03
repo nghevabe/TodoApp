@@ -24,6 +24,7 @@ class HomeView extends BaseView<HomeController> {
 
 Widget _homeBody(
     BuildContext context, List<TaskItem> listTask, HomeController controller) {
+  final listItem = controller.listTaskData.where((item) => item.status == 1 || item.status == 2).toList();
   return SingleChildScrollView(
       child: Container(
     child: Column(
@@ -35,7 +36,7 @@ Widget _homeBody(
         _titleHighPriority(),
         SizedBox(height: 16),
         Visibility(
-          visible: controller.listTaskData.isEmpty,
+          visible: listItem.isEmpty,
           child: Padding(
               padding: EdgeInsets.only(top: 32),
               child: EmptyTaskView(
