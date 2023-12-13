@@ -20,32 +20,26 @@ class ManagerView extends BaseView<ManagerController> {
   }
 }
 
-bool testDate(String inputDate, String fromDate, String toDate) {
-  var inputFormat = DateFormat('dd/MM/yyyy');
-  DateTime dtFrom = inputFormat.parse(fromDate);
-  DateTime dtTo = inputFormat.parse(toDate);
-  DateTime dtInput = inputFormat.parse(inputDate);
-
-  return dtInput.isAfter(dtFrom) && dtInput.isBefore(dtTo);
-}
-
-Widget _managerBody(BuildContext context, ManagerController controller, int initialIndex) {
+Widget _managerBody(
+    BuildContext context, ManagerController controller, int initialIndex) {
   return Column(
     children: [
-  _cardManager(controller, initialIndex),
+      _cardManager(controller, initialIndex),
     ],
   );
 }
 
 Widget _buildList(ManagerController controller, int status) {
-  final listItem = controller.listTaskData.where((item) => item.status == status).toList();
+  final listItem =
+      controller.listTaskData.where((item) => item.status == status).toList();
+  listItem.sort((a, b) {
+    return DateFormat('yyyy-MMM-dd').parse(b.dateTime.toString())
+        .compareTo(DateFormat('yyyy-MMM-dd').parse(a.dateTime.toString()));
+  });
   if (listItem.isNotEmpty) {
     return SingleChildScrollView(
       child: Column(
-        children: listItem
-            .asMap()
-            .entries
-            .map((entry) {
+        children: listItem.asMap().entries.map((entry) {
           TaskItem item = entry.value;
           return GestureDetector(
               onTap: () async {
@@ -77,10 +71,11 @@ Widget _buildList(ManagerController controller, int status) {
         emptyTitle = 'Cancel';
         break;
     }
-    return  Padding(
+    return Padding(
         padding: EdgeInsets.only(top: 200),
-        child: EmptyTaskView(title: "${'No tasks'} $emptyTitle", contend: 'There is no task assigned to you. Check back later.')
-    );
+        child: EmptyTaskView(
+            title: "${'No tasks'} $emptyTitle",
+            contend: 'There is no task assigned to you. Check back later.'));
   }
 }
 
@@ -100,30 +95,34 @@ Widget _cardManager(ManagerController controller, int initialIndex) {
                   topRight: Radius.circular(20.0),
                 )),
             // child: _tabMenu(controller),
-            child: TabBarMenu(controller: controller, tabs: const [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.0),
-                child: Text("To do",
+            child: TabBarMenu(
+              controller: controller,
+              tabs: const [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.0),
+                  child: Text("To do",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      )),
+                ),
+                Text("In progress",
                     style: TextStyle(
                       fontSize: 16.0,
                     )),
-              ),
-              Text("In progress",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                  )),
-              Text("Done",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                  )),
-            ], initialIndex: initialIndex, tabsView: [
-              _buildList(controller, 1),
-              _buildList(controller, 2),
-              _buildList(controller, 3),
-            ],),
+                Text("Done",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    )),
+              ],
+              initialIndex: initialIndex,
+              tabsView: [
+                _buildList(controller, 1),
+                _buildList(controller, 2),
+                _buildList(controller, 3),
+              ],
+            ),
           ),
         ),
-
       ],
     ),
   );
