@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/ui/base_component/app_filter_dialog.dart';
 import 'package:todo_app/ui/base_component/task_item.dart';
 import '../../base_view/base_view.dart';
 import '../../router/route_name.dart';
@@ -8,6 +9,8 @@ import '../base_component/empty_task_view.dart';
 import '../base_component/tab_bar_menu.dart';
 import '../base_component/util_components.dart';
 import 'manager_controller.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ManagerView extends BaseView<ManagerController> {
   final int? initialIndex;
@@ -24,7 +27,7 @@ Widget _managerBody(
     BuildContext context, ManagerController controller, int initialIndex) {
   return Column(
     children: [
-      _cardManager(controller, initialIndex),
+      _cardManager(controller, initialIndex, context),
     ],
   );
 }
@@ -33,7 +36,8 @@ Widget _buildList(ManagerController controller, int status) {
   final listItem =
       controller.listTaskData.where((item) => item.status == status).toList();
   listItem.sort((a, b) {
-    return DateFormat('yyyy-MMM-dd').parse(b.dateTime.toString())
+    return DateFormat('yyyy-MMM-dd')
+        .parse(b.dateTime.toString())
         .compareTo(DateFormat('yyyy-MMM-dd').parse(a.dateTime.toString()));
   });
   if (listItem.isNotEmpty) {
@@ -79,11 +83,12 @@ Widget _buildList(ManagerController controller, int status) {
   }
 }
 
-Widget _cardManager(ManagerController controller, int initialIndex) {
+Widget _cardManager(
+    ManagerController controller, int initialIndex, BuildContext context) {
   return Expanded(
     child: Stack(
       children: <Widget>[
-        _headerScreen(controller),
+        _headerScreen(context, controller),
         Container(
           margin: EdgeInsets.only(top: 180.0),
           alignment: Alignment.topLeft,
@@ -128,7 +133,7 @@ Widget _cardManager(ManagerController controller, int initialIndex) {
   );
 }
 
-Widget _headerScreen(ManagerController controller) {
+Widget _headerScreen(BuildContext context, ManagerController controller) {
   return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -140,17 +145,41 @@ Widget _headerScreen(ManagerController controller) {
       height: 200,
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 42.0),
-            alignment: Alignment.center,
-            child: Text(
-              controller.title.value,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold),
+          Row(children: [
+            Expanded(child: Container()),
+            Container(
+              margin: const EdgeInsets.only(top: 32.0),
+              child: Text(
+                controller.title.value,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  AppFilterDialog(
+                      context: context,
+                      titleHeader: "Search",
+                      onSubmit: (value) {
+                        print("value search XXX : " + value);
+                        controller.listTaskData
+                            .where((item) => item.titleTask == value)
+                            .toList();
+                      }).show();
+                },
+                child: Container(
+                    alignment: Alignment.centerRight,
+                    margin: const EdgeInsets.only(top: 32.0, right: 16),
+                    child: SvgPicture.asset(
+                      'assets/ic_search.svg',
+                      color: HexColor('#855B28'),
+                    )),
+              ),
+            )
+          ]),
           // listDate
           SizedBox(height: 12),
           _listItemDate(controller)
@@ -222,3 +251,4 @@ Widget _itemDateCard(String dayOfWeek, String dayOfMonth, bool isSelected) {
     ),
   );
 }
+// 31079601212045

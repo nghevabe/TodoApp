@@ -7,10 +7,12 @@ import 'package:hexcolor/hexcolor.dart';
 class AppFilterDialog {
   final String titleHeader;
   final BuildContext context;
+  final Function(String value)? onSubmit;
 
   AppFilterDialog({
     required this.titleHeader,
     required this.context,
+    required this.onSubmit,
   });
 
   Future show() {
@@ -49,7 +51,6 @@ class AppFilterDialog {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4))),
                     onChanged: (value) {
-                      print("value: "+value);
                       searchValue = value;
                     },
                   ),
@@ -62,7 +63,7 @@ class AppFilterDialog {
                       colorCodeText: '#FFFFFF',
                       colorCodeBackGround: '#C3A87B',
                       onClick: () {
-                        print("Search value: "+searchValue);
+                        onSubmit!(searchValue);
                         Get.back();
                       },),
                 )

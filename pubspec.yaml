@@ -68,6 +68,7 @@ flutter:
     - assets/ic_share.svg
     - assets/ic_add.png
     - assets/ic_task_empty.svg
+    - assets/ic_search.svg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
